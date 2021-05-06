@@ -1,7 +1,7 @@
 {
   "name": "resume-template",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "moment": "^2.19.1",
     "nuka-carousel": "^3.0.0",
@@ -26,5 +26,5 @@
   "devDependencies": {
     "gh-pages": "latest"
   },
-  "homepage": "."
+  "homepage": "https://tazbirul94.github.io/react-my-resume"
 }

@@ -1,7 +1,7 @@
 {
-  "name": "resume-template",
+  "name": "react-my-resume",
   "version": "0.1.0",
-  "private": false,
+  "homepage": "https://tazbirul94.github.io/react-my-resume",
   "dependencies": {
     "moment": "^2.19.1",
     "nuka-carousel": "^3.0.0",
@@ -20,11 +20,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "serve": "serve ./build -p 8000",
-    "gh-pages": "node ./gh-pages"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
-    "gh-pages": "latest"
-  },
-  "homepage": "https://tazbirul94.github.io/react-my-resume"
+    "gh-pages": "^3.1.0"
+  }
 }

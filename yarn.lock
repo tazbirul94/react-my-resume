@@ -2798,7 +2798,7 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gh-pages@latest:
+gh-pages@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/gh-pages/-/gh-pages-3.1.0.tgz#ec3ed0f6a6e3fc3d888758fa018f08191c96bd55"
   integrity sha512-3b1rly9kuf3/dXsT8+ZxP0UhNLOo1CItj+3e31yUVcaph/yDsJ9RzD7JOw5o5zpBTJVQLlJAASNkUfepi9fe2w==
@@ -4108,6 +4108,11 @@ lodash.templatesettings@^4.0.0:
   resolved "https://registry.yarnpkg.com/lodash.templatesettings/-/lodash.templatesettings-4.1.0.tgz#2b4d4e95ba440d915ff08bc899e4553666713316"
   dependencies:
     lodash._reinterpolate "~3.0.0"
+
+lodash.throttle@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
+  integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
 
 lodash.uniq@^4.5.0:
   version "4.5.0"
@@ -5428,6 +5433,13 @@ react-scripts@1.0.17:
     whatwg-fetch "2.0.3"
   optionalDependencies:
     fsevents "1.1.2"
+
+react-skillbars@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/react-skillbars/-/react-skillbars-1.6.1.tgz#9c08343a89b44aa6e3adfc572d33743bed20db61"
+  integrity sha512-vfenxvWl3KW4q8Ji6gXLRZFkAL1KFpfrP/8gQMWg5aREd9G1xhv0xnx2NcBHhWNhLf4NbhAOjO7AVQMatpRAqg==
+  dependencies:
+    lodash.throttle "4.1.1"
 
 react-transition-group@^2.2.1:
   version "2.2.1"

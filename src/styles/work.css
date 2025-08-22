@@ -1,0 +1,86 @@
+/* Center the whole section */
+.wk-container {
+  max-width: 900px;     /* center column width */
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Header on top, then a single centered column */
+.wk-header-col { margin: 0 0 14px; }
+.wk-main-col { position: relative; }
+
+/* Each timeline row is dot+line rail (40px) + card */
+.wk-row {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+/* Rail */
+.wk-rail { position: relative; display: flex; justify-content: center; }
+.wk-dot {
+  width: 12px; height: 12px; background: #0a66c2; border-radius: 50%;
+  position: relative; top: 12px; box-shadow: 0 0 0 3px rgba(10,102,194,0.15);
+}
+.wk-line { position: absolute; top: 24px; bottom: -8px; width: 2px; background: #e6e9ef; }
+
+/* Card + header */
+.wk-card {
+  background: #fff; border: 1px solid #edf0f5; border-radius: 16px;
+  padding: 16px 18px; box-shadow: 0 2px 6px rgba(13, 16, 23, 0.04);
+}
+.wk-card-head {
+  display: grid; grid-template-columns: 48px 1fr; gap: 12px; align-items: center;
+}
+.wk-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;     /* change to 50% for round logos */
+  background: #fff;        /* white background */
+  border: 1px solid #e5e7eb;
+  color: #0a66c2;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.wk-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.wk-company-title { margin: 0; font-size: 1.125rem; }
+.wk-company-title a { color: inherit; text-decoration: none; font-weight: 700; }
+.wk-company-title a:hover { text-decoration: underline; }
+
+.wk-meta { color: #6b7280; font-size: 0.92rem; }
+.wk-sep { margin: 0 6px; }
+.wk-chip {
+  background: #f1f5f9; border: 1px solid #e2e8f0; color: #475569;
+  font-size: 0.75rem; padding: 2px 8px; border-radius: 999px; margin-left: 8px;
+}
+
+/* Roles list inside a company card */
+.wk-roles { margin-top: 10px; }
+.wk-role-row { padding: 10px 0; }
+.wk-role-row + .wk-role-row { border-top: 1px dashed #e5e7eb; }
+.wk-role-row-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; }
+.wk-role { margin: 0; font-size: 1rem; line-height: 1.35rem; }
+.wk-summary { margin: 8px 0 4px; color: #374151; }
+
+/* Bullets & skills */
+.wk-bullets ul { margin: 6px 0 0 1rem; }
+.wk-bullets li { margin: 4px 0; }
+.wk-skills { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+.wk-skill {
+  background: #eef6ff; border: 1px solid #dbeafe; color: #1d4ed8;
+  padding: 2px 8px; border-radius: 999px; font-size: 0.75rem;
+}
+
+/* Responsive */
+@media (max-width: 680px) {
+  .wk-row { grid-template-columns: 28px 1fr; }
+}

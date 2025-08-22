@@ -1,70 +1,87 @@
 import React, { Component } from 'react';
 import { IntlProvider, addLocaleData } from 'react-intl';
-import resume_en_US from '../template/resume.example.en_US';
-import resume_zh_CN from '../template/resume.exmaple.zh_CN';
+
+import resume_en_US from '../template/resume.en_US';
+import resume_de_GER from '../template/resume.de_GER';
+
 import ui_en_US from '../template/ui.en_US';
-import ui_zh_CN from '../template/ui.zh_CN';
+import ui_de_GER from '../template/ui.de_GER';
+
 import Home from './Home';
 import flattenMessages from '../utils/flattenMessages';
 
+// locale data (react-intl v2 style)
 import en from 'react-intl/locale-data/en';
-import zh from 'react-intl/locale-data/zh';
+import de from 'react-intl/locale-data/de';
 
-addLocaleData([...en, ...zh]);
-console.log(flattenMessages(ui_en_US));
+addLocaleData([...en, ...de]);
 
 const SUPPORT_LOCALES = [
-  {
-    name: "English",
-    value: "en-US",
-  },
-  {
-    name: "简体中文",
-    value: "zh-CN",
-  }
+  { name: 'English', value: 'en-US' },
+  { name: 'Deutsch', value: 'de-GER' }
 ];
 
 class App extends Component {
-  state = { lang:'en', messages: ui_en_US, resume: resume_en_US };
+  state = {
+    // lang: short ISO for IntlProvider; locale: full code for the <select>
+    lang: 'en',
+    locale: 'en-US',
+    messages: ui_en_US,
+    resume: resume_en_US
+  };
+
   constructor(props) {
     super(props);
     this.onSelectLocale = this.onSelectLocale.bind(this);
   }
+
   renderLocaleSelector() {
     return (
-      <select onChange={this.onSelectLocale} defaultValue="" className="locale-selector">
-        <option value="" disabled>Change Language</option>
-        {SUPPORT_LOCALES.map(locale => (
-          <option key={locale.value} value={locale.value}>{locale.name}</option>
+      <select
+        onChange={this.onSelectLocale}
+        value={this.state.locale}
+        className="locale-selector"
+      >
+        {SUPPORT_LOCALES.map((locale) => (
+          <option key={locale.value} value={locale.value}>
+            {locale.name}
+          </option>
         ))}
       </select>
-    
     );
   }
+
   onSelectLocale(e) {
-    let lang = e.target.value;
-    if(lang==='zh-CN') {
+    const locale = e.target.value;      // 'en-US' | 'de-GER'
+    const lang = locale.slice(0, 2);    // 'en'    | 'de'
+
+    if (locale === 'de-GER') {
       this.setState({
-        lang: lang.slice(0,2), 
-        messages: ui_zh_CN, 
-        resume: resume_zh_CN
+        lang,
+        locale,
+        messages: ui_de_GER,
+        resume: resume_de_GER
       });
     } else {
       this.setState({
-        lang: lang.slice(0,2), 
-        messages: ui_en_US, 
+        lang,
+        locale,
+        messages: ui_en_US,
         resume: resume_en_US
       });
     }
-    // window.location.search = `?lang=${lang}`;
+    // optional: persist in URL
+    // window.location.search = `?lang=${locale}`;
   }
+
   render() {
     const { lang, messages, resume } = this.state;
     const flattenedMessages = flattenMessages(messages);
+
     return (
       <div className="App">
         <IntlProvider locale={lang} messages={flattenedMessages}>
-          <Home resume={resume} navigation={messages.navigation}/>
+          <Home resume={resume} navigation={messages.navigation} />
         </IntlProvider>
         {this.renderLocaleSelector()}
       </div>

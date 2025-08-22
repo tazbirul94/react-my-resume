@@ -24,7 +24,7 @@ const Footer = ({ content, intl }) => {
     </a>);
   const authorName = intl.formatMessage({id:'footer.authorName'});
   const author = (  
-    <a href="https://github.com/GuoXiaoyang/" title={authorName}
+    <a href="https://github.com/tazbirul94/" title={authorName}
     target="_blank" rel="noopener noreferrer">
     {authorName}
     </a>);

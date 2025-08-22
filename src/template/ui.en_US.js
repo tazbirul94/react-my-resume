@@ -42,8 +42,8 @@ const ui = {
   },
   footer: {
     description: 
-    `This site is developed and modified in React.js by {author1} from the original design of Ceevee from {author2} and the developer {author3}. And it is refactored with ES6 by {author4}`,
-    authorName: 'GuoXiaoyang'
+    `This site is developed and modified in React.js by {author1} from the original design of Ceevee from {author2} `,
+    authorName: 'Tazbirul Haque'
   }
 }
 export default  ui;

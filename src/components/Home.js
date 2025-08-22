@@ -20,7 +20,7 @@ const Home = ({ resume, navigation }) => (
       skills={resume.skills}
       languages={resume.languages}
       portfolio={resume.projects}
-      hobby={resume.hobby}
+      hobby={resume.interests}
       references={resume.references}/>
   </div>
 );

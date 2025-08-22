@@ -1,0 +1,33 @@
+/* Section title (HOBBY) is already styled by your global CSS */
+
+/* Hobby name (Travel, Cooking, …) */
+.hb-entry-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1f2937; /* dark gray */
+  margin-bottom: 6px;
+}
+
+/* Wrapper for keywords */
+.hb-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 16px;
+}
+
+/* Keyword chips */
+.hb-tag {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.hb-tag:hover {
+  background: #e0f2fe;
+  transform: translateY(-2px);
+}

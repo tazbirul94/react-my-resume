@@ -1,0 +1,40 @@
+/* --- Force this section to be light like others --- */
+#lng-section,
+#lng-section .row,
+#lng-section .header-col,
+#lng-section .main-col {
+  background: transparent !important;
+  color: inherit !important;
+}
+
+/* Match Hobby title sizing */
+.lng-entry-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 6px;
+  font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+/* Chips (same pattern as Hobby) */
+.lng-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 16px;
+}
+.lng-tag {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  transition: background 0.2s, transform 0.2s;
+}
+.lng-tag:hover { background: #e0f2fe; transform: translateY(-2px); }
+
+.lng-empty { color: #6b7280; font-style: italic; }
+
+/* Keep spacing consistent with other sections */
+.lng { padding-top: 0; padding-bottom: 0; }

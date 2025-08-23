@@ -7,6 +7,7 @@ import Portfolio from './Portfolio';
 import References from './References';
 import Footer from './Footer';
 import Hobby from './Hobby';
+import Languages from "./Languages";
 
 const Section = ({
   basics,
@@ -23,8 +24,8 @@ const Section = ({
       <About content={basics} />
       <Work content={work} />
       <Education content={education} />
-      {/* Skills expects an object with a .skills array */}
       <Skills content={{ skills }} />
+      <Languages content={languages} />
       <Hobby content={hobby} />
       <Portfolio content={portfolio} />
       <References content={references} />

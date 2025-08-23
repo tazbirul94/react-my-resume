@@ -22,6 +22,15 @@ const SchoolAvatar = ({ name, logo }) => {
   return <div className="wk-avatar">{initials}</div>;
 };
 
+/* Normalize summary into array of strings */
+function toSummaryList(summary) {
+  if (!summary) return [];
+  if (Array.isArray(summary)) return summary.filter(Boolean);
+  // summary is a string – split on line breaks; fallback to one item
+  var parts = String(summary).split(/\r?\n+/).map(function (s) { return s.trim(); }).filter(Boolean);
+  return parts.length ? parts : [String(summary)];
+}
+
 /* One degree/Program row */
 const ProgramRow = ({ entry }) => {
   const startDate = Datetime.getDisplayFromDate(entry.startDate);
@@ -30,10 +39,12 @@ const ProgramRow = ({ entry }) => {
       ? "Present"
       : Datetime.getDisplayFromDate(entry.endDate);
 
+  const bullets = toSummaryList(entry.summary);
+
   return (
     <div className="wk-role-row">
       <div className="wk-role-row-head">
-        <h4 className="wk-role">
+        <h4 className="wk-summary">
           {entry.degree || entry.program || entry.area || "Program"}
         </h4>
         <div className="wk-meta">
@@ -51,13 +62,26 @@ const ProgramRow = ({ entry }) => {
         </div>
       </div>
 
-      {entry.grade && (
-        <p className="wk-summary">
-          <strong>Grade:</strong> {entry.grade}
+      {/* GPA / Grade chips */}
+      {(entry.gpa || entry.gpa_german || entry.grade) && (
+        <p className="wk-role" style={{ marginTop: 4 }}>
+          Grade:{" "}
+          {entry.gpa ? (entry.gpa) : (entry.grade || "")}
+          {entry.gpa && entry.gpa_german ? " · " : ""}
+          {entry.gpa_german ? ("German " + entry.gpa_german) : ""}
         </p>
       )}
 
-      {entry.summary && <p className="wk-summary">{entry.summary}</p>}
+      {/* Summary bullets */}
+      {bullets.length > 0 && (
+        <div className="wk-bullets">
+          <ul>
+            {bullets.map(function (b, i) {
+              return <li key={i}>{b}</li>;
+            })}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

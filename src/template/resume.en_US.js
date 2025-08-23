@@ -159,7 +159,7 @@ const resume = {
         },
         {
             "institution": "Ahsanullah University of Science and Technology",
-            "area": "Bacholer in Computer Science and Engineering",
+            "area": "Bachelor in Computer Science and Engineering",
             "website": "https://aust.edu/",
             "logo": "/images/AUST.png",
             "studyType": "<STUDY_TYPE>",
@@ -167,7 +167,14 @@ const resume = {
             "endDate": "2017/03/01",
             "gpa": "3.34",
             "gpa_german": "2.1",
-            "summary": "<SUMMARY>",
+            "summary": [
+                "Completed a comprehensive undergraduate program covering the fundamentals of computer science, software engineering, algorithms, operating systems, and database management.",
+                "Gained practical knowledge in object-oriented programming, data structures, computer networks, artificial intelligence, and distributed systems.",
+                "Worked on multiple academic projects, developing applications with C, C++, Java, and web technologies, strengthening both problem-solving and software design skills.",
+                "Built a solid foundation in software development life cycle (SDLC), database design, and system architecture, which served as the basis for advanced study and professional growth.",
+                "Engaged in collaborative team projects, applying Agile and teamwork methodologies to deliver academic assignments and software solutions under tight deadlines.",
+                "Developed an early passion for software development, system design, and data-driven applications, leading to pursuit of a Master’s degree in Germany and a professional career in enterprise software development."
+            ],
             "courses": ["<COURSE_1>", "<COURSE_2>", "<COURSE_3>"]
         },
         {
@@ -180,7 +187,7 @@ const resume = {
             "endDate": "2012/06/01",
             "gpa": "5",
             "gpa_german": "1",
-            "summary": "<SUMMARY>",
+            "summary": "",
             "courses": ["<COURSE_1>", "<COURSE_2>", "<COURSE_3>"]
         }
     ],

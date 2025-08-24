@@ -2,7 +2,7 @@
   "name": "react-my-resume",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://tazbirul94.github.io/react-my-resume",
+  "homepage": "https://tazbirul94.github.io/myresume",
   "dependencies": {
     "moment": "^2.19.1",
     "nuka-carousel": "^3.0.0",

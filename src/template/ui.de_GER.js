@@ -41,8 +41,8 @@ const ui = {
   },
   footer: {
     description: 
-    `Diese Seite wurde in React.js von {author1} entwickelt und modifiziert, basierend auf dem ursprünglichen Design von Ceevee von {author2} und dem Entwickler {author3}. Sie wurde mit ES6 von {author4} refaktoriert.`,
-    authorName: 'GuoXiaoyang'
+    `Diese Seite wurde in React.js von {author1} entwickelt und modifiziert, basierend auf dem ursprünglichen Design von Ceevee von {author2}.`,
+    authorName: 'Tazbirul Haque'
   }
 }
 

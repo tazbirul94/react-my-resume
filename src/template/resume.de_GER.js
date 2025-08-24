@@ -2,7 +2,7 @@ const resume = {
   "basics": {
     "name": "MD TAZBIRUL HAQUE",
     "label": "SOFTWAREENTWICKLER",
-    "picture": "../resouces/images/galaxy head.jpg",
+    "picture": "images/galaxy head.jpg",
     "email": "tazbirul94@gmail.com",
     "website": "<WEBSITE>",
     "summary": [
@@ -28,7 +28,7 @@ const resume = {
   "work": [
     {
       "company": "CTS EVENTIM AG & Co. KGaA",
-      "logo": "/images/eventim-logo.png",
+      "logo": "images/eventim-logo.png",
       "position": "Software Development Experte (Vollzeit)",
       "website": "https://karriere.eventim.de/en/",
       "startDate": "2023/07/01",
@@ -49,7 +49,7 @@ const resume = {
     },
     {
       "company": "Swiss Re (Movingdots GmbH)",
-      "logo": "/images/swiss-re-logo.png",
+      "logo": "images/swiss-re-logo.png",
       "position": "Senior Full Stack Entwickler (Vollzeit)",
       "website": "https://www.movingdots.com/",
       "startDate": "2023/04/01",
@@ -63,7 +63,7 @@ const resume = {
     },
     {
       "company": "Swiss Re (Movingdots GmbH)",
-      "logo": "/images/swiss-re-logo.png",
+      "logo": "images/swiss-re-logo.png",
       "position": "Full Stack Entwickler (Vollzeit)",
       "website": "https://www.movingdots.com/",
       "startDate": "2022/04/01",
@@ -79,7 +79,7 @@ const resume = {
     },
     {
       "company": "Swiss Re (Movingdots GmbH)",
-      "logo": "/images/swiss-re-logo.png",
+      "logo": "images/swiss-re-logo.png",
       "position": "Full Stack Entwickler (Werkstudent)",
       "website": "https://www.movingdots.com/",
       "startDate": "2021/08/01",
@@ -92,7 +92,7 @@ const resume = {
     },
     {
       "company": "Netzlab GmbH",
-      "logo": "/images/netzlab_gmbh_logo.jpg",
+      "logo": "images/netzlab_gmbh_logo.jpg",
       "position": "Software Engineer (Werkstudent)",
       "website": "https://netzlab.de/",
       "startDate": "2020/10/01",
@@ -106,7 +106,7 @@ const resume = {
     },
     {
       "company": "Convince Computer Limited",
-      "logo": "/images/CCL logo.jpg",
+      "logo": "images/CCL-logo.jpg",
       "position": "Programmierer (Vollzeit)",
       "website": "https://www.convincebd.com/",
       "startDate": "2017/09/15",
@@ -120,7 +120,7 @@ const resume = {
     },
     {
       "company": "China Railway Major Bridge Engineering Co., Ltd.",
-      "logo": "/images/mbec.jpg",
+      "logo": "images/mbec.jpg",
       "position": "IT-Ingenieur (Vollzeit)",
       "website": "http://www.crecg.com/english/2687/3808/3938/index.html",
       "startDate": "2017/05/15",
@@ -137,7 +137,7 @@ const resume = {
       "institution": "Hochschule Rhein-Waal",
       "area": "Master in Information Engineering and Computer Science",
       "website": "https://www.hochschule-rhein-waal.de/",
-      "logo": "/images/Hochschule_Rhein-Waal-logo.png",
+      "logo": "images/Hochschule_Rhein-Waal-logo.png",
       "startDate": "2020/03/01",
       "endDate": "2023/02/01",
       "gpa": "1.8",
@@ -150,7 +150,7 @@ const resume = {
       "institution": "Ahsanullah University of Science and Technology",
       "area": "Bachelor in Computer Science and Engineering",
       "website": "https://aust.edu/",
-      "logo": "/images/AUST.png",
+      "logo": "images/AUST.png",
       "startDate": "2013/03/01",
       "endDate": "2017/03/01",
       "gpa": "3.34",
@@ -164,7 +164,7 @@ const resume = {
       "institution": "SOS Hermann Gmeiner College Dhaka",
       "area": "Higher Secondary Certificate",
       "website": "https://aust.edu/",
-      "logo": "/images/HGC.png",
+      "logo": "images/HGC.png",
       "startDate": "2010/06/01",
       "endDate": "2012/06/01",
       "gpa": "5",

@@ -2,7 +2,7 @@ const resume = {
     "basics": {
         "name": "MD TAZBIRUL HAQUE",
         "label": "SOFTWARE ENGINEER",
-        "picture": "../resouces/images/galaxy head.jpg",
+        "picture": "../resoucesimages/galaxy head.jpg",
         "email": "tazbirul94@gmail.com",
         // "phone": "+49 17657742207",
         "website": "<WEBSITE>",
@@ -32,7 +32,7 @@ const resume = {
         
         {
             "company": "CTS EVENTIM AG & Co. KGaA",
-            "logo": "/images/eventim-logo.png", 
+            "logo": "images/eventim-logo.png", 
             "position": "Software Development Expert (Full-Time)",
             "website": "https://karriere.eventim.de/en/",
             "startDate": "2023/07/01",
@@ -52,7 +52,7 @@ const resume = {
         },
         {
             "company": "Swiss Re (Movingdots GmbH)",
-            "logo": "/images/swiss-re-logo.png", 
+            "logo": "images/swiss-re-logo.png", 
             "position": "Senior Full Stack Developer (Full-Time)",
             "website": "https://www.movingdots.com/",
             "startDate": "2023/04/01",
@@ -66,7 +66,7 @@ const resume = {
         },
         {
             "company": "Swiss Re (Movingdots GmbH)",
-            "logo": "/images/swiss-re-logo.png", 
+            "logo": "images/swiss-re-logo.png", 
             "position": "Full Stack Developer (Full-Time)",
             "website": "https://www.movingdots.com/",
             "startDate": "2022/04/01",
@@ -82,7 +82,7 @@ const resume = {
         },
                 {
             "company": "Swiss Re (Movingdots GmbH)",
-            "logo": "/images/swiss-re-logo.png", 
+            "logo": "images/swiss-re-logo.png", 
             "position": "Full Stack Developer (Working Student)",
             "website": "https://www.movingdots.com/",
             "startDate": "2021/08/01",
@@ -95,12 +95,12 @@ const resume = {
         },
         {
             "company": "Netzlab GmbH",
-            "logo": "/images/netzlab_gmbh_logo.jpg", 
+            "logo": "images/netzlab_gmbh_logo.jpg", 
             "position": "Software Engineer (Working Student)",
             "website": "https://netzlab.de/",
             "startDate": "2020/10/01",
             "endDate": "2021/07/31",
-            "summary": "<C#, Asp.Net Core Web API, React Native, React, Javascript, CSS, Git, Azure>",
+            "summary": "C#, Asp.Net Core Web API, React Native, React, Javascript, CSS, Git, Azure",
             "highlights": [
                 "Developing and maintaining application using React Native, C#, Asp.Net Core, ReactJS, MS SQL, jQuery.",
                 "Web API, REST API, MS SQL Server, LINQ, Version Controlling with Azure.",
@@ -108,12 +108,12 @@ const resume = {
         },
         {
             "company": "Convince Computer Limited",
-            "logo": "/images/CCL logo.jpg", 
+            "logo": "images/CCL-logo.jpg", 
             "position": "Programmer (Full-Time)",
             "website": "https://www.convincebd.com/",
             "startDate": "2017/09/15",
             "endDate": "2019/09/15",
-            "summary": "<C#, Asp.Net MVC, Javascript, Html 5, CSS3, Github>",
+            "summary": "C#, Asp.Net MVC, Javascript, Html 5, CSS3, Github",
             "highlights": [
                 "Implemented business logics using ASP.Net MVC, C# and designed management websites.",
                 "Worked and manipulated large amount of data using MS SQL.",
@@ -121,7 +121,7 @@ const resume = {
         },
         {
             "company": "China Railway Major Bridge Engineering Co., Ltd.",
-            "logo": "/images/mbec.jpg", 
+            "logo": "images/mbec.jpg", 
             "position": "IT Engineer (Full-Time)",
             "website": "http://www.crecg.com/english/2687/3808/3938/index.html",
             "startDate": "2017/05/15",
@@ -148,7 +148,7 @@ const resume = {
             "institution": "Hochschule Rhein-Waal",
             "area": "Master in Information Engineering and Computer Science",
             "website": "https://www.hochschule-rhein-waal.de/",
-            "logo": "/images/Hochschule_Rhein-Waal-logo.png",
+            "logo": "images/Hochschule_Rhein-Waal-logo.png",
             "studyType": "<STUDY_TYPE>",
             "startDate": "2020/03/01",
             "endDate": "2023/02/01",
@@ -161,7 +161,7 @@ const resume = {
             "institution": "Ahsanullah University of Science and Technology",
             "area": "Bachelor in Computer Science and Engineering",
             "website": "https://aust.edu/",
-            "logo": "/images/AUST.png",
+            "logo": "images/AUST.png",
             "studyType": "<STUDY_TYPE>",
             "startDate": "2013/03/01",
             "endDate": "2017/03/01",
@@ -181,7 +181,7 @@ const resume = {
             "institution": "SOS Hermann Gmeiner College Dhaka",
             "area": "Higher Seconday Certificate",
             "website": "https://aust.edu/",
-            "logo": "/images/HGC.png",
+            "logo": "images/HGC.png",
             "studyType": "<STUDY_TYPE>",
             "startDate": "2010/06/01",
             "endDate": "2012/06/01",

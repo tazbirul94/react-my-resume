@@ -225,6 +225,24 @@ const resume = {
       { "name": "Kritisches Denken", "level": 78 }
     ]
   }
+],
+    "certifications": [
+  {
+    "title": "Zertifikat Deutsch / telc Deutsch B1",
+    "issuer": "telc gGmbH",
+    "issueDate": "2025/03/01",
+    "credentialUrl": "https://results.telc.net/qr/qM2RD7IlSqC3FxHsVhgNkYwqmfcuck9Vjx217LH-8RzXJQ6WQxhBOIxE5r8xPoFM",
+    "language": "German",
+    "logo": "images/telc.png"
+  },
+  {
+    "title": "C# (Basic)",
+    "issuer": "HackerRank",
+    "issueDate": "2021/10/01",
+    "credentialUrl": "https://www.hackerrank.com/certificates/d976e40ae220",
+    "language": "English",
+    "logo": "images/hackerrank.png"
+  }
 ]
 };
 

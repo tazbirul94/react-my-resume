@@ -9,6 +9,7 @@ import Footer from './Footer';
 import Hobby from './Hobby';
 import Languages from "./Languages";
 import SoftSkills from './SoftSkills';
+import Certifications from './Certifications';
 
 const Section = ({
   basics,
@@ -17,6 +18,7 @@ const Section = ({
   skills,
   softskills,
   languages,
+  certifications,
   portfolio,
   references,
   hobby = []   // 👈 make sure hobby is defined
@@ -30,6 +32,7 @@ const Section = ({
       <SoftSkills content={{ softskills }} />
       <Languages content={languages} />
       <Hobby content={hobby} />
+      <Certifications content={certifications} />
       <Portfolio content={portfolio} />
       <References content={references} />
       <Footer content={basics} />

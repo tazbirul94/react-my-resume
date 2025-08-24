@@ -276,7 +276,25 @@ const resume = {
             "company": "DFKI",
             "reference": "He is a very passionate person and highly skilled. In fact he knows what he is trying to do which can really be appreciated. On the hand he can break the complex problem into a smaller one which helps to solve the problem within a decent time. "
         }
-    ]
+    ],
+    "certifications": [
+  {
+    "title": "Zertifikat Deutsch / telc Deutsch B1",
+    "issuer": "telc gGmbH",
+    "issueDate": "2025/03/01",
+    "credentialUrl": "https://results.telc.net/qr/qM2RD7IlSqC3FxHsVhgNkYwqmfcuck9Vjx217LH-8RzXJQ6WQxhBOIxE5r8xPoFM",
+    "language": "German",
+    "logo": "images/telc.png"
+  },
+  {
+    "title": "C# (Basic)",
+    "issuer": "HackerRank",
+    "issueDate": "2021/10/01",
+    "credentialUrl": "https://www.hackerrank.com/certificates/d976e40ae220",
+    "language": "English",
+    "logo": "images/hackerrank.png"
+  }
+]
 };
 
 export default resume;

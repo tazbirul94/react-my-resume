@@ -20,6 +20,7 @@ const Home = ({ resume, navigation }) => (
       skills={resume.skills}
       softskills={resume.softskills}
       languages={resume.languages}
+      certifications={resume.certifications}
       portfolio={resume.projects}
       hobby={resume.interests}
       references={resume.references}/>

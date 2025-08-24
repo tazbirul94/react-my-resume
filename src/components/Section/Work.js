@@ -4,19 +4,23 @@ import Datetime from "../../utils/datetime";
 import { FormattedMessage, FormattedDate } from "react-intl";
 import "../../styles/work.css";
 
+/* build an absolute path that works on GitHub Pages (/myresume/) */
+const asset = (p = "") =>
+  `${process.env.PUBLIC_URL}/${String(p).replace(/^\/+/, "")}`;
+
 /* Avatar: show company logo if provided, else initials */
 const CompanyAvatar = ({ name, logo }) => {
   if (logo) {
     return (
       <div className="wk-avatar">
-        <img src={logo} alt={name} className="wk-avatar-img" />
+        <img src={asset(logo)} alt={name} className="wk-avatar-img" />
       </div>
     );
   }
   const initials = (name || "")
     .split(" ")
     .filter(Boolean)
-    .map(function (p) { return p[0]; })
+    .map((p) => p[0])
     .join("")
     .slice(0, 2)
     .toUpperCase();
@@ -26,7 +30,7 @@ const CompanyAvatar = ({ name, logo }) => {
 /* One role row inside a company card */
 const RoleRow = ({ entry }) => {
   const startDate = Datetime.getDisplayFromDate(entry.startDate);
-  const rawEnd = entry.endDate; // don't convert yet
+  const rawEnd = entry.endDate;
   const endDate = rawEnd === "Present" ? "Present" : Datetime.getDisplayFromDate(rawEnd);
 
   const hasHighlights =
@@ -65,13 +69,11 @@ const RoleRow = ({ entry }) => {
 
       {hasSkills && (
         <div className="wk-skills">
-          {skills.map(function (s, i) {
-            return (
-              <span key={i} className="wk-skill">
-                {s}
-              </span>
-            );
-          })}
+          {skills.map((s, i) => (
+            <span key={i} className="wk-skill">
+              {s}
+            </span>
+          ))}
         </div>
       )}
     </div>
@@ -80,17 +82,14 @@ const RoleRow = ({ entry }) => {
 
 /* One company block on the timeline (dot + card with all roles) */
 const CompanyBlock = ({ isLast, company, website, logo, roles }) => {
-  // sort roles by startDate desc
   const sorted = roles
     .slice()
-    .sort(function (a, b) {
-      return new Date(b.startDate || 0) - new Date(a.startDate || 0);
-    });
+    .sort((a, b) => new Date(b.startDate || 0) - new Date(a.startDate || 0));
 
   // prefer company-level logo; else first role logo if available
-  var resolvedLogo = logo;
+  let resolvedLogo = logo;
   if (!resolvedLogo) {
-    for (var i = 0; i < sorted.length; i++) {
+    for (let i = 0; i < sorted.length; i++) {
       if (sorted[i] && sorted[i].logo) {
         resolvedLogo = sorted[i].logo;
         break;
@@ -100,13 +99,11 @@ const CompanyBlock = ({ isLast, company, website, logo, roles }) => {
 
   return (
     <article className="wk-row">
-      {/* timeline rail */}
       <div className="wk-rail">
         <span className="wk-dot" />
         {!isLast && <span className="wk-line" />}
       </div>
 
-      {/* card */}
       <div className="wk-card">
         <div className="wk-card-head">
           <CompanyAvatar name={company} logo={resolvedLogo} />
@@ -127,9 +124,9 @@ const CompanyBlock = ({ isLast, company, website, logo, roles }) => {
         </div>
 
         <div className="wk-roles">
-          {sorted.map(function (r, i) {
-            return <RoleRow key={i} entry={r} />;
-          })}
+          {sorted.map((r, i) => (
+            <RoleRow key={i} entry={r} />
+          ))}
         </div>
       </div>
     </article>
@@ -138,10 +135,10 @@ const CompanyBlock = ({ isLast, company, website, logo, roles }) => {
 
 /* Group flat content by company */
 function groupByCompany(content) {
-  var map = {};
-  for (var i = 0; i < content.length; i++) {
-    var e = content[i] || {};
-    var key = (e.company || "Unknown").trim();
+  const map = {};
+  for (let i = 0; i < content.length; i++) {
+    const e = content[i] || {};
+    const key = (e.company || "Unknown").trim();
     if (!map[key]) {
       map[key] = {
         company: key,
@@ -151,46 +148,35 @@ function groupByCompany(content) {
       };
     }
     map[key].roles.push(e);
-
-    // prefer the first non-empty website & logo if missing
     if (!map[key].website && e.website) map[key].website = e.website;
     if (!map[key].logo && e.logo) map[key].logo = e.logo;
   }
-  // return as array
-  var arr = [];
-  for (var k in map) arr.push(map[k]);
-  return arr;
+  return Object.keys(map).map((k) => map[k]);
 }
 
 const Work = ({ content }) => {
   const list = Array.isArray(content) ? content : [];
   const grouped = groupByCompany(list);
 
-  // order companies by newest role start date
-  grouped.sort(function (a, b) {
-    function latestStart(company) {
-      var max = 0;
-      for (var i = 0; i < company.roles.length; i++) {
-        var t = new Date(company.roles[i].startDate || 0).getTime();
-        if (t > max) max = t;
-      }
-      return max;
-    }
-    return latestStart(b) - latestStart(a);
+  grouped.sort((a, b) => {
+    const latest = (company) =>
+      Math.max(...company.roles.map((r) => new Date(r.startDate || 0).getTime()));
+    return latest(b) - latest(a);
   });
 
   return (
     <section id="work">
-      <div className="wk-container">
-        <div className="wk-header-col">
+      <div className="row work">
+        <div className="two columns header-col">
           <h1>
             <FormattedMessage id="work.title" defaultMessage="Work" />
           </h1>
         </div>
 
-        <div className="wk-main-col">
-          {grouped.map(function (g, i) {
-            return (
+        <div className="ten columns main-col wk-main-col">
+          {/* optional center constraint */}
+          <div className="wk-container">
+            {grouped.map((g, i) => (
               <CompanyBlock
                 key={g.company + i}
                 isLast={i === grouped.length - 1}
@@ -199,8 +185,8 @@ const Work = ({ content }) => {
                 logo={g.logo}
                 roles={g.roles}
               />
-            );
-          })}
+            ))}
+          </div>
         </div>
       </div>
     </section>

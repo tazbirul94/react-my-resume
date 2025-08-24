@@ -3,19 +3,23 @@ import Datetime from "../../utils/datetime";
 import { FormattedMessage, FormattedDate } from "react-intl";
 import "../../styles/work.css"; // reuse the same styles
 
+/* Build an absolute path that works on GitHub Pages (/myresume/) */
+const asset = (p = "") =>
+  `${process.env.PUBLIC_URL}/${String(p).replace(/^\/+/, "")}`;
+
 /* Avatar: show school logo if provided, else initials */
 const SchoolAvatar = ({ name, logo }) => {
   if (logo) {
     return (
       <div className="wk-avatar">
-        <img src={logo} alt={name} className="wk-avatar-img" />
+        <img src={asset(logo)} alt={name} className="wk-avatar-img" />
       </div>
     );
   }
   const initials = (name || "")
     .split(" ")
     .filter(Boolean)
-    .map(function (p) { return p[0]; })
+    .map((p) => p[0])
     .join("")
     .slice(0, 2)
     .toUpperCase();
@@ -26,8 +30,10 @@ const SchoolAvatar = ({ name, logo }) => {
 function toSummaryList(summary) {
   if (!summary) return [];
   if (Array.isArray(summary)) return summary.filter(Boolean);
-  // summary is a string – split on line breaks; fallback to one item
-  var parts = String(summary).split(/\r?\n+/).map(function (s) { return s.trim(); }).filter(Boolean);
+  const parts = String(summary)
+    .split(/\r?\n+/)
+    .map((s) => s.trim())
+    .filter(Boolean);
   return parts.length ? parts : [String(summary)];
 }
 
@@ -44,7 +50,7 @@ const ProgramRow = ({ entry }) => {
   return (
     <div className="wk-role-row">
       <div className="wk-role-row-head">
-        <h4 className="wk-summary">
+        <h4 className="wk-role">
           {entry.degree || entry.program || entry.area || "Program"}
         </h4>
         <div className="wk-meta">
@@ -62,23 +68,21 @@ const ProgramRow = ({ entry }) => {
         </div>
       </div>
 
-      {/* GPA / Grade chips */}
       {(entry.gpa || entry.gpa_german || entry.grade) && (
-        <p className="wk-role" style={{ marginTop: 4 }}>
-          Grade:{" "}
-          {entry.gpa ? (entry.gpa) : (entry.grade || "")}
+        <p className="wk-summary" style={{ marginTop: 4 }}>
+          <strong>Grade:</strong>{" "}
+          {entry.gpa ? entry.gpa : entry.grade || ""}
           {entry.gpa && entry.gpa_german ? " · " : ""}
-          {entry.gpa_german ? ("German " + entry.gpa_german) : ""}
+          {entry.gpa_german ? `German ${entry.gpa_german}` : ""}
         </p>
       )}
 
-      {/* Summary bullets */}
       {bullets.length > 0 && (
         <div className="wk-bullets">
           <ul>
-            {bullets.map(function (b, i) {
-              return <li key={i}>{b}</li>;
-            })}
+            {bullets.map((b, i) => (
+              <li key={i}>{b}</li>
+            ))}
           </ul>
         </div>
       )}
@@ -90,14 +94,11 @@ const ProgramRow = ({ entry }) => {
 const SchoolBlock = ({ isLast, institution, website, logo, programs }) => {
   const sorted = programs
     .slice()
-    .sort(function (a, b) {
-      return new Date(b.startDate || 0) - new Date(a.startDate || 0);
-    });
+    .sort((a, b) => new Date(b.startDate || 0) - new Date(a.startDate || 0));
 
-  // prefer institution logo; else first program logo
-  var resolvedLogo = logo;
+  let resolvedLogo = logo;
   if (!resolvedLogo) {
-    for (var i = 0; i < sorted.length; i++) {
+    for (let i = 0; i < sorted.length; i++) {
       if (sorted[i] && sorted[i].logo) {
         resolvedLogo = sorted[i].logo;
         break;
@@ -132,9 +133,9 @@ const SchoolBlock = ({ isLast, institution, website, logo, programs }) => {
         </div>
 
         <div className="wk-roles">
-          {sorted.map(function (p, i) {
-            return <ProgramRow key={i} entry={p} />;
-          })}
+          {sorted.map((p, i) => (
+            <ProgramRow key={i} entry={p} />
+          ))}
         </div>
       </div>
     </article>
@@ -143,10 +144,10 @@ const SchoolBlock = ({ isLast, institution, website, logo, programs }) => {
 
 /* Group flat content by institution */
 function groupBySchool(content) {
-  var map = {};
-  for (var i = 0; i < content.length; i++) {
-    var e = content[i] || {};
-    var key = (e.institution || "Unknown").trim();
+  const map = {};
+  for (let i = 0; i < content.length; i++) {
+    const e = content[i] || {};
+    const key = (e.institution || "Unknown").trim();
     if (!map[key]) {
       map[key] = {
         institution: key,
@@ -159,40 +160,31 @@ function groupBySchool(content) {
     if (!map[key].website && e.website) map[key].website = e.website;
     if (!map[key].logo && e.logo) map[key].logo = e.logo;
   }
-  var arr = [];
-  for (var k in map) arr.push(map[k]);
-  return arr;
+  return Object.keys(map).map((k) => map[k]);
 }
 
 const Education = ({ content }) => {
   const list = Array.isArray(content) ? content : [];
   const grouped = groupBySchool(list);
 
-  // order schools by newest program start date
-  grouped.sort(function (a, b) {
-    function latestStart(s) {
-      var max = 0;
-      for (var i = 0; i < s.programs.length; i++) {
-        var t = new Date(s.programs[i].startDate || 0).getTime();
-        if (t > max) max = t;
-      }
-      return max;
-    }
-    return latestStart(b) - latestStart(a);
+  grouped.sort((a, b) => {
+    const latest = (s) =>
+      Math.max(...s.programs.map((p) => new Date(p.startDate || 0).getTime()));
+    return latest(b) - latest(a);
   });
 
   return (
     <section id="education">
-      <div className="wk-container">
-        <div className="wk-header-col">
+      <div className="row education">
+        <div className="two columns header-col">
           <h1>
             <FormattedMessage id="education.title" defaultMessage="Education" />
           </h1>
         </div>
 
-        <div className="wk-main-col">
-          {grouped.map(function (g, i) {
-            return (
+        <div className="ten columns main-col wk-main-col">
+          <div className="wk-container">
+            {grouped.map((g, i) => (
               <SchoolBlock
                 key={g.institution + i}
                 isLast={i === grouped.length - 1}
@@ -201,8 +193,8 @@ const Education = ({ content }) => {
                 logo={g.logo}
                 programs={g.programs}
               />
-            );
-          })}
+            ))}
+          </div>
         </div>
       </div>
     </section>

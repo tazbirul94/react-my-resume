@@ -1,6 +1,6 @@
 // src/components/Section/Languages.js
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { injectIntl } from "react-intl";
 import "../../styles/hobby.css"; // reuse the chip + title styles
 
 const Entry = ({ entry }) => {
@@ -20,22 +20,24 @@ const Entry = ({ entry }) => {
   );
 };
 
-const Languages = ({ content }) => {
+const Languages = ({ content, intl }) => {
   const items = Array.isArray(content) ? content : [];
+  // no optional chaining (compatible with older CRA)
+  const locale = intl && intl.locale ? String(intl.locale).toLowerCase() : "";
+  const isDE = locale.indexOf("de") === 0;
+  const titleText = isDE ? "SPRACHEN" : "LANGUAGES";
 
   return (
-    // ⚠️ these three lines stay unchanged (as you requested)
+    // ⚠️ these three lines stay unchanged (as requested)
     <section id="hobby">
       <div className="row hobby">
         <div className="two columns header-col">
-          <h1>
-            <FormattedMessage id="languages.title" defaultMessage="LANGUAGES" />
-          </h1>
+          <h1>{titleText}</h1>
         </div>
 
         <div className="ten columns main-col">
           {items.length === 0 ? (
-            <p className="hb-empty">No languages to show.</p>
+            <p className="hb-empty">{isDE ? "Keine Sprachen vorhanden." : "No languages to show."}</p>
           ) : (
             items.map((entry, i) => <Entry key={i} entry={entry} />)
           )}
@@ -45,4 +47,4 @@ const Languages = ({ content }) => {
   );
 };
 
-export default Languages;
+export default injectIntl(Languages);

@@ -35,7 +35,7 @@ const Hobby = ({ content }) => {
       <div className="row hobby">
         <div className="two columns header-col">
           <h1>
-            <FormattedMessage id="hobby.title" defaultMessage="HOBBY" />
+            <FormattedMessage id="hobby.title" defaultMessage="HOBBYS" />
           </h1>
         </div>
         <div className="ten columns main-col">

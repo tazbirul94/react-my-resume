@@ -5,9 +5,10 @@ const ui = {
     work: 'Berufserfahrung',
     education: 'Ausbildung',
     skill: 'Fähigkeiten',
-    portfolio: 'Portfolio',
+    hobbys: 'Hobbys',
+    certification: 'Zertifizierung',
     testimonials: 'Referenzen',
-    hobby: 'Hobbys'
+
   },
   navMenu: {
     showNav: 'Navigation anzeigen',
@@ -27,13 +28,16 @@ const ui = {
   portfolio: {
     title: 'Portfolio'
   },
+  certification: {
+    title: 'Zertifizierung'
+  },
   work: {
     title: 'Berufserfahrung'
   },
   education: {
     title: 'Ausbildung'
   },
-  hobby: {
+  hobbys: {
     title: 'Hobbys'
   },
   references: {

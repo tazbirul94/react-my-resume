@@ -255,7 +255,7 @@ const resume = {
         },
         {
             "name": "English",
-            "level": "C1"
+            "level": "B2"
         },
         {
             "name": "Bengali",
@@ -279,11 +279,11 @@ const resume = {
     ],
     "certifications": [
   {
-    "title": "Zertifikat Deutsch / telc Deutsch B1",
+    "title": "Telc German B1",
     "issuer": "telc gGmbH",
     "issueDate": "2025/03/01",
     "credentialUrl": "https://results.telc.net/qr/qM2RD7IlSqC3FxHsVhgNkYwqmfcuck9Vjx217LH-8RzXJQ6WQxhBOIxE5r8xPoFM",
-    "language": "German",
+    // "language": "German",
     "logo": "images/telc.png"
   },
   {
@@ -291,7 +291,7 @@ const resume = {
     "issuer": "HackerRank",
     "issueDate": "2021/10/01",
     "credentialUrl": "https://www.hackerrank.com/certificates/d976e40ae220",
-    "language": "English",
+    // "language": "English",
     "logo": "images/hackerrank.png"
   }
 ]

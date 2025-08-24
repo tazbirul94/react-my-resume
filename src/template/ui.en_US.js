@@ -6,9 +6,9 @@ const ui = {
     work: 'Work',
     education: 'Education',
     skill: 'Skills',
-    portfolio: 'Portfolio',
-    testimonials: 'References',
-    hobby: 'Hobby'
+    hobbys: 'Hobbys',
+    certification: 'Certifications',
+    testimonials: 'References'
   },
   navMenu: {
     showNav: 'Show navigation',
@@ -25,8 +25,8 @@ const ui = {
     details: 'Details',
     close: 'Close'
   },
-  portfolio: {
-    title: 'Portfolio'
+  certification: {
+    title: 'Certifications'
   },
   work: {
     title: 'Work'
@@ -34,8 +34,8 @@ const ui = {
   education: {
     title: 'Education'
   },
-  hobby: {
-    title: 'Hobby'
+  hobbys: {
+    title: 'Hobbys'
   },
   references: {
     title: 'References'

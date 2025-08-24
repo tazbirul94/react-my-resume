@@ -18,10 +18,10 @@ const Section = ({
   skills,
   softskills,
   languages,
-  certifications,
   portfolio,
+  certifications,
   references,
-  hobby = []   // 👈 make sure hobby is defined
+  hobby = []
 }) => {
   return (
     <div>

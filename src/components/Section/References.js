@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 const Entry = ({ entry }) => (
   <div>
     <blockquote>
-      <p>{entry.reference}</p>
+      <p style={{ fontSize: "1:1rem" }}>{entry.reference}</p>
       <cite>
         {entry.name}
         <br/>

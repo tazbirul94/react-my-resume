@@ -1,14 +1,14 @@
 // src/components/Section/Languages.js
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import "../../styles/hobby.css"; // reuse the chip styles
+import "../../styles/hobby.css"; // reuse the chip + title styles
 
 const Entry = ({ entry }) => {
-  const level = entry && entry.level ? entry.level : null;
+  const level = entry && entry.level ? String(entry.level) : "";
   return (
     <div className="row item">
       <div className="twelve columns">
-        {/* Language name styled like hobby titles */}
+        {/* same typography as hobby titles */}
         <h3 className="hb-entry-title">{entry.name}</h3>
         {level && (
           <div className="hb-tags">
@@ -24,13 +24,15 @@ const Languages = ({ content }) => {
   const items = Array.isArray(content) ? content : [];
 
   return (
-    <section id="languages-section"> {/* unique id to avoid theme clashes */}
-      <div className="row languages-row"> {/* unique class */}
+    // ⚠️ these three lines stay unchanged (as you requested)
+    <section id="hobby">
+      <div className="row hobby">
         <div className="two columns header-col">
           <h1>
-            <FormattedMessage id="languages.title" defaultMessage="Languages" />
+            <FormattedMessage id="languages.title" defaultMessage="LANGUAGES" />
           </h1>
         </div>
+
         <div className="ten columns main-col">
           {items.length === 0 ? (
             <p className="hb-empty">No languages to show.</p>

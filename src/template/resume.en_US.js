@@ -252,10 +252,10 @@ const resume = {
     ],
     "references": [
         {
-            "name": "<REFERENCE_NAME>",
-            "position": "<POSITION>",
-            "company": "<COMPANY>",
-            "reference": "<SUMMARY>"
+            "name": "Md Shahabub Alam",
+            "position": "Research Assistant | NLP, Deep Learning & Computer Vision",
+            "company": "DFKI",
+            "reference": "He is a very passionate person and highly skilled. In fact he knows what he is trying to do which can really be appreciated. On the hand he can break the complex problem into a smaller one which helps to solve the problem within a decent time. "
         }
     ]
 };

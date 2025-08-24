@@ -199,21 +199,21 @@ const resume = {
             "summary": "<SUMMARY>"
         }
     ],
-    "projects": [
-        {
-            "name": "<PUBLICATION_NAME>",
-            "publisher": "<PUBLISHER>",
-            "category": "<CATEGORY>",
-            "releaseDate": "<RELEASE_DATE>",
-            "website": "<WEBSITE>",
-            "summary": "<SUMMARY>",
-            "image": {
-                "modal": "<MODAL_IMAGE>",
-                "thumb": "<THUMBNAIL_IMAGE>"
-            },
-            "keywords": ["<KEYWORD_1>", "<KEYWORD_2>", "<KEYWORD_3>"]
-        }
-    ],
+    // "projects": [
+    //     {
+    //         "name": "<PUBLICATION_NAME>",
+    //         "publisher": "<PUBLISHER>",
+    //         "category": "<CATEGORY>",
+    //         "releaseDate": "<RELEASE_DATE>",
+    //         "website": "<WEBSITE>",
+    //         "summary": "<SUMMARY>",
+    //         "image": {
+    //             "modal": "<MODAL_IMAGE>",
+    //             "thumb": "<THUMBNAIL_IMAGE>"
+    //         },
+    //         "keywords": ["<KEYWORD_1>", "<KEYWORD_2>", "<KEYWORD_3>"]
+    //     }
+    // ],
     "skills": [
         {
             "title": "<DESCRIPTION_TITLE>",

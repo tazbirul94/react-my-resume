@@ -135,7 +135,7 @@ const resume = {
   "education": [
     {
       "institution": "Hochschule Rhein-Waal",
-      "area": "Master in Information Engineering and Computer Science",
+      "area": "Master in Informationsingenieurwesen und Informatik",
       "website": "https://www.hochschule-rhein-waal.de/",
       "logo": "images/Hochschule_Rhein-Waal-logo.png",
       "startDate": "2020/03/01",
@@ -148,7 +148,7 @@ const resume = {
     },
     {
       "institution": "Ahsanullah University of Science and Technology",
-      "area": "Bachelor in Computer Science and Engineering",
+      "area": "Bachelor in Informatik und Ingenieurwesen",
       "website": "https://aust.edu/",
       "logo": "images/AUST.png",
       "startDate": "2013/03/01",
@@ -162,7 +162,7 @@ const resume = {
     },
     {
       "institution": "SOS Hermann Gmeiner College Dhaka",
-      "area": "Higher Secondary Certificate",
+      "area": "Abitur",
       "website": "https://aust.edu/",
       "logo": "images/HGC.png",
       "startDate": "2010/06/01",

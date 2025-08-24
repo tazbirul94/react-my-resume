@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import SkillBar from 'react-skillbars';
 import '../../styles/SoftSkills.css';
 
@@ -44,7 +44,7 @@ const SoftSkill = ({ title, content = [], summary = [] }) => {
   );
 };
 
-const SoftSkills = ({ content }) => {
+const SoftSkills = ({ content, intl }) => {
   // Accept either content = { softskills: [...] } OR content = [...]
   let softskillsArray = [];
   if (Array.isArray(content)) {
@@ -53,13 +53,15 @@ const SoftSkills = ({ content }) => {
     softskillsArray = content.softskills;
   }
 
+  const locale = intl && intl.locale ? String(intl.locale).toLowerCase() : '';
+  const isDE = locale.indexOf('de') === 0;
+  const titleText = isDE ? 'SOZIALE FÄHIGKEITEN' : 'SOFT SKILLS';
+
   return (
     <section id="hobby">
       <div className="row hobby">
         <div className="two columns header-col">
-          <h1>
-            <FormattedMessage id="softskills.title" defaultMessage="Soft Skills" />
-          </h1>
+          <h1>{titleText}</h1>
         </div>
 
         <div className="ten columns main-col">
@@ -77,4 +79,4 @@ const SoftSkills = ({ content }) => {
   );
 };
 
-export default SoftSkills;
+export default injectIntl(SoftSkills);

@@ -1,0 +1,31 @@
+/* give the left title more room */
+.softskills-bars .skillbar-title {
+  width: 25% !important;        /* take 25% of the bar width */
+  min-width: 200px;             /* ensure it's not too small */
+  max-width: 35%;               /* prevent it from eating the whole bar */
+  box-sizing: border-box;       /* include padding in that width */
+}
+
+/* keep the text on one line, but make it fit better */
+.softskills-bars .skillbar-title span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 8px;
+  font-size: 14px;
+  line-height: 28px;
+}
+
+/* bar styling */
+.softskills-bars .skillbar {
+  height: 28px !important;
+  margin-bottom: 14px;
+}
+
+/* responsive fallback for mobile */
+@media (max-width: 768px) {
+  .softskills-bars .skillbar-title {
+    width: 40% !important;   /* give more space on smaller screens */
+    min-width: 150px;
+  }
+}

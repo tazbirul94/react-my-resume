@@ -229,7 +229,26 @@ const resume = {
             ]
         }
     ],
-    "languages": [
+"softskills": [
+  {
+    "title": "Soft Skills",
+    "description": [
+      "Strong communication and collaboration in international teams.",
+      "Analytical and solution-oriented working style.",
+      "High adaptability and willingness to learn."
+    ],
+    "skillDetails": [
+      { "name": "Teamwork", "level": 85 },
+      { "name": "Communication", "level": 80 },
+      { "name": "Problem Solving", "level": 90 },
+      { "name": "Time Management", "level": 75 },
+      { "name": "Leadership", "level": 70 },
+      { "name": "Adaptability", "level": 80 },
+      { "name": "Critical Thinking", "level": 78 }
+    ]
+  }
+],
+        "languages": [
         {
             "name": "Deutsch",
             "level": "B1"

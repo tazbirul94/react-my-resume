@@ -2,6 +2,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import SkillBar from 'react-skillbars';
+import './SoftSkills.css'; 
 
 const skills = [
   {type: "C#", level: 80},
@@ -67,8 +68,8 @@ const Skill = ({ title, content, summary }) => {
 
   return (
     <div className="row inside">
-      <h3>{title}</h3>
-      {summaries}
+      {/* <h3>{title}</h3>
+      {summaries} */}
       <div className="bars">
         <ul className="skills">
           {content.map((entry, index) =>(

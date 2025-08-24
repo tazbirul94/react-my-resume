@@ -8,12 +8,14 @@ import References from './References';
 import Footer from './Footer';
 import Hobby from './Hobby';
 import Languages from "./Languages";
+import SoftSkills from './SoftSkills';
 
 const Section = ({
   basics,
   work,
   education,
   skills,
+  softskills,
   languages,
   portfolio,
   references,
@@ -25,6 +27,7 @@ const Section = ({
       <Work content={work} />
       <Education content={education} />
       <Skills content={{ skills }} />
+      <SoftSkills content={{ softskills }} />
       <Languages content={languages} />
       <Hobby content={hobby} />
       <Portfolio content={portfolio} />

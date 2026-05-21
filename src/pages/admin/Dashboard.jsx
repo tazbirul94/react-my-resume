@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Card, CardContent, CardTitle, CardHeader } from '@/components/ui/card'
 
 const SECTIONS = [
+  { path: 'locales', label: 'Locales', description: 'Manage available languages' },
   { path: 'basics', label: 'Basics', description: 'Personal info, contact, profiles' },
   { path: 'work', label: 'Work Experience', description: 'Jobs and highlights' },
   { path: 'education', label: 'Education', description: 'Degrees and courses' },

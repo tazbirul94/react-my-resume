@@ -17,6 +17,8 @@ import { InterestsAdmin } from '@/pages/admin/InterestsAdmin'
 import { ProjectsAdmin } from '@/pages/admin/ProjectsAdmin'
 import { CertificationsAdmin } from '@/pages/admin/CertificationsAdmin'
 import { TestimonialsAdmin } from '@/pages/admin/TestimonialsAdmin'
+import { AdminLocaleProvider } from '@/context/AdminLocaleContext'
+import { LocalesAdmin } from '@/pages/admin/LocalesAdmin'
 
 export default function App() {
   return (
@@ -31,11 +33,14 @@ export default function App() {
                 path="/admin"
                 element={
                   <ProtectedRoute>
-                    <AdminLayout />
+                    <AdminLocaleProvider>
+                      <AdminLayout />
+                    </AdminLocaleProvider>
                   </ProtectedRoute>
                 }
               >
                 <Route index element={<AdminDashboard />} />
+                <Route path="locales" element={<LocalesAdmin />} />
                 <Route path="basics" element={<BasicsAdmin />} />
                 <Route path="work" element={<WorkAdmin />} />
                 <Route path="education" element={<EducationAdmin />} />

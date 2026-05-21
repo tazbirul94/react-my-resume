@@ -7,8 +7,10 @@ import { Dialog } from '@/components/ui/dialog'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Plus, Pencil, Trash2 } from 'lucide-react'
+import { useAdminLocale } from '@/context/AdminLocaleContext'
 
 export function SkillsAdmin() {
+  const { adminLocale } = useAdminLocale()
   const [groups, setGroups] = useState([])
   const [skills, setSkills] = useState([])
   const [loading, setLoading] = useState(true)
@@ -27,20 +29,20 @@ export function SkillsAdmin() {
       return
     }
     const [g, s] = await Promise.all([
-      supabase.from('skill_groups').select('*').order('sort_order'),
-      supabase.from('skills').select('*').order('sort_order'),
+      supabase.from('skill_groups').select('*').eq('locale', adminLocale).order('sort_order'),
+      supabase.from('skills').select('*').eq('locale', adminLocale).order('sort_order'),
     ])
     setGroups(g.data || [])
     setSkills(s.data || [])
     setLoading(false)
   }
 
-  useEffect(() => { load() }, [])
+  useEffect(() => { load() }, [adminLocale])
 
   const saveGroup = async () => {
     if (!supabase) return
     if (editingGroup) await supabase.from('skill_groups').update(groupForm).eq('id', editingGroup.id)
-    else await supabase.from('skill_groups').insert(groupForm)
+    else await supabase.from('skill_groups').insert({ ...groupForm, locale: adminLocale })
     setGroupDialog(false)
     load()
   }
@@ -48,7 +50,7 @@ export function SkillsAdmin() {
   const saveSkill = async () => {
     if (!supabase) return
     if (editingSkill) await supabase.from('skills').update(skillForm).eq('id', editingSkill.id)
-    else await supabase.from('skills').insert(skillForm)
+    else await supabase.from('skills').insert({ ...skillForm, locale: adminLocale })
     setSkillDialog(null)
     load()
   }

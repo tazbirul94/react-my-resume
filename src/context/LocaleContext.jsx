@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 import enUI from '@/template/ui.en_US'
-import deUI from '@/template/ui.de_GER'
+import deUI from '@/template/ui.de_DE'
 
 const UI_MAPS = { 'en-US': enUI, 'de-DE': deUI }
 

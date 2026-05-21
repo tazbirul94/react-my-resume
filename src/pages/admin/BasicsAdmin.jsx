@@ -5,8 +5,10 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { supabase } from '@/lib/supabase'
 import { fallbackData } from '@/lib/fallback'
+import { useAdminLocale } from '@/context/AdminLocaleContext'
 
 export function BasicsAdmin() {
+  const { adminLocale } = useAdminLocale()
   const [form, setForm] = useState({ name: '', label: '', email: '', phone: '', website: '', picture: '', city: '', country_code: '', summary: [] })
   const [id, setId] = useState(null)
   const [saving, setSaving] = useState(false)
@@ -15,23 +17,20 @@ export function BasicsAdmin() {
   useEffect(() => {
     const load = async () => {
       if (!supabase) { const d = fallbackData.basics; if (d) setForm(d); return }
-      const { data } = await supabase.from('basics').select('*').limit(1)
+      const { data } = await supabase.from('basics').select('*').eq('locale', adminLocale).limit(1)
       if (data?.[0]) { setForm(data[0]); setId(data[0].id) }
     }
     load()
-  }, [])
+  }, [adminLocale])
 
   const handleSave = async () => {
     if (!supabase) { alert('Supabase not configured'); return }
     setSaving(true)
     const payload = { ...form }
     delete payload.id
-    if (id) {
-      await supabase.from('basics').update(payload).eq('id', id)
-    } else {
-      const { data } = await supabase.from('basics').insert(payload).select()
-      if (data?.[0]) setId(data[0].id)
-    }
+    payload.locale = adminLocale
+    const { data } = await supabase.from('basics').upsert({ ...payload, locale: adminLocale }, { onConflict: 'locale' }).select()
+    if (data?.[0]) setId(data[0].id)
     setSaving(false)
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)

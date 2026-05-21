@@ -1,4 +1,4 @@
-import deResume from '@/template/resume.de_GER'
+import deResume from '@/template/resume.de_DE'
 
 // Fallback data derived from resume.example.en_US.js
 // Used when Supabase is not configured (VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY missing)

@@ -6,21 +6,23 @@ import { Badge } from '@/components/ui/badge'
 import { DatePicker } from '@/components/ui/DatePicker'
 import { supabase } from '@/lib/supabase'
 import { fallbackData } from '@/lib/fallback'
+import { useAdminLocale } from '@/context/AdminLocaleContext'
 
 const EMPTY = { company: '', position: '', website: '', start_date: '', end_date: '', summary: '', highlights: [], skills: [], employment_type: '', location: '' }
 
 export function WorkAdmin() {
+  const { adminLocale } = useAdminLocale()
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
 
   const load = async () => {
     if (!supabase) { setItems(fallbackData.work || []); setLoading(false); return }
-    const { data } = await supabase.from('work').select('*').order('start_date', { ascending: false })
+    const { data } = await supabase.from('work').select('*').eq('locale', adminLocale).order('start_date', { ascending: false })
     setItems(data || [])
     setLoading(false)
   }
 
-  useEffect(() => { load() }, [])
+  useEffect(() => { load() }, [adminLocale])
 
   return (
     <CrudPage
@@ -29,7 +31,7 @@ export function WorkAdmin() {
       items={items}
       loading={loading}
       onRefresh={load}
-      emptyForm={EMPTY}
+      emptyForm={{...EMPTY, locale: adminLocale}}
       renderRow={(item) => (
         <div>
           <span className="font-medium">{item.position}</span>

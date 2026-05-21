@@ -4,21 +4,23 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { supabase } from '@/lib/supabase'
 import { fallbackData } from '@/lib/fallback'
+import { useAdminLocale } from '@/context/AdminLocaleContext'
 
 const EMPTY = { name: '', position: '', company: '', reference: '' }
 
 export function TestimonialsAdmin() {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
+  const { adminLocale } = useAdminLocale()
 
   const load = async () => {
     if (!supabase) { setItems(fallbackData.testimonials || []); setLoading(false); return }
-    const { data } = await supabase.from('testimonials').select('*').order('name')
+    const { data } = await supabase.from('testimonials').select('*').eq('locale', adminLocale).order('name')
     setItems(data || [])
     setLoading(false)
   }
 
-  useEffect(() => { load() }, [])
+  useEffect(() => { load() }, [adminLocale])
 
   return (
     <CrudPage
@@ -27,7 +29,7 @@ export function TestimonialsAdmin() {
       items={items}
       loading={loading}
       onRefresh={load}
-      emptyForm={EMPTY}
+      emptyForm={{...EMPTY, locale: adminLocale}}
       renderRow={(item) => (
         <div>
           <span className="font-medium">{item.name}</span>

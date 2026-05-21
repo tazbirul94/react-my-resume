@@ -17,6 +17,7 @@ function useQuery(tableName, fallbackKey, options = {}) {
     }
     let q = supabase.from(tableName).select(options.select || '*')
     if (options.order) q = q.order(options.order, { ascending: options.ascending ?? false })
+    if (options.filter_locale !== false) q = q.eq('locale', locale)
     if (options.limit) q = q.limit(options.limit)
     q.then(({ data: result, error: err }) => {
       if (err) { setError(err); setData(getFallback(fallbackKey, locale)) }

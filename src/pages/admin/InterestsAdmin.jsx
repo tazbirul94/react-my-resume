@@ -3,21 +3,23 @@ import { CrudPage } from '@/components/admin/CrudPage'
 import { Input } from '@/components/ui/input'
 import { supabase } from '@/lib/supabase'
 import { fallbackData } from '@/lib/fallback'
+import { useAdminLocale } from '@/context/AdminLocaleContext'
 
 const EMPTY = { name: '', keywords: [] }
 
 export function InterestsAdmin() {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
+  const { adminLocale } = useAdminLocale()
 
   const load = async () => {
     if (!supabase) { setItems(fallbackData.interests || []); setLoading(false); return }
-    const { data } = await supabase.from('interests').select('*').order('name')
+    const { data } = await supabase.from('interests').select('*').eq('locale', adminLocale).order('name')
     setItems(data || [])
     setLoading(false)
   }
 
-  useEffect(() => { load() }, [])
+  useEffect(() => { load() }, [adminLocale])
 
   return (
     <CrudPage
@@ -26,7 +28,7 @@ export function InterestsAdmin() {
       items={items}
       loading={loading}
       onRefresh={load}
-      emptyForm={EMPTY}
+      emptyForm={{...EMPTY, locale: adminLocale}}
       renderRow={(item) => (
         <div>
           <span className="font-medium">{item.name}</span>

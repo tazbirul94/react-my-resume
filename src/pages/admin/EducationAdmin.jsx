@@ -6,21 +6,23 @@ import { Badge } from '@/components/ui/badge'
 import { DatePicker } from '@/components/ui/DatePicker'
 import { supabase } from '@/lib/supabase'
 import { fallbackData } from '@/lib/fallback'
+import { useAdminLocale } from '@/context/AdminLocaleContext'
 
 const EMPTY = { institution: '', degree: '', area: '', start_date: '', end_date: '', gpa: '', gpa_german: '', website: '', location: '', summary: '' }
 
 export function EducationAdmin() {
+  const { adminLocale } = useAdminLocale()
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
 
   const load = async () => {
     if (!supabase) { setItems(fallbackData.education || []); setLoading(false); return }
-    const { data } = await supabase.from('education').select('*').order('start_date', { ascending: false })
+    const { data } = await supabase.from('education').select('*').eq('locale', adminLocale).order('start_date', { ascending: false })
     setItems(data || [])
     setLoading(false)
   }
 
-  useEffect(() => { load() }, [])
+  useEffect(() => { load() }, [adminLocale])
 
   return (
     <CrudPage
@@ -29,7 +31,7 @@ export function EducationAdmin() {
       items={items}
       loading={loading}
       onRefresh={load}
-      emptyForm={EMPTY}
+      emptyForm={{...EMPTY, locale: adminLocale}}
       renderRow={(item) => (
         <div>
           <span className="font-medium">{item.degree}</span>

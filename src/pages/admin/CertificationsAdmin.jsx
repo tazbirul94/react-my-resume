@@ -5,21 +5,23 @@ import { Badge } from '@/components/ui/badge'
 import { DatePicker } from '@/components/ui/DatePicker'
 import { supabase } from '@/lib/supabase'
 import { fallbackData } from '@/lib/fallback'
+import { useAdminLocale } from '@/context/AdminLocaleContext'
 
 const EMPTY = { title: '', issuer: '', logo: '', issue_date: '', credential_url: '' }
 
 export function CertificationsAdmin() {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
+  const { adminLocale } = useAdminLocale()
 
   const load = async () => {
     if (!supabase) { setItems(fallbackData.certifications || []); setLoading(false); return }
-    const { data } = await supabase.from('certifications').select('*').order('issue_date', { ascending: false })
+    const { data } = await supabase.from('certifications').select('*').eq('locale', adminLocale).order('issue_date', { ascending: false })
     setItems(data || [])
     setLoading(false)
   }
 
-  useEffect(() => { load() }, [])
+  useEffect(() => { load() }, [adminLocale])
 
   return (
     <CrudPage
@@ -28,7 +30,7 @@ export function CertificationsAdmin() {
       items={items}
       loading={loading}
       onRefresh={load}
-      emptyForm={EMPTY}
+      emptyForm={{...EMPTY, locale: adminLocale}}
       renderRow={(item) => (
         <div>
           <span className="font-medium">{item.title}</span>

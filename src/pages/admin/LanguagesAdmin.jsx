@@ -4,21 +4,23 @@ import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { supabase } from '@/lib/supabase'
 import { fallbackData } from '@/lib/fallback'
+import { useAdminLocale } from '@/context/AdminLocaleContext'
 
 const EMPTY = { name: '', level: '' }
 
 export function LanguagesAdmin() {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
+  const { adminLocale } = useAdminLocale()
 
   const load = async () => {
     if (!supabase) { setItems(fallbackData.languages || []); setLoading(false); return }
-    const { data } = await supabase.from('languages').select('*').order('name')
+    const { data } = await supabase.from('languages').select('*').eq('locale', adminLocale).order('name')
     setItems(data || [])
     setLoading(false)
   }
 
-  useEffect(() => { load() }, [])
+  useEffect(() => { load() }, [adminLocale])
 
   return (
     <CrudPage
@@ -27,7 +29,7 @@ export function LanguagesAdmin() {
       items={items}
       loading={loading}
       onRefresh={load}
-      emptyForm={EMPTY}
+      emptyForm={{...EMPTY, locale: adminLocale}}
       renderRow={(item) => (
         <div className="flex items-center gap-2">
           <span className="font-medium">{item.name}</span>

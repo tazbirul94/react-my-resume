@@ -23,6 +23,7 @@ const basics = {
 
 const profiles = [
   { network: 'github', username: 'Tazbirul94', url: 'https://github.com/tazbirul94', sort_order: 0 },
+  { network: 'linkedin', username: 'tazbirul-haque', url: 'https://www.linkedin.com/in/tazbirul-haque', sort_order: 1 },
 ]
 
 const work = [

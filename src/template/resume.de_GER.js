@@ -22,6 +22,11 @@ const resume = {
         "network": "github",
         "username": "Tazbirul94",
         "url": "https://github.com/tazbirul94"
+      },
+      {
+        "network": "linkedin",
+        "username": "tazbirul-haque",
+        "url": "https://www.linkedin.com/in/tazbirul-haque"
       }
     ]
   },

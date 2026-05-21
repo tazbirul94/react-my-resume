@@ -1,19 +1,16 @@
+// src/utils/random.js
 const Random = {
-    shuffleArray: function (array) {
-        function applyFunc(currentIndex, oldArray) {
-            if (!currentIndex) {
-                return oldArray;
-            }
-
-            const randomIndex = Math.floor(Math.random() * currentIndex);
-            const newArray = JSON.parse(JSON.stringify(oldArray));
-            const temporaryValue = oldArray[currentIndex];
-            newArray[currentIndex] = oldArray[randomIndex];
-            newArray[randomIndex] = temporaryValue;
-            return applyFunc(currentIndex - 1, newArray);
-        }
-        return applyFunc(array.length - 1, array);
+  shuffleArray(input) {
+    if (!Array.isArray(input)) return [];
+    const arr = input.slice();            // copy once
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1)); // 0..i inclusive
+      const tmp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = tmp;
     }
+    return arr;
+  }
 };
 
-module.exports = Random;
+export default Random;

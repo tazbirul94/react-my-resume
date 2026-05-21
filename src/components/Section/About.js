@@ -19,10 +19,10 @@ const About = ({ content }) => (
               <br/>
               <span>{content.location.countryCode}</span>
               <br/>
-              <a href={`skype:${content.phone}`}>
+              {/* <a href={`skype:${content.phone}`}>
                 <span>{content.phone}</span>
               </a>
-              <br/>
+              <br/> */}
               <a href={`mailto:${content.email}`}>
                 <span>{content.email}</span>
               </a>

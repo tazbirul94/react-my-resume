@@ -1,0 +1,110 @@
+@media print {
+  /* ── Reset all decorative styles ───────── */
+  *, *::before, *::after {
+    color: #000 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+    border-color: #ccc !important;
+  }
+
+  /* ── Hide non-content ───────────────────── */
+  nav,
+  header,
+  footer,
+  .hero-scroll,
+  .wave-divider,
+  [data-print="hidden"],
+  button {
+    display: none !important;
+  }
+
+  /* ── Show print-only elements ──────────── */
+  [data-print="only"] {
+    display: block !important;
+  }
+
+  /* ── Page setup ─────────────────────────── */
+  @page {
+    size: Letter portrait;
+    margin: 0.75in;
+  }
+
+  html, body {
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #000 !important;
+    background: #fff !important;
+  }
+
+  /* ── Prevent orphaned headings ──────────── */
+  h1, h2, h3 { page-break-after: avoid; }
+  .apple-card { page-break-inside: avoid; margin-bottom: 12pt; }
+
+  /* ── Print contact header ───────────────── */
+  .print-header {
+    display: block !important;
+    text-align: center;
+    padding-bottom: 10pt;
+    margin-bottom: 16pt;
+    border-bottom: 1pt solid #000 !important;
+  }
+  .print-header h1 { font-size: 18pt; font-weight: 700; margin-bottom: 4pt; }
+  .print-header p  { font-size: 10pt; color: #333 !important; }
+
+  /* ── Section headings ───────────────────── */
+  .eyebrow { display: none !important; }
+  .section-title {
+    font-size: 13pt !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    border-bottom: 0.5pt solid #000 !important;
+    padding-bottom: 4pt !important;
+    margin-bottom: 10pt !important;
+  }
+
+  /* ── Remove hero section ────────────────── */
+  section:first-of-type[id=""] ,
+  section:has(h1) { display: none !important; }
+
+  /* ── Cards: flat in print ───────────────── */
+  .apple-card {
+    padding: 0 !important;
+    border: none !important;
+    border-bottom: 0.5pt solid #ddd !important;
+    border-radius: 0 !important;
+  }
+
+  /* ── Skills: show plain list, hide chips ── */
+  .skills-chip-list { display: none !important; }
+  .skills-print-list { display: block !important; }
+  .skills-print-list li { font-size: 10pt; line-height: 1.6; }
+
+  /* ── Links: show URL text ───────────────── */
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #444 !important;
+  }
+  a[href^="#"]::after,
+  a[href^="mailto:"]::after { content: ""; }
+
+  /* ── Remove section padding ─────────────── */
+  section {
+    padding-top: 16pt !important;
+    padding-bottom: 8pt !important;
+  }
+
+  /* ── Dateline: hide decorative ──────────── */
+  .career-dateline { display: none !important; }
+
+  /* ── Current badge ──────────────────────── */
+  .current-dot { display: none !important; }
+
+  /* ── Max width: full page ───────────────── */
+  .max-w-content, [class*="max-w-"] { max-width: 100% !important; }
+}

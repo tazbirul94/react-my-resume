@@ -4,25 +4,40 @@ import Work from './Work';
 import Education from './Education';
 import Skills from './Skills';
 import Portfolio from './Portfolio';
-import References from './References'; 
+import References from './References';
 import Footer from './Footer';
 import Hobby from './Hobby';
+import Languages from "./Languages";
+import SoftSkills from './SoftSkills';
+import Certifications from './Certifications';
+import Photo from './Photo';
 
-const Section = (props) => {
-  const skillsContent = {
-    skills: props.skills,
-    languages: props.languages
-  };
+const Section = ({
+  basics,
+  work,
+  education,
+  skills,
+  softskills,
+  languages,
+  portfolio,
+  certifications,
+  references,
+  hobby = []
+}) => {
   return (
     <div>
-      <About content={props.basics}/>
-      <Work content={props.work}/>
-      <Education content={props.education}/>
-      <Skills content={skillsContent}/>
-      <Hobby content={props.education} />
-      <Portfolio content={props.portfolio}/>
-      <References content={props.references}/>
-      <Footer content={props.basics}/>
+      <Photo content={basics} />
+      <About content={basics} />
+      <Work content={work} />
+      <Education content={education} />
+      <Skills content={{ skills }} />
+      <SoftSkills content={{ softskills }} />
+      <Languages content={languages} />
+      <Hobby content={hobby} />
+      <Certifications content={certifications} />
+      <Portfolio content={portfolio} />
+      <References content={references} />
+      <Footer content={basics} />
     </div>
   );
 };

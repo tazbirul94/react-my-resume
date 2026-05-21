@@ -18,9 +18,11 @@ const Home = ({ resume, navigation }) => (
       work={resume.work}
       education={resume.education}
       skills={resume.skills}
+      softskills={resume.softskills}
       languages={resume.languages}
+      certifications={resume.certifications}
       portfolio={resume.projects}
-      hobby={resume.hobby}
+      hobby={resume.interests}
       references={resume.references}/>
   </div>
 );

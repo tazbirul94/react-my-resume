@@ -1,7 +1,6 @@
 import { useCertifications } from '@/hooks/useResume'
+import { useLocale } from '@/context/LocaleContext'
 import { SectionWrapper } from '@/components/layout/SectionWrapper'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ExternalLink } from 'lucide-react'
 
@@ -11,36 +10,61 @@ function formatDate(dateStr) {
 }
 
 export function Certifications() {
-  const { data: certs, loading } = useCertifications()
+  const { data: certifications, loading } = useCertifications()
+  const { t } = useLocale()
 
   if (loading) return (
-    <SectionWrapper id="certifications" eyebrow="Certifications" title="Credentials">
-      <div className="grid sm:grid-cols-2 gap-4">{[1,2].map(i => <Skeleton key={i} className="h-24 w-full" />)}</div>
+    <SectionWrapper id="certifications" eyebrow={t('sections.certifications.eyebrow')} title={t('sections.certifications.title')}>
+      <div className="grid sm:grid-cols-2 gap-5">
+        {[1,2].map(i => <Skeleton key={i} className="h-28 w-full rounded-2xl" />)}
+      </div>
     </SectionWrapper>
   )
 
-  const items = certs ?? []
-  if (!items.length) return null
+  const items = certifications ?? []
 
   return (
-    <SectionWrapper id="certifications" eyebrow="Certifications" title="Credentials">
-      <div className="grid sm:grid-cols-2 gap-4">
-        {items.map((cert) => (
-          <Card key={cert.id}>
-            <CardContent className="pt-4 flex items-start gap-3">
-              {cert.logo && <img src={cert.logo} alt={cert.issuer} className="h-10 w-10 object-contain rounded" onError={(e) => { e.target.style.display = 'none' }} />}
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-foreground text-sm leading-tight">{cert.title}</h3>
-                <p className="text-xs text-muted-foreground">{cert.issuer}</p>
-                {cert.issue_date && <Badge variant="secondary" className="mt-1 text-xs">{formatDate(cert.issue_date)}</Badge>}
+    <SectionWrapper id="certifications" eyebrow={t('sections.certifications.eyebrow')} title={t('sections.certifications.title')}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
+        {items.map((cert, idx) => (
+          <div key={cert.id ?? idx} className="apple-card" style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+            {/* Logo */}
+            {cert.logo && (
+              <div style={{
+                width: 44, height: 44, borderRadius: 10, flexShrink: 0,
+                background: 'rgb(var(--bg-secondary))',
+                border: '1px solid rgb(var(--apple-border))',
+                overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <img src={cert.logo} alt={cert.issuer}
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                  onError={e => { e.target.parentNode.style.display = 'none' }} />
               </div>
-              {cert.credential_url && (
-                <a href={cert.credential_url} target="_blank" rel="noopener noreferrer" className="text-brand hover:text-brand-dark">
-                  <ExternalLink className="h-4 w-4" />
-                </a>
+            )}
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
+                <h3 style={{ fontSize: 'var(--type-card-h)', fontWeight: 600, color: 'rgb(var(--text-primary))', marginBottom: 3 }}>
+                  {cert.title || cert.name}
+                </h3>
+                {cert.credential_url && (
+                  <a href={cert.credential_url} target="_blank" rel="noopener noreferrer"
+                    style={{ color: 'rgb(var(--text-tertiary))', flexShrink: 0, transition: 'color 150ms ease' }}
+                    onMouseEnter={e => e.currentTarget.style.color = 'rgb(var(--accent))'}
+                    onMouseLeave={e => e.currentTarget.style.color = 'rgb(var(--text-tertiary))'}>
+                    <ExternalLink size={14} />
+                  </a>
+                )}
+              </div>
+              <p style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--text-secondary))', fontWeight: 500 }}>
+                {cert.issuer}
+              </p>
+              {cert.issue_date && (
+                <p className="eyebrow" style={{ color: 'rgb(var(--text-tertiary))', marginTop: 4 }}>
+                  {formatDate(cert.issue_date)}
+                </p>
               )}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         ))}
       </div>
     </SectionWrapper>

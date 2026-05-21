@@ -5,49 +5,77 @@ const ui = {
     work: 'Berufserfahrung',
     education: 'Ausbildung',
     skill: 'Fähigkeiten',
-    hobbys: 'Hobbys',
+    skills: 'Fähigkeiten',
+    portfolio: 'Portfolio',
+    hobbys: 'Interessen',
+    interests: 'Interessen',
     certification: 'Zertifizierung',
+    certifications: 'Zertifizierungen',
     testimonials: 'Referenzen',
-
+    references: 'Referenzen',
   },
   navMenu: {
     showNav: 'Navigation anzeigen',
-    hideNav: 'Navigation ausblenden'
+    hideNav: 'Navigation ausblenden',
+  },
+  hero: {
+    viewResume: 'Lebenslauf ansehen',
+    contactMe: 'Kontakt aufnehmen',
+    scroll: 'Scrollen',
+  },
+  sections: {
+    about:         { eyebrow: 'Über mich',        title: 'Wer ich bin' },
+    work:          { eyebrow: 'Berufserfahrung',   title: 'Wo ich gebaut habe' },
+    education:     { eyebrow: 'Ausbildung',        title: 'Akademischer Werdegang' },
+    skills:        { eyebrow: 'Fähigkeiten',       title: 'Womit ich arbeite' },
+    languages:     { eyebrow: 'Sprachen',          title: 'Sprachen, die ich spreche' },
+    interests:     { eyebrow: 'Interessen',        title: 'Abseits des Schreibtischs' },
+    portfolio:     { eyebrow: 'Portfolio',         title: 'Was ich entwickelt habe' },
+    certifications:{ eyebrow: 'Zertifizierungen',  title: 'Nachweise' },
+    references:    { eyebrow: 'Referenzen',        title: 'Was andere sagen' },
+  },
+  work: {
+    present: 'Heute',
+    current: 'Aktuell',
+    title: 'Berufserfahrung',
   },
   about: {
     title: 'Über mich',
-    subtitle: 'Kontaktdaten'
+    subtitle: 'Kontaktdaten',
   },
   skills: {
     title: 'Fähigkeiten',
   },
   modal: {
     details: 'Details',
-    close: 'Schließen'
+    close: 'Schließen',
   },
   portfolio: {
-    title: 'Portfolio'
+    title: 'Portfolio',
   },
   certification: {
-    title: 'Zertifizierung'
-  },
-  work: {
-    title: 'Berufserfahrung'
+    title: 'Zertifizierung',
   },
   education: {
-    title: 'Ausbildung'
+    title: 'Ausbildung',
+    present: 'Heute',
   },
   hobbys: {
-    title: 'Hobbys'
+    title: 'Interessen',
   },
   references: {
-    title: 'Referenzen'
+    title: 'Referenzen',
+  },
+  print: {
+    saveButton: 'PDF speichern',
+  },
+  theme: {
+    toggleLabel: 'Design wechseln',
   },
   footer: {
-    description: 
-    `Diese Seite wurde in React.js von {author1} entwickelt und modifiziert, basierend auf dem ursprünglichen Design von Ceevee von {author2}.`,
-    authorName: 'Tazbirul Haque'
-  }
+    description: 'Diese Seite wurde in React.js von {author1} entwickelt und modifiziert, basierend auf dem ursprünglichen Design von Ceevee von {author2}.',
+    authorName: 'Tazbirul Haque',
+  },
 }
 
-export default ui;
+export default ui

@@ -1,5 +1,6 @@
 import { useBasics } from '@/hooks/useResume'
 import { SectionWrapper } from '@/components/layout/SectionWrapper'
+import { useLocale } from '@/context/LocaleContext'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Mail, Phone, MapPin, Globe, ArrowRight } from 'lucide-react'
 
@@ -11,10 +12,11 @@ const contactItems = (basics) => [
 ].filter(Boolean)
 
 export function About() {
+  const { t } = useLocale()
   const { data: basics, loading } = useBasics()
 
   if (loading) return (
-    <SectionWrapper id="about" eyebrow="About" title="About Me">
+    <SectionWrapper id="about" eyebrow={t('sections.about.eyebrow')} title={t('sections.about.title')}>
       <div className="flex flex-col md:flex-row gap-10 md:gap-14">
         <Skeleton className="h-52 w-52 rounded-3xl shrink-0" />
         <div className="flex-1 space-y-3 pt-2">
@@ -31,7 +33,7 @@ export function About() {
   const contacts = contactItems(basics)
 
   return (
-    <SectionWrapper id="about" eyebrow="About" title="About Me">
+    <SectionWrapper id="about" eyebrow={t('sections.about.eyebrow')} title={t('sections.about.title')}>
       <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
         {/* Photo */}
         <div className="shrink-0 flex justify-center md:justify-start">

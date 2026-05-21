@@ -1,9 +1,10 @@
 import { useWork } from '@/hooks/useResume'
 import { SectionWrapper } from '@/components/layout/SectionWrapper'
+import { useLocale } from '@/context/LocaleContext'
 import { Skeleton } from '@/components/ui/skeleton'
 
-function formatDate(dateStr) {
-  if (!dateStr) return 'Present'
+function formatDate(dateStr, presentLabel = 'Present') {
+  if (!dateStr) return presentLabel
   return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
 }
 
@@ -23,9 +24,10 @@ function isCurrent(job) {
 
 export function Work() {
   const { data: work, loading } = useWork()
+  const { t } = useLocale()
 
   if (loading) return (
-    <SectionWrapper id="work" eyebrow="Experience" title="Where I've Built Things" alt>
+    <SectionWrapper id="work" eyebrow={t('sections.work.eyebrow')} title={t('sections.work.title')} alt>
       <div className="space-y-4">
         {[1, 2, 3].map(i => <Skeleton key={i} className="h-36 w-full rounded-2xl" />)}
       </div>
@@ -42,7 +44,7 @@ export function Work() {
   const endYear = new Date().getFullYear()
 
   return (
-    <SectionWrapper id="work" eyebrow="Experience" title="Where I've Built Things" alt>
+    <SectionWrapper id="work" eyebrow={t('sections.work.eyebrow')} title={t('sections.work.title')} alt>
       {/* Career dateline */}
       {startYear && (
         <div className="flex items-center gap-3 mb-10">
@@ -90,7 +92,7 @@ export function Work() {
                           className="current-dot"
                           style={{ display: 'inline-block', width: 6, height: 6, borderRadius: '50%', background: '#22c55e' }}
                         />
-                        Current
+                        {t('work.current')}
                       </span>
                     )}
                   </div>
@@ -110,7 +112,7 @@ export function Work() {
               {/* Date chip */}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4, flexShrink: 0 }}>
                 <span className="apple-chip" style={{ background: 'rgb(var(--bg-secondary))' }}>
-                  {formatDate(job.start_date)} – {formatDate(job.end_date)}
+                  {formatDate(job.start_date, t('work.present'))} – {formatDate(job.end_date, t('work.present'))}
                 </span>
                 {job.start_date && (
                   <span className="eyebrow" style={{ color: 'rgb(var(--text-tertiary))' }}>

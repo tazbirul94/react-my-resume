@@ -1,4 +1,5 @@
 import { Github, Mail, Globe, Linkedin, Twitter, ArrowDown, FileText } from 'lucide-react'
+import { useLocale } from '@/context/LocaleContext'
 
 const ICON_MAP = {
   github:   Github,
@@ -9,6 +10,7 @@ const ICON_MAP = {
 }
 
 export function Hero({ basics, profiles = [] }) {
+  const { t } = useLocale()
   if (!basics) return null
 
   return (
@@ -93,7 +95,7 @@ export function Hero({ basics, profiles = [] }) {
             onMouseLeave={e => { e.currentTarget.style.background = 'rgb(var(--accent))'; e.currentTarget.style.transform = 'scale(1)' }}
           >
             <FileText size={16} />
-            View Resume
+            {t('hero.viewResume')}
           </a>
           <a
             href={`mailto:${basics.email}`}
@@ -111,7 +113,7 @@ export function Hero({ basics, profiles = [] }) {
             onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.transform = 'scale(1)' }}
           >
             <Mail size={16} />
-            Contact Me
+            {t('hero.contactMe')}
           </a>
         </div>
 
@@ -170,7 +172,7 @@ export function Hero({ basics, profiles = [] }) {
         className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 transition-colors"
         style={{ color: 'rgb(var(--text-tertiary))', textDecoration: 'none' }}
       >
-        <span className="eyebrow" style={{ letterSpacing: '0.2em' }}>Scroll</span>
+        <span className="eyebrow" style={{ letterSpacing: '0.2em' }}>{t('hero.scroll')}</span>
         <ArrowDown size={13} />
       </a>
     </section>

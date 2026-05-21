@@ -1,14 +1,24 @@
-import { Heart } from 'lucide-react'
+import { useLocale } from '@/context/LocaleContext'
 
 export function Footer({ basics }) {
+  const { t } = useLocale()
+  const desc = t('footer.description')
+    .replace('{author1}', basics?.name || t('footer.authorName'))
+    .replace('{author2}', 'Ceevee')
+
   return (
-    <footer className="border-t border-border bg-background">
-      <div className="max-w-5xl mx-auto px-5 py-10 flex flex-col items-center gap-3 text-center">
-        <p className="font-display font-bold text-lg text-brand">{basics?.name || 'Resume'}</p>
-        <p className="text-xs text-muted-foreground flex items-center gap-1.5">
-          &copy; {new Date().getFullYear()} — Built with
-          <Heart className="h-3 w-3 text-brand fill-brand" />
-          React &amp; Supabase
+    <footer
+      data-print="hidden"
+      style={{
+        borderTop: '1px solid rgb(var(--apple-border))',
+        background: 'rgb(var(--bg-secondary))',
+        padding: '32px 24px',
+        textAlign: 'center',
+      }}
+    >
+      <div className="max-w-content mx-auto">
+        <p style={{ fontSize: 'var(--type-micro)', color: 'rgb(var(--text-tertiary))', lineHeight: 1.6 }}>
+          {desc}
         </p>
       </div>
     </footer>

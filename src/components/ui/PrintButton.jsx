@@ -1,6 +1,8 @@
 import { Download } from 'lucide-react'
+import { useLocale } from '@/context/LocaleContext'
 
 export function PrintButton() {
+  const { t } = useLocale()
   return (
     <button
       data-print="hidden"
@@ -38,7 +40,7 @@ export function PrintButton() {
       }}
     >
       <Download size={16} />
-      Save PDF
+      {t('print.saveButton')}
     </button>
   )
 }

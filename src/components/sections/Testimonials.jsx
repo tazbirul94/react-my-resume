@@ -1,52 +1,48 @@
-import { useState } from 'react'
 import { useTestimonials } from '@/hooks/useResume'
+import { useLocale } from '@/context/LocaleContext'
 import { SectionWrapper } from '@/components/layout/SectionWrapper'
-import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import { ChevronLeft, ChevronRight, Quote } from 'lucide-react'
 
 export function Testimonials() {
   const { data: testimonials, loading } = useTestimonials()
-  const [idx, setIdx] = useState(0)
+  const { t } = useLocale()
 
   if (loading) return (
-    <SectionWrapper id="testimonials" eyebrow="References" title="What Others Say" alt>
-      <Skeleton className="h-48 w-full max-w-2xl mx-auto" />
+    <SectionWrapper id="testimonials" eyebrow={t('sections.references.eyebrow')} title={t('sections.references.title')} alt>
+      <div className="grid md:grid-cols-2 gap-5">
+        {[1,2].map(i => <Skeleton key={i} className="h-40 w-full rounded-2xl" />)}
+      </div>
     </SectionWrapper>
   )
 
   const items = testimonials ?? []
-  if (!items.length) return null
-
-  const current = items[idx]
 
   return (
-    <SectionWrapper id="testimonials" eyebrow="References" title="What Others Say" alt>
-      <div className="max-w-2xl mx-auto">
-        <Card className="dark:bg-slate-800 dark:border-slate-700">
-          <CardContent className="pt-6 pb-4 text-center">
-            <Quote className="h-8 w-8 text-brand mx-auto mb-4 opacity-50" />
-            <p className="text-muted-foreground italic mb-6 text-lg leading-relaxed">"{current.reference}"</p>
-            <p className="font-semibold text-foreground">{current.name}</p>
-            <p className="text-sm text-brand">{current.position}{current.company ? `, ${current.company}` : ''}</p>
-          </CardContent>
-        </Card>
-
-        {items.length > 1 && (
-          <div className="flex justify-center items-center gap-4 mt-4">
-            <button onClick={() => setIdx(i => (i - 1 + items.length) % items.length)} className="p-2 rounded-full hover:bg-muted transition-colors">
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-            <div className="flex gap-2">
-              {items.map((_, i) => (
-                <button key={i} onClick={() => setIdx(i)} className={`h-2 w-2 rounded-full transition-colors ${i === idx ? 'bg-brand' : 'bg-muted'}`} />
-              ))}
+    <SectionWrapper id="testimonials" eyebrow={t('sections.references.eyebrow')} title={t('sections.references.title')} alt>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 16 }}>
+        {items.map((ref, idx) => (
+          <div key={ref.id ?? idx} className="apple-card" style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            {ref.reference && ref.reference !== '<SUMMARY>' && (
+              <blockquote style={{
+                fontSize: 'var(--type-small)', color: 'rgb(var(--text-secondary))',
+                lineHeight: 1.7, fontStyle: 'italic', margin: 0,
+                paddingLeft: 14, borderLeft: '2px solid rgb(var(--accent))',
+              }}>
+                "{ref.reference}"
+              </blockquote>
+            )}
+            <div>
+              <p style={{ fontSize: 'var(--type-small)', fontWeight: 600, color: 'rgb(var(--text-primary))' }}>
+                {ref.name}
+              </p>
+              {(ref.position || ref.company) && (
+                <p className="eyebrow" style={{ color: 'rgb(var(--text-tertiary))', marginTop: 2 }}>
+                  {[ref.position, ref.company].filter(Boolean).join(' · ')}
+                </p>
+              )}
             </div>
-            <button onClick={() => setIdx(i => (i + 1) % items.length)} className="p-2 rounded-full hover:bg-muted transition-colors">
-              <ChevronRight className="h-5 w-5" />
-            </button>
           </div>
-        )}
+        ))}
       </div>
     </SectionWrapper>
   )

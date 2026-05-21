@@ -2,21 +2,16 @@ import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import { ThemeToggle } from './ThemeToggle'
 import { Menu, X } from 'lucide-react'
+import { useLocale } from '@/context/LocaleContext'
+import { LocaleSwitcher } from '@/components/ui/LocaleSwitcher'
 
-const NAV_LINKS = [
-  { href: '#about',        label: 'About' },
-  { href: '#work',         label: 'Work' },
-  { href: '#education',    label: 'Education' },
-  { href: '#skills',       label: 'Skills' },
-  { href: '#portfolio',    label: 'Portfolio' },
-  { href: '#testimonials', label: 'References' },
-]
+const SECTION_IDS = ['about', 'work', 'education', 'skills', 'portfolio', 'testimonials']
 
 function useActiveSection() {
   const [active, setActive] = useState('')
 
   useEffect(() => {
-    const ids = NAV_LINKS.map(l => l.href.slice(1))
+    const ids = SECTION_IDS
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries.filter(e => e.isIntersecting)
@@ -40,6 +35,15 @@ function useActiveSection() {
 }
 
 export function Navbar({ name = 'Resume' }) {
+  const { t } = useLocale()
+  const NAV_LINKS = [
+    { href: '#about',        label: t('navigation.about') },
+    { href: '#work',         label: t('navigation.work') },
+    { href: '#education',    label: t('navigation.education') },
+    { href: '#skills',       label: t('navigation.skills') },
+    { href: '#portfolio',    label: t('navigation.portfolio') },
+    { href: '#testimonials', label: t('navigation.references') },
+  ]
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const active = useActiveSection()
@@ -88,6 +92,7 @@ export function Navbar({ name = 'Resume' }) {
         </div>
 
         <div className="flex items-center gap-2">
+          <LocaleSwitcher />
           <ThemeToggle />
           <button
             className="md:hidden p-2 rounded-md transition-colors"
@@ -105,7 +110,7 @@ export function Navbar({ name = 'Resume' }) {
         <div
           className="md:hidden border-b px-6 py-2 backdrop-blur-[20px]"
           style={{
-            background: 'rgba(var(--bg-primary)/0.92)',
+            background: 'rgba(255,255,255,0.92)',
             borderColor: 'rgb(var(--apple-border))',
           }}
         >

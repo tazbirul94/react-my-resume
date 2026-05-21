@@ -1,12 +1,14 @@
 import { useSkills } from '@/hooks/useResume'
 import { SectionWrapper } from '@/components/layout/SectionWrapper'
+import { useLocale } from '@/context/LocaleContext'
 import { Skeleton } from '@/components/ui/skeleton'
 
 export function Skills() {
+  const { t } = useLocale()
   const { data: groups, loading } = useSkills()
 
   if (loading) return (
-    <SectionWrapper id="skills" eyebrow="Skills" title="What I Work With">
+    <SectionWrapper id="skills" eyebrow={t('sections.skills.eyebrow')} title={t('sections.skills.title')}>
       <div className="grid md:grid-cols-2 gap-5">
         {[1, 2].map(i => <Skeleton key={i} className="h-52 w-full rounded-2xl" />)}
       </div>
@@ -16,7 +18,7 @@ export function Skills() {
   const items = groups ?? []
 
   return (
-    <SectionWrapper id="skills" eyebrow="Skills" title="What I Work With">
+    <SectionWrapper id="skills" eyebrow={t('sections.skills.eyebrow')} title={t('sections.skills.title')}>
       <div className="grid md:grid-cols-2 gap-5">
         {items.map((group) => (
           <div key={group.id} className="apple-card" style={{ padding: 24 }}>

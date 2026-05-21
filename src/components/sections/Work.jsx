@@ -56,7 +56,7 @@ export function Work() {
 
       <div className="space-y-4">
         {items.map((job) => (
-          <div key={job.id} className="apple-card">
+          <div key={job.id} className="apple-card stagger-item">
             {/* Header row */}
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
               <div className="flex items-start gap-3">

@@ -22,7 +22,7 @@ export function Portfolio() {
     <SectionWrapper id="portfolio" eyebrow={t('sections.portfolio.eyebrow')} title={t('sections.portfolio.title')} alt>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
         {items.map((project, idx) => (
-          <div key={project.id ?? idx} className="apple-card" style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: 0, overflow: 'hidden' }}>
+          <div key={project.id ?? idx} className="apple-card stagger-item" style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: 0, overflow: 'hidden' }}>
             {/* Thumbnail */}
             {project.image_thumb && !project.image_thumb.startsWith('<') && (
               <div style={{ width: '100%', height: 160, overflow: 'hidden', background: 'rgb(var(--bg-secondary))' }}>

@@ -1,5 +1,7 @@
+import { useMemo } from 'react'
 import { Github, Mail, Globe, Linkedin, Twitter, ArrowDown, FileText } from 'lucide-react'
 import { useLocale } from '@/context/LocaleContext'
+import { useWork } from '@/hooks/useResume'
 
 const ICON_MAP = {
   github:   Github,
@@ -11,28 +13,44 @@ const ICON_MAP = {
 
 export function Hero({ basics, profiles = [] }) {
   const { t } = useLocale()
+  const { data: work } = useWork()
+
+  const stats = useMemo(() => {
+    if (!work?.length) return null
+    const startDates = work.map(j => new Date(j.start_date)).filter(d => !isNaN(d))
+    const earliest = startDates.length ? Math.min(...startDates.map(d => d.getTime())) : null
+    const years = earliest ? Math.floor((Date.now() - earliest) / (1000 * 60 * 60 * 24 * 365.25)) : null
+    const companies = new Set(work.map(j => j.company).filter(Boolean)).size
+    const countries = new Set(
+      work
+        .map(j => j.location)
+        .filter(l => l && l !== 'Remote')
+        .map(l => l.split(', ').pop())
+        .filter(Boolean)
+    ).size
+    return { years, companies, countries }
+  }, [work])
+
   if (!basics) return null
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{ background: 'rgb(var(--bg-primary))' }}>
 
-      {/* Static gradient fog — no animation, Apple-style */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(var(--accent)/0.07) 0%, transparent 70%)',
-        }}
-      />
+      {/* Animated gradient orbs */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="hero-orb hero-orb-1" />
+        <div className="hero-orb hero-orb-2" />
+        <div className="hero-orb hero-orb-3" />
+      </div>
 
-      {/* Very subtle dot grid */}
+      {/* Subtle dot grid texture */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: 'radial-gradient(circle, rgba(var(--apple-border)/0.9) 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(circle, rgba(var(--apple-border)/0.7) 1px, transparent 1px)',
           backgroundSize: '36px 36px',
-          opacity: 0.35,
+          opacity: 0.25,
         }}
       />
 
@@ -71,25 +89,41 @@ export function Hero({ basics, profiles = [] }) {
         {/* Summary first line as subtitle */}
         {basics.summary?.[0] && (
           <p
-            className="hero-socials mb-10 mx-auto max-w-xl leading-relaxed"
+            className="hero-socials mb-6 mx-auto max-w-xl leading-relaxed"
             style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--text-secondary))' }}
           >
             {basics.summary[0]}
           </p>
         )}
 
-        {/* Tech stack */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
+        {/* Tech stack chips — staggered entrance */}
+        <div className="hero-tech-chips flex flex-wrap justify-center gap-2 mb-10">
           {['C#', '.NET Core', 'Docker', 'Kubernetes', 'Azure', 'MS SQL', 'RabbitMQ', 'React'].map(tech => (
             <span
               key={tech}
-              className="apple-chip font-mono-code"
+              className="hero-tech-chip apple-chip font-mono-code"
               style={{ fontSize: 12, background: 'rgb(var(--bg-secondary))' }}
             >
               {tech}
             </span>
           ))}
         </div>
+
+        {/* Stats row — computed from work data */}
+        {stats && (
+          <div className="hero-stats-row">
+            {[
+              { value: `${stats.years}+`, label: 'Years Experience' },
+              { value: stats.companies,   label: 'Companies' },
+              { value: stats.countries,   label: 'Countries' },
+            ].map(({ value, label }) => (
+              <div key={label} className="text-center">
+                <div className="hero-stat-value">{value}</div>
+                <div className="hero-stat-label">{label}</div>
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* CTAs */}
         <div className="hero-ctas flex flex-wrap justify-center gap-3 mb-10">

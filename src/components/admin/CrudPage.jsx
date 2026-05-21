@@ -18,11 +18,14 @@ export function CrudPage({ title, table, items = [], loading, renderRow, renderF
   const handleSave = async () => {
     if (!supabase) { alert('Supabase not configured'); return }
     setSaving(true)
+    const payload = Object.fromEntries(
+      Object.entries(form).map(([k, v]) => [k, v === '' ? null : v])
+    )
     try {
       if (editing) {
-        await supabase.from(table).update(form).eq('id', editing.id)
+        await supabase.from(table).update(payload).eq('id', editing.id)
       } else {
-        await supabase.from(table).insert(form)
+        await supabase.from(table).insert(payload)
       }
       setDialogOpen(false)
       onRefresh?.()

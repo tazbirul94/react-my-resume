@@ -96,6 +96,7 @@ create table if not exists projects (
   category text,
   publisher text,
   release_date date,
+  description text,
   keywords text[],
   sort_order int default 0
 );

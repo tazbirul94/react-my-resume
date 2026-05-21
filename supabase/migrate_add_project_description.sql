@@ -1,7 +1,13 @@
--- Seed data for react-my-resume
--- Run in order: basics → profiles → work → education → skill_groups → skills → languages → interests → projects → certifications → testimonials
+-- Migration: add description column to projects + seed all tables
+-- Run once against your existing Supabase database
 
--- basics
+-- 1. Add missing column
+ALTER TABLE projects ADD COLUMN IF NOT EXISTS description text;
+
+-- 2. Truncate all tables (preserves structure, resets data)
+TRUNCATE basics, profiles, work, education, skill_groups, skills, languages, interests, projects, certifications, testimonials RESTART IDENTITY CASCADE;
+
+-- 3. basics
 INSERT INTO basics (name, label, picture, email, phone, website, summary, city, country_code, postal_code)
 VALUES (
   'MD TAZBIRUL HAQUE',
@@ -20,24 +26,18 @@ VALUES (
   '28201'
 );
 
--- profiles
+-- 4. profiles
 INSERT INTO profiles (network, username, url, sort_order) VALUES
-  ('github',   'Tazbirul94',    'https://github.com/tazbirul94',                      0),
-  ('linkedin', 'tazbirul-haque','https://www.linkedin.com/in/tazbirul-haque',         1);
+  ('github',   'Tazbirul94',     'https://github.com/tazbirul94',                0),
+  ('linkedin', 'tazbirul-haque', 'https://www.linkedin.com/in/tazbirul-haque',   1);
 
--- work
+-- 5. work
 INSERT INTO work (company, logo, website, position, employment_type, location, start_date, end_date, summary, highlights, skills, sort_order)
 VALUES
 (
-  'CTS EVENTIM AG & Co. KGaA',
-  'images/eventim-logo.png',
-  'https://karriere.eventim.de/en/',
-  'Software Development Expert',
-  'Full-Time',
-  'Bremen, Germany',
-  '2023-07-01',
-  NULL,
-  NULL,
+  'CTS EVENTIM AG & Co. KGaA', 'images/eventim-logo.png', 'https://karriere.eventim.de/en/',
+  'Software Development Expert', 'Full-Time', 'Bremen, Germany',
+  '2023-07-01', NULL, NULL,
   ARRAY[
     'Design and maintain enterprise applications using C#, ASP.NET Core, and modern modulith architecture.',
     'Implement and optimize RESTful APIs and GraphQL services for scalable system integrations.',
@@ -50,15 +50,9 @@ VALUES
   0
 ),
 (
-  'Swiss Re (Movingdots GmbH)',
-  'images/swiss-re-logo.png',
-  'https://www.movingdots.com/',
-  'Senior Full Stack Developer',
-  'Full-Time',
-  'Remote',
-  '2023-04-01',
-  '2023-06-30',
-  NULL,
+  'Swiss Re (Movingdots GmbH)', 'images/swiss-re-logo.png', 'https://www.movingdots.com/',
+  'Senior Full Stack Developer', 'Full-Time', 'Remote',
+  '2023-04-01', '2023-06-30', NULL,
   ARRAY[
     'Led Databricks and Azure Data Factory pipelines to process large-scale telematics data for usage-based insurance.',
     'Built features enabling insurers to assess driver risk profiles and crash likelihood more accurately.',
@@ -68,15 +62,9 @@ VALUES
   1
 ),
 (
-  'Swiss Re (Movingdots GmbH)',
-  'images/swiss-re-logo.png',
-  'https://www.movingdots.com/',
-  'Full Stack Developer',
-  'Full-Time',
-  'Remote',
-  '2022-04-01',
-  '2023-03-31',
-  NULL,
+  'Swiss Re (Movingdots GmbH)', 'images/swiss-re-logo.png', 'https://www.movingdots.com/',
+  'Full Stack Developer', 'Full-Time', 'Remote',
+  '2022-04-01', '2023-03-31', NULL,
   ARRAY[
     'Delivered production-grade APIs and optimized database queries with MS SQL, LINQ, and Entity Framework.',
     'Enhanced insurance telematics platforms with REST API integrations and cloud service connections.',
@@ -86,15 +74,9 @@ VALUES
   2
 ),
 (
-  'Swiss Re (Movingdots GmbH)',
-  'images/swiss-re-logo.png',
-  'https://www.movingdots.com/',
-  'Full Stack Developer (Working Student)',
-  'Working Student',
-  'Kleve, Germany',
-  '2021-08-01',
-  '2022-03-31',
-  NULL,
+  'Swiss Re (Movingdots GmbH)', 'images/swiss-re-logo.png', 'https://www.movingdots.com/',
+  'Full Stack Developer (Working Student)', 'Working Student', 'Kleve, Germany',
+  '2021-08-01', '2022-03-31', NULL,
   ARRAY[
     'Contributed to full-stack projects with C#, ASP.NET Core, ReactJS, React Native, and MS SQL.',
     'Completed Master''s thesis: "Crash Detection using ML Models (Decision Tree, SVM, ANN) with Hyperparameter Optimization" on real Swiss Re telematics data.'
@@ -103,15 +85,9 @@ VALUES
   3
 ),
 (
-  'Netzlab GmbH',
-  'images/netzlab_gmbh_logo.jpg',
-  'https://netzlab.de/',
-  'Software Engineer (Working Student)',
-  'Working Student',
-  'Düsseldorf, Germany',
-  '2020-10-01',
-  '2021-07-31',
-  NULL,
+  'Netzlab GmbH', 'images/netzlab_gmbh_logo.jpg', 'https://netzlab.de/',
+  'Software Engineer (Working Student)', 'Working Student', 'Düsseldorf, Germany',
+  '2020-10-01', '2021-07-31', NULL,
   ARRAY[
     'Developed and maintained mobile and web applications using React Native, C#, ASP.NET Core, and MS SQL.',
     'Built REST APIs and managed version control with Azure DevOps.'
@@ -120,15 +96,9 @@ VALUES
   4
 ),
 (
-  'Convince Computer Limited',
-  'images/CCL-logo.jpg',
-  'https://www.convincebd.com/',
-  'Programmer',
-  'Full-Time',
-  'Dhaka, Bangladesh',
-  '2017-09-15',
-  '2019-09-15',
-  NULL,
+  'Convince Computer Limited', 'images/CCL-logo.jpg', 'https://www.convincebd.com/',
+  'Programmer', 'Full-Time', 'Dhaka, Bangladesh',
+  '2017-09-15', '2019-09-15', NULL,
   ARRAY[
     'Built business management web applications using ASP.NET MVC and C#.',
     'Processed and queried large datasets with MS SQL Server.'
@@ -137,69 +107,42 @@ VALUES
   5
 );
 
--- education
+-- 6. education
 INSERT INTO education (institution, logo, website, degree, area, location, start_date, end_date, gpa, gpa_german, summary, courses, sort_order)
 VALUES
 (
-  'Hochschule Rhein-Waal',
-  'images/Hochschule_Rhein-Waal-logo.png',
-  'https://www.hochschule-rhein-waal.de/',
-  'Master of Science',
-  'Master in Information Engineering and Computer Science',
-  'Kleve, Germany',
-  '2020-03-01',
-  '2023-02-01',
-  '1.8',
-  '1.8',
+  'Hochschule Rhein-Waal', 'images/Hochschule_Rhein-Waal-logo.png', 'https://www.hochschule-rhein-waal.de/',
+  'Master of Science', 'Master in Information Engineering and Computer Science', 'Kleve, Germany',
+  '2020-03-01', '2023-02-01', '1.8', '1.8',
   ARRAY[
     'Strong focus on software engineering, distributed systems, cloud computing, and data analytics.',
     'Master''s Thesis: "Crash Detection using Machine Learning Models (Decision Tree, SVM, and ANN) with Hyperparameter Optimization", developed with Swiss Re (Movingdots GmbH).'
   ],
-  ARRAY[]::text[],
-  0
+  ARRAY[]::text[], 0
 ),
 (
-  'Ahsanullah University of Science and Technology',
-  'images/AUST.png',
-  'https://aust.edu/',
-  'Bachelor of Science',
-  'Bachelor in Computer Science and Engineering',
-  'Dhaka, Bangladesh',
-  '2013-03-01',
-  '2017-03-01',
-  '3.34',
-  '2.1',
+  'Ahsanullah University of Science and Technology', 'images/AUST.png', 'https://aust.edu/',
+  'Bachelor of Science', 'Bachelor in Computer Science and Engineering', 'Dhaka, Bangladesh',
+  '2013-03-01', '2017-03-01', '3.34', '2.1',
   ARRAY['Comprehensive program covering software engineering, algorithms, operating systems, databases, and AI.'],
-  ARRAY[]::text[],
-  1
+  ARRAY[]::text[], 1
 ),
 (
-  'SOS Hermann Gmeiner College',
-  'images/HGC.png',
-  NULL,
-  NULL,
-  'Higher Secondary Certificate',
-  'Dhaka, Bangladesh',
-  '2010-06-01',
-  '2012-06-01',
-  '5.0',
-  '1.0',
-  ARRAY[]::text[],
-  ARRAY[]::text[],
-  2
+  'SOS Hermann Gmeiner College', 'images/HGC.png', NULL,
+  NULL, 'Higher Secondary Certificate', 'Dhaka, Bangladesh',
+  '2010-06-01', '2012-06-01', '5.0', '1.0',
+  ARRAY[]::text[], ARRAY[]::text[], 2
 );
 
--- skill_groups
+-- 7. skill_groups
 INSERT INTO skill_groups (title, description, type, sort_order) VALUES
   ('Backend',           ARRAY[]::text[], 'hard', 0),
   ('Cloud & DevOps',    ARRAY[]::text[], 'hard', 1),
   ('Frontend & Mobile', ARRAY[]::text[], 'hard', 2),
   ('Data & ML',         ARRAY[]::text[], 'hard', 3);
 
--- skills (CTE joins on group title)
-WITH sg AS (
-  SELECT id, title FROM skill_groups
-)
+-- 8. skills
+WITH sg AS (SELECT id, title FROM skill_groups)
 INSERT INTO skills (group_id, name, level, sort_order)
 SELECT sg.id, s.name, s.level, s.sort_order
 FROM (VALUES
@@ -231,70 +174,53 @@ FROM (VALUES
 ) AS s(group_title, name, level, sort_order)
 JOIN sg ON sg.title = s.group_title;
 
--- languages
+-- 9. languages
 INSERT INTO languages (name, level, sort_order) VALUES
   ('German',  'B1',     0),
   ('English', 'B2',     1),
   ('Bengali', 'Native', 2);
 
--- interests
+-- 10. interests
 INSERT INTO interests (name, keywords, sort_order) VALUES
-  ('Photography', ARRAY['Landscapes', 'Nature', 'Street'],         0),
-  ('Travel',      ARRAY['City breaks', 'Hiking'],                  1),
-  ('Cooking',     ARRAY['Bangladeshi', 'BBQ', 'Experimenting'],    2),
-  ('DIY Projects',ARRAY['Quilling', 'Origami', 'Puzzles'],         3),
-  ('Music',       ARRAY['Guitar', 'Piano', 'Spotify'],             4);
+  ('Photography', ARRAY['Landscapes', 'Nature', 'Street'],        0),
+  ('Travel',      ARRAY['City breaks', 'Hiking'],                 1),
+  ('Cooking',     ARRAY['Bangladeshi', 'BBQ', 'Experimenting'],   2),
+  ('DIY Projects',ARRAY['Quilling', 'Origami', 'Puzzles'],        3),
+  ('Music',       ARRAY['Guitar', 'Piano', 'Spotify'],            4);
 
--- projects
-INSERT INTO projects (name, category, publisher, website, release_date, keywords, sort_order) VALUES
+-- 11. projects
+INSERT INTO projects (name, category, publisher, website, release_date, description, keywords, sort_order) VALUES
 (
-  'ML Crash Detection',
-  'Research / ML',
-  'Hochschule Rhein-Waal × Swiss Re',
-  'https://github.com/tazbirul94',
-  '2023-02-01',
-  ARRAY['Python', 'Machine Learning', 'SVM', 'Decision Tree', 'ANN', 'Telematics'],
-  0
+  'ML Crash Detection', 'Research / ML', 'Hochschule Rhein-Waal × Swiss Re',
+  'https://github.com/tazbirul94', '2023-02-01',
+  'Master''s thesis: crash detection from real telematics data using Decision Tree, SVM, and ANN with hyperparameter optimization. Collaboration with Swiss Re (Movingdots).',
+  ARRAY['Python','Machine Learning','SVM','Decision Tree','ANN','Telematics'], 0
 ),
 (
-  'React Resume Portfolio',
-  'Web App',
-  'Personal',
-  'https://tazbirul94.github.io/react-my-resume',
-  '2024-01-01',
-  ARRAY['React', 'Vite', 'Tailwind CSS', 'Supabase', 'i18n', 'GitHub Pages'],
-  1
+  'React Resume Portfolio', 'Web App', 'Personal',
+  'https://tazbirul94.github.io/react-my-resume', '2024-01-01',
+  'Dynamic resume website with Supabase CMS backend, EN/DE i18n, dark mode, print/PDF export, and admin panel. Built with React, Vite, and Tailwind CSS.',
+  ARRAY['React','Vite','Tailwind CSS','Supabase','i18n','GitHub Pages'], 1
 ),
 (
-  'Insurance Telematics API',
-  'Enterprise / Backend',
-  'Swiss Re (Movingdots)',
-  'https://www.movingdots.com/',
-  '2023-03-01',
-  ARRAY['C#', 'ASP.NET Core', 'Databricks', 'Azure', 'REST APIs', 'Telematics'],
-  2
+  'Insurance Telematics API', 'Enterprise / Backend', 'Swiss Re (Movingdots)',
+  'https://www.movingdots.com/', '2023-03-01',
+  'Scalable telematics data pipelines on Databricks and Azure Data Factory for usage-based insurance risk scoring. C# / ASP.NET Core REST APIs.',
+  ARRAY['C#','ASP.NET Core','Databricks','Azure','REST APIs','Telematics'], 2
 );
 
--- certifications
+-- 12. certifications
 INSERT INTO certifications (title, issuer, logo, issue_date, credential_url, sort_order) VALUES
 (
-  'Telc German B1',
-  'telc gGmbH',
-  'images/telc.png',
-  '2025-03-01',
-  'https://results.telc.net/qr/qM2RD7IlSqC3FxHsVhgNkYwqmfcuck9Vjx217LH-8RzXJQ6WQxhBOIxE5r8xPoFM',
-  0
+  'Telc German B1', 'telc gGmbH', 'images/telc.png', '2025-03-01',
+  'https://results.telc.net/qr/qM2RD7IlSqC3FxHsVhgNkYwqmfcuck9Vjx217LH-8RzXJQ6WQxhBOIxE5r8xPoFM', 0
 ),
 (
-  'C# (Basic)',
-  'HackerRank',
-  'images/hackerrank.png',
-  '2021-10-01',
-  'https://www.hackerrank.com/certificates/d976e40ae220',
-  1
+  'C# (Basic)', 'HackerRank', 'images/hackerrank.png', '2021-10-01',
+  'https://www.hackerrank.com/certificates/d976e40ae220', 1
 );
 
--- testimonials
+-- 13. testimonials
 INSERT INTO testimonials (name, position, company, reference, sort_order) VALUES
 (
   'Md Shahabub Alam',

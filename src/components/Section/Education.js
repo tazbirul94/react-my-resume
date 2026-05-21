@@ -51,7 +51,12 @@ const ProgramRow = ({ entry }) => {
     <div className="wk-role-row">
       <div className="wk-role-row-head">
         <h4 className="wk-role">
-          {entry.degree || entry.program || entry.area || "Program"}
+          {entry.degree || entry.program || "Program"}
+          {entry.area && (
+            <span style={{ fontWeight: 400, opacity: 0.72, marginLeft: 6 }}>
+              — {entry.area}
+            </span>
+          )}
         </h4>
         <div className="wk-meta">
           <span className="wk-date">

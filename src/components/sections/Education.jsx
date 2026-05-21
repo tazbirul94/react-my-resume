@@ -30,6 +30,11 @@ export function Education() {
               <div style={{ flex: 1, minWidth: 0 }}>
                 <h3 style={{ fontSize: 'var(--type-card-h)', fontWeight: 600, color: 'rgb(var(--text-primary))', marginBottom: 3 }}>
                   {edu.degree || edu.area}
+                  {edu.degree && edu.area && (
+                    <span style={{ fontWeight: 400, color: 'rgb(var(--text-secondary))', marginLeft: 6 }}>
+                      — {edu.area}
+                    </span>
+                  )}
                 </h3>
                 {edu.website ? (
                   <a href={edu.website} target="_blank" rel="noopener noreferrer"

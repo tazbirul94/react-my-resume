@@ -3,6 +3,7 @@ import { CrudPage } from '@/components/admin/CrudPage'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
+import { DatePicker } from '@/components/ui/DatePicker'
 import { supabase } from '@/lib/supabase'
 import { fallbackData } from '@/lib/fallback'
 
@@ -41,8 +42,8 @@ export function WorkAdmin() {
           <div className="grid grid-cols-2 gap-3">
             <Input label="Company" value={form.company} onChange={e => setForm(f => ({...f, company: e.target.value}))} />
             <Input label="Position" value={form.position} onChange={e => setForm(f => ({...f, position: e.target.value}))} />
-            <Input label="Start Date" type="date" value={form.start_date} onChange={e => setForm(f => ({...f, start_date: e.target.value}))} />
-            <Input label="End Date (leave blank = Present)" type="date" value={form.end_date || ''} onChange={e => setForm(f => ({...f, end_date: e.target.value || null}))} />
+            <DatePicker label="Start Date" value={form.start_date} onChange={v => setForm(f => ({...f, start_date: v}))} clearable={false} />
+            <DatePicker label="End Date (blank = Present)" value={form.end_date || ''} onChange={v => setForm(f => ({...f, end_date: v || null}))} placeholder="Present" />
             <Input label="Website" value={form.website || ''} onChange={e => setForm(f => ({...f, website: e.target.value}))} />
             <Input label="Location" value={form.location || ''} onChange={e => setForm(f => ({...f, location: e.target.value}))} />
           </div>

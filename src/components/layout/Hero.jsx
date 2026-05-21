@@ -56,24 +56,6 @@ export function Hero({ basics, profiles = [] }) {
 
       <div className="relative z-10 text-center px-5 w-full max-w-3xl mx-auto pt-28 pb-36">
 
-        {/* Avatar */}
-        {basics.picture && (
-          <div className="hero-avatar mb-9 flex justify-center">
-            <img
-              src={basics.picture}
-              alt={basics.name}
-              onError={(e) => { e.target.style.display = 'none' }}
-              style={{
-                width: 180,
-                height: 180,
-                borderRadius: '50%',
-                objectFit: 'cover',
-                border: '1px solid rgb(var(--apple-border))',
-                boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
-              }}
-            />
-          </div>
-        )}
 
         {/* Role eyebrow */}
         <p className="hero-label eyebrow mb-4">{basics.label}</p>

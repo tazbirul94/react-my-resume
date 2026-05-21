@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { CrudPage } from '@/components/admin/CrudPage'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
+import { DatePicker } from '@/components/ui/DatePicker'
 import { supabase } from '@/lib/supabase'
 import { fallbackData } from '@/lib/fallback'
 
@@ -45,7 +46,7 @@ export function ProjectsAdmin() {
             <Input label="Website" value={form.website || ''} onChange={e => setForm(f => ({...f, website: e.target.value}))} />
             <Input label="Thumbnail Image URL" value={form.image_thumb || ''} onChange={e => setForm(f => ({...f, image_thumb: e.target.value}))} />
             <Input label="Modal Image URL" value={form.image_modal || ''} onChange={e => setForm(f => ({...f, image_modal: e.target.value}))} />
-            <Input label="Release Date" type="date" value={form.release_date || ''} onChange={e => setForm(f => ({...f, release_date: e.target.value}))} />
+            <DatePicker label="Release Date" value={form.release_date || ''} onChange={v => setForm(f => ({...f, release_date: v}))} />
             <Input label="Keywords (comma separated)" value={(form.keywords || []).join(', ')} onChange={e => setForm(f => ({...f, keywords: e.target.value.split(',').map(s => s.trim()).filter(Boolean)}))} />
           </div>
         </>

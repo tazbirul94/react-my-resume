@@ -3,6 +3,7 @@ import { CrudPage } from '@/components/admin/CrudPage'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
+import { DatePicker } from '@/components/ui/DatePicker'
 import { supabase } from '@/lib/supabase'
 import { fallbackData } from '@/lib/fallback'
 
@@ -46,8 +47,8 @@ export function EducationAdmin() {
             <Input label="GPA" value={form.gpa || ''} onChange={e => setForm(f => ({...f, gpa: e.target.value}))} />
             <Input label="GPA (German scale)" value={form.gpa_german || ''} onChange={e => setForm(f => ({...f, gpa_german: e.target.value}))} />
             <Input label="Website" value={form.website || ''} onChange={e => setForm(f => ({...f, website: e.target.value}))} />
-            <Input label="Start Date" type="date" value={form.start_date || ''} onChange={e => setForm(f => ({...f, start_date: e.target.value}))} />
-            <Input label="End Date (leave blank = Present)" type="date" value={form.end_date || ''} onChange={e => setForm(f => ({...f, end_date: e.target.value || null}))} />
+            <DatePicker label="Start Date" value={form.start_date || ''} onChange={v => setForm(f => ({...f, start_date: v}))} clearable={false} />
+            <DatePicker label="End Date (blank = Present)" value={form.end_date || ''} onChange={v => setForm(f => ({...f, end_date: v || null}))} placeholder="Present" />
             <Input label="Location" value={form.location || ''} onChange={e => setForm(f => ({...f, location: e.target.value}))} className="col-span-2" />
           </div>
           <Textarea label="Summary" value={form.summary || ''} onChange={e => setForm(f => ({...f, summary: e.target.value}))} />

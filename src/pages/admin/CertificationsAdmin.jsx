@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { CrudPage } from '@/components/admin/CrudPage'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
+import { DatePicker } from '@/components/ui/DatePicker'
 import { supabase } from '@/lib/supabase'
 import { fallbackData } from '@/lib/fallback'
 
@@ -41,7 +42,7 @@ export function CertificationsAdmin() {
             <Input label="Title" value={form.title || ''} onChange={e => setForm(f => ({...f, title: e.target.value}))} />
             <Input label="Issuer" value={form.issuer || ''} onChange={e => setForm(f => ({...f, issuer: e.target.value}))} />
             <Input label="Issuer Logo URL" value={form.logo || ''} onChange={e => setForm(f => ({...f, logo: e.target.value}))} />
-            <Input label="Issue Date" type="date" value={form.issue_date || ''} onChange={e => setForm(f => ({...f, issue_date: e.target.value}))} />
+            <DatePicker label="Issue Date" value={form.issue_date || ''} onChange={v => setForm(f => ({...f, issue_date: v}))} />
             <Input label="Credential URL" value={form.credential_url || ''} onChange={e => setForm(f => ({...f, credential_url: e.target.value}))} className="col-span-2" />
           </div>
         </>

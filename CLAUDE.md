@@ -2,16 +2,28 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Setup
+
+1. Copy env file: `cp .env.example .env`
+2. Fill in `.env`:
+   ```
+   VITE_SUPABASE_URL=https://<project-ref>.supabase.co
+   VITE_SUPABASE_ANON_KEY=<publishable-key>
+   ```
+   Get both from Supabase dashboard → **Settings → API Keys**.
+3. Create admin user: Supabase dashboard → **Authentication → Users → Add user**.
+4. Install deps: `npm install`
+
 ## Commands
 
 ```bash
-npm start          # Dev server on localhost:3000
+npm run dev        # Dev server on localhost:5173
 npm run build      # Production build
-npm test           # Run tests (Jest, jsdom)
+npm run preview    # Preview production build locally
 npm run deploy     # Build + publish to GitHub Pages (tazbirul94.github.io/react-my-resume)
 ```
 
-No single-test runner flag needed — `react-scripts test` runs all tests; prefix with `--testPathPattern=<name>` to filter.
+Admin panel: `http://localhost:5173/admin/login`
 
 ## Architecture
 

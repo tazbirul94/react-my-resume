@@ -80,7 +80,7 @@ export function Navbar({ name = 'Resume' }) {
               <a
                 key={link.href}
                 href={link.href}
-                className="relative px-3 py-1.5 rounded-md transition-colors duration-150"
+                className="nav-link relative px-3 py-1.5 rounded-md transition-colors duration-150"
                 style={{
                   fontSize: 'var(--type-small)',
                   fontWeight: isActive ? 600 : 500,
@@ -98,7 +98,7 @@ export function Navbar({ name = 'Resume' }) {
           <LocaleSwitcher />
           <ThemeToggle />
           <button
-            className="md:hidden p-2 rounded-md transition-colors"
+            className="mobile-menu-btn md:hidden p-2 rounded-md transition-colors"
             style={{ color: 'rgb(var(--text-secondary))' }}
             onClick={() => setMobileOpen(v => !v)}
             aria-label="Toggle menu"
@@ -124,7 +124,7 @@ export function Navbar({ name = 'Resume' }) {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center py-3 border-b last:border-0 transition-colors"
+                className="nav-link flex items-center py-3 border-b last:border-0 transition-colors"
                 style={{
                   fontSize: 'var(--type-small)',
                   fontWeight: isActive ? 600 : 500,

@@ -20,7 +20,7 @@ export function AdminDashboard() {
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {SECTIONS.map(s => (
           <Link key={s.path} to={`/admin/${s.path}`}>
-            <Card className="hover:border-brand transition-colors cursor-pointer h-full">
+            <Card className="hover:border-apple-text/30 transition-colors cursor-pointer h-full">
               <CardHeader><CardTitle className="text-base">{s.label}</CardTitle></CardHeader>
               <CardContent><p className="text-sm text-muted-foreground">{s.description}</p></CardContent>
             </Card>

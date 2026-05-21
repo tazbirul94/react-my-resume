@@ -8,6 +8,10 @@ export default {
   theme: {
     extend: {
       colors: {
+        brand: {
+          DEFAULT: 'rgb(var(--accent) / <alpha-value>)',
+          dark:    'rgb(var(--accent-hover) / <alpha-value>)',
+        },
         /* Apple semantic tokens */
         'apple-bg':        'rgb(var(--bg-primary) / <alpha-value>)',
         'apple-bg-2':      'rgb(var(--bg-secondary) / <alpha-value>)',

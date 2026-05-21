@@ -12,12 +12,13 @@ export function LocaleSwitcher() {
             key={l.code}
             onClick={() => setLocale(l.code)}
             data-print="hidden"
+            className={isActive ? undefined : 'locale-btn'}
             style={{
               padding: '3px 9px',
               borderRadius: 6,
-              border: isActive ? '1px solid rgb(var(--accent))' : '1px solid rgb(var(--apple-border))',
-              background: isActive ? 'rgb(var(--accent))' : 'transparent',
-              color: isActive ? '#fff' : 'rgb(var(--text-secondary))',
+              border: isActive ? '1px solid rgb(var(--text-primary))' : '1px solid rgb(var(--apple-border))',
+              background: isActive ? 'rgb(var(--text-primary))' : 'transparent',
+              color: isActive ? 'rgb(var(--bg-primary))' : 'rgb(var(--text-secondary))',
               fontSize: 12,
               fontWeight: 600,
               fontFamily: 'inherit',

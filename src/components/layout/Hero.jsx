@@ -132,14 +132,16 @@ export function Hero({ basics, profiles = [] }) {
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
               height: 44, padding: '0 28px', borderRadius: 12,
-              background: 'rgb(var(--accent))',
-              color: '#fff',
+              background: 'rgb(var(--text-primary))',
+              color: 'rgb(var(--bg-primary))',
               fontSize: 'var(--type-small)', fontWeight: 600,
+              letterSpacing: '-0.01em',
               textDecoration: 'none',
-              transition: 'background 200ms ease, transform 200ms ease',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.14)',
+              transition: 'opacity 150ms ease, transform 200ms ease',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'rgb(var(--accent-hover))'; e.currentTarget.style.transform = 'scale(1.02)' }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'rgb(var(--accent))'; e.currentTarget.style.transform = 'scale(1)' }}
+            onMouseEnter={e => { e.currentTarget.style.opacity = '0.88'; e.currentTarget.style.transform = 'scale(1.02)' }}
+            onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'scale(1)' }}
           >
             <FileText size={16} />
             {t('hero.viewResume')}

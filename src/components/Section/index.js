@@ -10,6 +10,7 @@ import Hobby from './Hobby';
 import Languages from "./Languages";
 import SoftSkills from './SoftSkills';
 import Certifications from './Certifications';
+import Photo from './Photo';
 
 const Section = ({
   basics,
@@ -25,6 +26,7 @@ const Section = ({
 }) => {
   return (
     <div>
+      <Photo content={basics} />
       <About content={basics} />
       <Work content={work} />
       <Education content={education} />

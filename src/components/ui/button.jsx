@@ -1,11 +1,11 @@
 import { cn } from '@/lib/utils'
 
 const variants = {
-  default: 'bg-brand text-white hover:bg-brand-dark shadow-sm hover:shadow-brand/25 hover:shadow-md',
-  outline: 'border border-brand/40 text-brand hover:border-brand hover:bg-brand/5',
-  ghost: 'hover:bg-muted hover:text-foreground',
-  destructive: 'bg-red-500 text-white hover:bg-red-600',
-  secondary: 'bg-muted text-foreground hover:bg-muted/70',
+  default: 'bg-apple-text text-apple-bg shadow-[0_1px_3px_rgba(0,0,0,0.12),0_1px_2px_rgba(0,0,0,0.07)] hover:opacity-90 active:opacity-80',
+  outline: 'border border-apple-border bg-transparent text-apple-text-2 hover:bg-apple-bg-2 hover:text-apple-text',
+  ghost: 'bg-transparent text-apple-text-2 hover:bg-apple-bg-2 hover:text-apple-text',
+  destructive: 'bg-red-500/90 text-white hover:bg-red-500 shadow-sm active:bg-red-600',
+  secondary: 'bg-apple-bg-2 text-apple-text hover:bg-apple-bg-3 border border-apple-border',
 }
 
 const sizes = {
@@ -15,7 +15,7 @@ const sizes = {
   icon: 'h-9 w-9',
 }
 
-const base = 'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand disabled:opacity-50'
+const base = 'inline-flex items-center justify-center rounded-lg font-medium tracking-[-0.01em] transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apple-text/30 disabled:opacity-40'
 
 export function Button({ variant = 'default', size = 'md', className, children, asChild, ...props }) {
   const cls = cn(base, variants[variant], sizes[size], className)

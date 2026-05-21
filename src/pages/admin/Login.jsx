@@ -31,7 +31,7 @@ export function AdminLogin() {
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle className="text-center text-brand">Admin Login</CardTitle>
+          <CardTitle className="text-center text-foreground">Admin Login</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">

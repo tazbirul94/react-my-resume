@@ -2,7 +2,7 @@ const resume = {
     "basics": {
         "name": "MD TAZBIRUL HAQUE",
         "label": "SOFTWARE ENGINEER",
-        "picture": "../resoucesimages/galaxy head.jpg",
+        "picture": "images/myself2.jpg",
         "email": "tazbirul94@gmail.com",
         // "phone": "+49 17657742207",
         "website": "<WEBSITE>",

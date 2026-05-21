@@ -79,6 +79,23 @@
   ::-webkit-scrollbar-thumb:hover { background: rgba(var(--accent) / 0.55); }
 }
 
+/* ── Navbar interactive states ───────────────────── */
+.nav-link:hover {
+  color: rgb(var(--text-primary)) !important;
+  background: rgba(var(--text-primary) / 0.06) !important;
+}
+
+.locale-btn:hover {
+  border-color: rgb(var(--accent)) !important;
+  color: rgb(var(--accent)) !important;
+  background: rgba(var(--accent) / 0.08) !important;
+}
+
+.mobile-menu-btn:hover {
+  background: rgba(var(--text-primary) / 0.06) !important;
+  color: rgb(var(--text-primary)) !important;
+}
+
 /* ── Type scale vars ─────────────────────────────── */
 :root {
   --type-hero:    clamp(3rem, 7vw, 5.5rem);

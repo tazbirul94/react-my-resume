@@ -13,6 +13,7 @@ const ui = {
     certifications: 'Zertifizierungen',
     testimonials: 'Referenzen',
     references: 'Referenzen',
+    photo: 'Foto',
   },
   navMenu: {
     showNav: 'Navigation anzeigen',
@@ -73,7 +74,7 @@ const ui = {
     toggleLabel: 'Design wechseln',
   },
   footer: {
-    description: 'Diese Seite wurde in React.js von {author1} entwickelt und modifiziert, basierend auf dem ursprünglichen Design von Ceevee von {author2}.',
+    description: 'Entworfen und entwickelt in React.js von {author1}',
     authorName: 'Tazbirul Haque',
   },
 }

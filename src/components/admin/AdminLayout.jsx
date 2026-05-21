@@ -22,14 +22,14 @@ export function AdminLayout() {
   return (
     <div className="min-h-screen flex bg-background">
       <aside className="w-56 border-r border-border bg-card flex flex-col">
-        <div className="p-4 border-b border-border font-bold text-brand">Admin Panel</div>
+        <div className="p-4 border-b border-border font-bold text-foreground tracking-tight">Admin Panel</div>
         <nav className="flex-1 p-2 space-y-1">
           <Link to="/admin" className="flex items-center gap-2 px-3 py-2 rounded-md text-sm hover:bg-muted transition-colors">
             <Home className="h-4 w-4" /> Dashboard
           </Link>
           {SECTIONS.map(s => (
             <Link key={s.path} to={`/admin/${s.path}`}
-              className={`block px-3 py-2 rounded-md text-sm transition-colors ${location.pathname.includes(s.path) ? 'bg-brand text-white' : 'hover:bg-muted'}`}>
+              className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors ${location.pathname.includes(s.path) ? 'bg-apple-text text-apple-bg' : 'text-apple-text-2 hover:bg-apple-bg-2 hover:text-apple-text'}`}>
               {s.label}
             </Link>
           ))}

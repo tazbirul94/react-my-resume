@@ -4,7 +4,6 @@ export function Footer({ basics }) {
   const { t } = useLocale()
   const desc = t('footer.description')
     .replace('{author1}', basics?.name || t('footer.authorName'))
-    .replace('{author2}', 'Ceevee')
 
   return (
     <footer

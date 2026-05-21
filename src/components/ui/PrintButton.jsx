@@ -20,23 +20,26 @@ export function PrintButton() {
         height: 44,
         padding: '0 20px',
         borderRadius: 22,
-        background: 'rgb(var(--accent))',
-        color: '#fff',
+        background: 'rgb(var(--text-primary))',
+        color: 'rgb(var(--bg-primary))',
         border: 'none',
         cursor: 'pointer',
         fontSize: 14,
         fontWeight: 600,
         fontFamily: 'inherit',
-        boxShadow: '0 4px 16px rgba(0,113,227,0.35)',
-        transition: 'transform 200ms ease, box-shadow 200ms ease',
+        letterSpacing: '-0.01em',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.18), 0 1px 2px rgba(0,0,0,0.10)',
+        transition: 'transform 200ms ease, box-shadow 200ms ease, opacity 150ms ease',
       }}
       onMouseEnter={e => {
         e.currentTarget.style.transform = 'scale(1.04)'
-        e.currentTarget.style.boxShadow = '0 6px 24px rgba(0,113,227,0.45)'
+        e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.22)'
+        e.currentTarget.style.opacity = '0.92'
       }}
       onMouseLeave={e => {
         e.currentTarget.style.transform = 'scale(1)'
-        e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,113,227,0.35)'
+        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.18), 0 1px 2px rgba(0,0,0,0.10)'
+        e.currentTarget.style.opacity = '1'
       }}
     >
       <Download size={16} />

@@ -1,5 +1,4 @@
-import { Github, Mail, Globe, Linkedin, Twitter } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Github, Mail, Globe, Linkedin, Twitter, ArrowDown, FileText } from 'lucide-react'
 
 const ICON_MAP = {
   github: Github,
@@ -13,65 +12,106 @@ export function Hero({ basics, profiles = [] }) {
   if (!basics) return null
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-brand-dark">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-brand/20 via-transparent to-transparent" />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950">
+      {/* Animated ambient orbs */}
+      <div className="orb-1 absolute top-1/4 left-1/4 h-[500px] w-[500px] rounded-full bg-brand/10 blur-[120px] pointer-events-none" />
+      <div className="orb-2 absolute bottom-1/4 right-1/4 h-[400px] w-[400px] rounded-full bg-brand-light/8 blur-[100px] pointer-events-none" />
 
-      <div className="relative z-10 text-center px-4 max-w-3xl mx-auto pt-16">
+      {/* Subtle dot grid */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.025]"
+        style={{
+          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)',
+          backgroundSize: '40px 40px',
+        }}
+      />
+
+      <div className="relative z-10 text-center px-5 w-full max-w-3xl mx-auto pt-24 pb-32">
+        {/* Avatar */}
         {basics.picture && (
-          <div className="mb-6 flex justify-center">
-            <img
-              src={basics.picture}
-              alt={basics.name}
-              onError={(e) => { e.target.style.display = 'none' }}
-              className="h-32 w-32 rounded-full object-cover ring-4 ring-brand ring-offset-4 ring-offset-slate-900"
-            />
+          <div className="hero-avatar mb-8 flex justify-center">
+            <div className="relative">
+              <div className="absolute inset-0 rounded-full bg-brand/30 blur-2xl scale-125" />
+              <img
+                src={basics.picture}
+                alt={basics.name}
+                onError={(e) => { e.target.style.display = 'none' }}
+                className="relative h-28 w-28 rounded-full object-cover ring-2 ring-brand/50 ring-offset-4 ring-offset-slate-950"
+              />
+            </div>
           </div>
         )}
 
-        <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight mb-3">
+        {/* Name */}
+        <h1 className="hero-name font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight leading-tight mb-5 break-words">
           {basics.name}
         </h1>
-        <p className="text-xl md:text-2xl text-brand-light font-medium mb-6">
-          {basics.label}
-        </p>
 
-        {profiles.length > 0 && (
-          <div className="flex justify-center gap-4 mb-8">
+        {/* Role pill */}
+        <div className="hero-label flex justify-center mb-9">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brand/25 bg-brand/8 text-brand-light text-sm font-medium tracking-wide">
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-light animate-pulse" />
+            {basics.label}
+          </span>
+        </div>
+
+        {/* Social links */}
+        {(profiles.length > 0 || basics.email) && (
+          <div className="hero-socials flex justify-center gap-2.5 mb-10">
             {profiles.map((p) => {
               const Icon = ICON_MAP[p.network?.toLowerCase()] || Globe
               return (
-                <a key={p.network} href={p.url} target="_blank" rel="noopener noreferrer"
-                  className="p-2.5 rounded-full bg-white/10 hover:bg-brand transition-colors text-white">
-                  <Icon className="h-5 w-5" />
+                <a
+                  key={p.network}
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={p.network}
+                  className="h-10 w-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white/50 hover:text-white hover:border-brand/40 hover:bg-brand/10 transition-all duration-200"
+                >
+                  <Icon className="h-4 w-4" />
                 </a>
               )
             })}
             {basics.email && (
-              <a href={`mailto:${basics.email}`}
-                className="p-2.5 rounded-full bg-white/10 hover:bg-brand transition-colors text-white">
-                <Mail className="h-5 w-5" />
+              <a
+                href={`mailto:${basics.email}`}
+                title="Email"
+                className="h-10 w-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white/50 hover:text-white hover:border-brand/40 hover:bg-brand/10 transition-all duration-200"
+              >
+                <Mail className="h-4 w-4" />
               </a>
             )}
           </div>
         )}
 
-        <div className="flex justify-center gap-4">
-          <Button size="lg" className="bg-brand hover:bg-brand-dark text-white" asChild>
-            <a href="#about">View Resume</a>
-          </Button>
-          <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10">
-            <a href={`mailto:${basics.email}`}>Contact Me</a>
-          </Button>
+        {/* CTAs */}
+        <div className="hero-ctas flex flex-wrap justify-center gap-3">
+          <a
+            href="#about"
+            className="inline-flex items-center gap-2 h-11 px-7 rounded-lg bg-brand hover:bg-brand-dark text-white font-medium text-sm transition-all duration-200 shadow-lg shadow-brand/20 hover:shadow-brand/35"
+          >
+            <FileText className="h-4 w-4" />
+            View Resume
+          </a>
+          <a
+            href={`mailto:${basics.email}`}
+            className="inline-flex items-center gap-2 h-11 px-7 rounded-lg border border-white/12 bg-white/5 hover:bg-white/10 hover:border-white/20 text-white/80 hover:text-white font-medium text-sm transition-all duration-200"
+          >
+            <Mail className="h-4 w-4" />
+            Contact Me
+          </a>
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <a href="#about" className="text-white/50 hover:text-white transition-colors">
-          <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </a>
-      </div>
+      {/* Scroll cue */}
+      <a
+        href="#about"
+        className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-white/30 hover:text-brand/70 transition-colors"
+      >
+        <span className="text-[10px] font-medium tracking-[0.2em] uppercase">Scroll</span>
+        <ArrowDown className="h-3.5 w-3.5" />
+      </a>
     </section>
   )
 }

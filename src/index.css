@@ -1,43 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 0 0% 99%;
+    --foreground: 220 20% 8%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 20% 8%;
     --primary: 183 82% 38%;
     --primary-foreground: 0 0% 100%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --border: 214.3 31.8% 91.4%;
-    --radius: 0.5rem;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 8% 50%;
+    --border: 220 14% 91%;
+    --radius: 0.625rem;
   }
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --background: 222 47% 5%;
+    --foreground: 210 40% 96%;
+    --card: 222 40% 8%;
+    --card-foreground: 210 40% 96%;
     --primary: 183 82% 45%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --border: 217.2 32.6% 17.5%;
+    --primary-foreground: 222 47% 5%;
+    --muted: 220 25% 12%;
+    --muted-foreground: 215 16% 55%;
+    --border: 220 25% 14%;
   }
 }
 
 @layer base {
-  * {
-    border-color: hsl(var(--border));
-  }
+  * { border-color: hsl(var(--border)); }
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
-  html {
-    scroll-behavior: smooth;
+  html { scroll-behavior: smooth; }
+
+  ::selection {
+    background: rgba(17, 171, 176, 0.25);
+    color: inherit;
   }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(17, 171, 176, 0.4); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(17, 171, 176, 0.7); }
 }
+
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes orb-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(50px, -40px) scale(1.06); }
+  66%       { transform: translate(-30px, 25px) scale(0.97); }
+}
+
+@keyframes orb-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40%       { transform: translate(-60px, 35px) scale(1.08); }
+  70%       { transform: translate(40px, -25px) scale(0.95); }
+}
+
+@keyframes scroll-hint {
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.5; }
+  50%       { transform: translateX(-50%) translateY(8px); opacity: 1; }
+}
+
+.hero-avatar  { animation: hero-fade-up 0.9s cubic-bezier(0.22,1,0.36,1) 0.05s both; }
+.hero-name    { animation: hero-fade-up 0.9s cubic-bezier(0.22,1,0.36,1) 0.2s both; }
+.hero-label   { animation: hero-fade-up 0.9s cubic-bezier(0.22,1,0.36,1) 0.35s both; }
+.hero-socials { animation: hero-fade-up 0.9s cubic-bezier(0.22,1,0.36,1) 0.5s both; }
+.hero-ctas    { animation: hero-fade-up 0.9s cubic-bezier(0.22,1,0.36,1) 0.65s both; }
+.hero-scroll  { animation: scroll-hint 2.2s ease-in-out 1.5s infinite; }
+
+.orb-1 { animation: orb-drift-1 20s ease-in-out infinite; }
+.orb-2 { animation: orb-drift-2 25s ease-in-out infinite; }
+
+.font-display { font-family: 'Syne', system-ui, sans-serif; }

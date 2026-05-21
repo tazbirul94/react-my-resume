@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
-import { fallbackData } from '@/lib/fallback'
+import { getFallback } from '@/lib/fallback'
+import { useLocale } from '@/context/LocaleContext'
 
 function useQuery(tableName, fallbackKey, options = {}) {
+  const { locale } = useLocale()
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   useEffect(() => {
     if (!supabase) {
-      setData(fallbackData[fallbackKey] ?? [])
+      setData(getFallback(fallbackKey, locale))
       setLoading(false)
       return
     }
@@ -17,11 +19,11 @@ function useQuery(tableName, fallbackKey, options = {}) {
     if (options.order) q = q.order(options.order, { ascending: options.ascending ?? false })
     if (options.limit) q = q.limit(options.limit)
     q.then(({ data: result, error: err }) => {
-      if (err) { setError(err); setData(fallbackData[fallbackKey] ?? []) }
+      if (err) { setError(err); setData(getFallback(fallbackKey, locale)) }
       else setData(result)
       setLoading(false)
     })
-  }, [tableName, fallbackKey])
+  }, [tableName, fallbackKey, locale])
 
   return { data, loading, error }
 }

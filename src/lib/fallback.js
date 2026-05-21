@@ -1,3 +1,5 @@
+import deResume from '@/template/resume.de_GER'
+
 // Fallback data derived from resume.example.en_US.js
 // Used when Supabase is not configured (VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY missing)
 // Field names match Supabase column names (snake_case)
@@ -210,4 +212,90 @@ export const fallbackData = {
   projects,
   certifications,
   testimonials,
+}
+
+function normalizeDE(de) {
+  const loc = de.basics?.location ?? {}
+  const deBasics = {
+    ...de.basics,
+    city: loc.city ?? de.basics.city ?? null,
+    country_code: loc.countryCode ?? de.basics.country_code ?? null,
+    postal_code: loc.postalCode ?? de.basics.postal_code ?? null,
+  }
+  delete deBasics.location
+  delete deBasics.profiles
+
+  const deProfiles = (de.basics?.profiles ?? []).map((p, i) => ({
+    network: p.network,
+    username: p.username,
+    url: p.url,
+    sort_order: i,
+  }))
+
+  const deWork = (de.work ?? []).map((w, i) => ({
+    ...w,
+    start_date: w.startDate ?? w.start_date ?? null,
+    end_date: w.endDate === 'Present' ? null : (w.endDate ?? w.end_date ?? null),
+    sort_order: i,
+  }))
+
+  const deEducation = (de.education ?? []).map((e, i) => ({
+    ...e,
+    start_date: e.startDate ?? e.start_date ?? null,
+    end_date: e.endDate ?? e.end_date ?? null,
+    sort_order: i,
+  }))
+
+  const deSkillGroups = (de.skills ?? []).map((g, i) => ({
+    id: `de-group-${i}`,
+    title: g.title,
+    description: g.description,
+    type: 'hard',
+    sort_order: i,
+  }))
+  const deSkills = (de.skills ?? []).flatMap((g, gi) =>
+    (g.skillDetails ?? []).map((s, si) => ({
+      id: `de-skill-${gi}-${si}`,
+      group_id: `de-group-${gi}`,
+      name: s.name,
+      level: s.level ?? null,
+      sort_order: si,
+    }))
+  )
+
+  const deCertifications = (de.certifications ?? []).map((c, i) => ({
+    ...c,
+    issue_date: c.issueDate ?? c.issue_date ?? null,
+    credential_url: c.credentialUrl ?? c.credential_url ?? null,
+    sort_order: i,
+  }))
+
+  const deTestimonials = (de.references ?? de.testimonials ?? []).map((r, i) => ({
+    name: r.name,
+    position: r.position,
+    company: r.company,
+    reference: r.reference,
+    sort_order: i,
+  }))
+
+  return {
+    basics: deBasics,
+    profiles: deProfiles,
+    work: deWork,
+    education: deEducation,
+    skillGroups: deSkillGroups,
+    skills: deSkills,
+    languages: de.languages ?? [],
+    interests: de.interests ?? [],
+    projects: de.projects ?? [],
+    certifications: deCertifications,
+    testimonials: deTestimonials,
+  }
+}
+
+const deFallbackData = normalizeDE(deResume)
+
+export function getFallback(key, locale) {
+  if (locale === 'de-DE') return deFallbackData[key] ?? []
+  return fallbackData[key] ?? []
 }

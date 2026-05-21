@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils'
 import { ThemeToggle } from './ThemeToggle'
 import { Menu, X } from 'lucide-react'
 import { useLocale } from '@/context/LocaleContext'
+import { useTheme } from '@/context/ThemeContext'
 import { LocaleSwitcher } from '@/components/ui/LocaleSwitcher'
 
 const SECTION_IDS = ['about', 'work', 'education', 'skills', 'portfolio', 'testimonials']
@@ -36,6 +37,7 @@ function useActiveSection() {
 
 export function Navbar({ name = 'Resume' }) {
   const { t } = useLocale()
+  const { theme } = useTheme()
   const NAV_LINKS = [
     { href: '#about',        label: t('navigation.about') },
     { href: '#work',         label: t('navigation.work') },
@@ -110,7 +112,7 @@ export function Navbar({ name = 'Resume' }) {
         <div
           className="md:hidden border-b px-6 py-2 backdrop-blur-[20px]"
           style={{
-            background: 'rgba(255,255,255,0.92)',
+            background: theme === 'dark' ? 'rgba(0,0,0,0.92)' : 'rgba(255,255,255,0.92)',
             borderColor: 'rgb(var(--apple-border))',
           }}
         >

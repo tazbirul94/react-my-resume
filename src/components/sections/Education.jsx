@@ -14,7 +14,7 @@ export function Education() {
   const { data: education, loading } = useEducation()
 
   if (loading) return (
-    <SectionWrapper id="education" title="Education">
+    <SectionWrapper id="education" eyebrow="Education" title="Academic Background">
       <div className="space-y-4">{[1,2].map(i => <Skeleton key={i} className="h-28 w-full" />)}</div>
     </SectionWrapper>
   )
@@ -22,7 +22,7 @@ export function Education() {
   const items = education ?? []
 
   return (
-    <SectionWrapper id="education" title="Education">
+    <SectionWrapper id="education" eyebrow="Education" title="Academic Background">
       <div className="space-y-4">
         {items.map((edu) => (
           <Card key={edu.id}>

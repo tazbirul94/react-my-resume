@@ -10,7 +10,7 @@ export function Testimonials() {
   const [idx, setIdx] = useState(0)
 
   if (loading) return (
-    <SectionWrapper id="testimonials" title="References" dark>
+    <SectionWrapper id="testimonials" eyebrow="References" title="What Others Say" alt>
       <Skeleton className="h-48 w-full max-w-2xl mx-auto" />
     </SectionWrapper>
   )
@@ -21,7 +21,7 @@ export function Testimonials() {
   const current = items[idx]
 
   return (
-    <SectionWrapper id="testimonials" title="References" dark>
+    <SectionWrapper id="testimonials" eyebrow="References" title="What Others Say" alt>
       <div className="max-w-2xl mx-auto">
         <Card className="dark:bg-slate-800 dark:border-slate-700">
           <CardContent className="pt-6 pb-4 text-center">

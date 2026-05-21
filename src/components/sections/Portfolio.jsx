@@ -12,7 +12,7 @@ export function Portfolio() {
   const [selected, setSelected] = useState(null)
 
   if (loading) return (
-    <SectionWrapper id="portfolio" title="Portfolio" dark>
+    <SectionWrapper id="portfolio" eyebrow="Portfolio" title="Things I've Shipped" alt>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {[1,2,3,4,5,6].map(i => <Skeleton key={i} className="h-56 w-full" />)}
       </div>
@@ -22,7 +22,7 @@ export function Portfolio() {
   const items = (projects ?? []).slice(0, 9)
 
   return (
-    <SectionWrapper id="portfolio" title="Portfolio" dark>
+    <SectionWrapper id="portfolio" eyebrow="Portfolio" title="Things I've Shipped" alt>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {items.map((proj) => (
           <Card key={proj.id} className="overflow-hidden cursor-pointer group dark:bg-slate-800 dark:border-slate-700 hover:border-brand transition-colors" onClick={() => setSelected(proj)}>

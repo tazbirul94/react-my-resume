@@ -7,7 +7,7 @@ export function Interests() {
   const { data: interests, loading } = useInterests()
 
   if (loading) return (
-    <SectionWrapper id="interests" title="Interests">
+    <SectionWrapper id="interests" eyebrow="Interests" title="Beyond the Keyboard">
       <div className="flex gap-2">{[1,2,3,4].map(i => <Skeleton key={i} className="h-8 w-24" />)}</div>
     </SectionWrapper>
   )
@@ -16,7 +16,7 @@ export function Interests() {
   if (!items.length) return null
 
   return (
-    <SectionWrapper id="interests" title="Interests & Hobbies">
+    <SectionWrapper id="interests" eyebrow="Interests" title="Beyond the Keyboard">
       <div className="space-y-4">
         {items.map((interest) => (
           <div key={interest.id}>

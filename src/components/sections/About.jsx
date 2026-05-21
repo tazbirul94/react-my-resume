@@ -1,7 +1,7 @@
 import { useBasics } from '@/hooks/useResume'
 import { SectionWrapper } from '@/components/layout/SectionWrapper'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Mail, Phone, MapPin, Globe } from 'lucide-react'
+import { Mail, Phone, MapPin, Globe, ArrowRight } from 'lucide-react'
 
 const contactItems = (basics) => [
   basics.email  && { icon: Mail,   href: `mailto:${basics.email}`,  label: basics.email },
@@ -14,11 +14,9 @@ export function About() {
   const { data: basics, loading } = useBasics()
 
   if (loading) return (
-    <SectionWrapper id="about" title="About Me">
-      <div className="flex flex-col md:flex-row gap-8 md:gap-10">
-        <div className="flex justify-center md:justify-start shrink-0">
-          <Skeleton className="h-52 w-52 rounded-2xl" />
-        </div>
+    <SectionWrapper id="about" eyebrow="About" title="About Me">
+      <div className="flex flex-col md:flex-row gap-10 md:gap-14">
+        <Skeleton className="h-52 w-52 rounded-3xl shrink-0" />
         <div className="flex-1 space-y-3 pt-2">
           {[1, 0.9, 0.75, 0.8, 0.6].map((w, i) => (
             <Skeleton key={i} className="h-4 rounded" style={{ width: `${w * 100}%` }} />
@@ -33,59 +31,121 @@ export function About() {
   const contacts = contactItems(basics)
 
   return (
-    <SectionWrapper id="about" title="About Me">
-      <div className="flex flex-col md:flex-row gap-8 md:gap-10 items-start">
+    <SectionWrapper id="about" eyebrow="About" title="About Me">
+      <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
         {/* Photo */}
-        <div className="flex justify-center md:justify-start shrink-0">
+        <div className="shrink-0 flex justify-center md:justify-start">
           {basics.picture ? (
-            <div className="relative group">
-              <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-brand/30 to-brand-light/10 blur-lg opacity-60 group-hover:opacity-80 transition-opacity" />
-              <img
-                src={basics.picture}
-                alt={basics.name}
-                onError={(e) => { e.target.style.display = 'none' }}
-                className="relative h-52 w-52 rounded-2xl object-cover ring-1 ring-brand/20"
-              />
-            </div>
+            <img
+              src={basics.picture}
+              alt={basics.name}
+              onError={(e) => { e.target.style.display = 'none' }}
+              style={{
+                width: 200, height: 200,
+                borderRadius: 24,
+                objectFit: 'cover',
+                border: '1px solid rgb(var(--apple-border))',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.07)',
+              }}
+            />
           ) : (
-            <div className="h-52 w-52 rounded-2xl bg-muted flex items-center justify-center text-4xl font-display font-bold text-brand/40">
+            <div style={{
+              width: 200, height: 200, borderRadius: 24,
+              background: 'rgb(var(--bg-secondary))',
+              border: '1px solid rgb(var(--apple-border))',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 48, fontWeight: 700, color: 'rgb(var(--text-tertiary))',
+            }}>
               {basics.name?.[0]}
             </div>
           )}
         </div>
 
         {/* Content */}
-        <div className="flex-1 min-w-0 space-y-6">
-          <div>
-            <h3 className="font-display text-2xl font-bold text-foreground">{basics.name}</h3>
-            <p className="text-brand font-medium mt-0.5">{basics.label}</p>
-          </div>
+        <div className="flex-1 min-w-0">
+          <h3 style={{ fontSize: 'var(--type-card-h)', fontWeight: 700, color: 'rgb(var(--text-primary))', marginBottom: 4 }}>
+            {basics.name}
+          </h3>
+          <p style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--accent))', fontWeight: 500, marginBottom: 20 }}>
+            {basics.label}
+          </p>
 
-          <div className="space-y-2.5 text-muted-foreground leading-relaxed">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 28 }}>
             {(basics.summary || []).map((para, i) => (
-              <p key={i}>{para}</p>
+              <p key={i} style={{ fontSize: 'var(--type-body)', color: 'rgb(var(--text-secondary))', lineHeight: 1.7 }}>
+                {para}
+              </p>
             ))}
           </div>
 
-          {/* Contact grid */}
+          {/* Contact items with micro-interaction arrow */}
           {contacts.length > 0 && (
-            <div className="grid sm:grid-cols-2 gap-2 pt-2">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 10 }}>
               {contacts.map(({ icon: Icon, href, label, external }) => {
-                const cls = "flex items-center gap-2.5 text-sm text-muted-foreground hover:text-brand transition-colors group"
-                const inner = (
-                  <>
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-brand/8 group-hover:bg-brand/15 transition-colors">
-                      <Icon className="h-3.5 w-3.5 text-brand" />
+                const content = (
+                  <span style={{ display: 'flex', alignItems: 'center', gap: 10, width: '100%' }}>
+                    <span style={{
+                      width: 30, height: 30, borderRadius: 8, flexShrink: 0,
+                      background: 'rgb(var(--bg-secondary))',
+                      border: '1px solid rgb(var(--apple-border))',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    }}>
+                      <Icon size={14} style={{ color: 'rgb(var(--accent))' }} />
                     </span>
-                    <span className="truncate">{label}</span>
-                  </>
+                    <span style={{
+                      fontSize: 'var(--type-small)', color: 'rgb(var(--text-secondary))',
+                      overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1,
+                    }}>
+                      {label}
+                    </span>
+                    {href && (
+                      <ArrowRight size={12}
+                        className="contact-arrow"
+                        style={{
+                          color: 'rgb(var(--text-tertiary))',
+                          flexShrink: 0,
+                          transform: 'translateX(-4px)',
+                          opacity: 0,
+                          transition: 'transform 150ms ease, opacity 150ms ease',
+                        }}
+                      />
+                    )}
+                  </span>
                 )
+
+                const baseStyle = {
+                  display: 'flex', alignItems: 'center',
+                  padding: '8px 12px',
+                  borderRadius: 10,
+                  border: '1px solid transparent',
+                  textDecoration: 'none',
+                  transition: 'background 150ms ease, border-color 150ms ease',
+                  cursor: href ? 'pointer' : 'default',
+                }
+
+                const handleEnter = (e) => {
+                  if (!href) return
+                  e.currentTarget.style.background = 'rgb(var(--bg-secondary))'
+                  e.currentTarget.style.borderColor = 'rgb(var(--apple-border))'
+                  const arrow = e.currentTarget.querySelector('.contact-arrow')
+                  if (arrow) { arrow.style.opacity = '1'; arrow.style.transform = 'translateX(0)' }
+                }
+                const handleLeave = (e) => {
+                  if (!href) return
+                  e.currentTarget.style.background = 'transparent'
+                  e.currentTarget.style.borderColor = 'transparent'
+                  const arrow = e.currentTarget.querySelector('.contact-arrow')
+                  if (arrow) { arrow.style.opacity = '0'; arrow.style.transform = 'translateX(-4px)' }
+                }
+
                 return href ? (
-                  <a key={label} href={href} className={cls} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
-                    {inner}
+                  <a key={label} href={href} style={baseStyle}
+                    onMouseEnter={handleEnter} onMouseLeave={handleLeave}
+                    {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+                    {content}
                   </a>
                 ) : (
-                  <span key={label} className={cls}>{inner}</span>
+                  <span key={label} style={baseStyle}>{content}</span>
                 )
               })}
             </div>

@@ -14,7 +14,7 @@ export function Certifications() {
   const { data: certs, loading } = useCertifications()
 
   if (loading) return (
-    <SectionWrapper id="certifications" title="Certifications">
+    <SectionWrapper id="certifications" eyebrow="Certifications" title="Credentials">
       <div className="grid sm:grid-cols-2 gap-4">{[1,2].map(i => <Skeleton key={i} className="h-24 w-full" />)}</div>
     </SectionWrapper>
   )
@@ -23,7 +23,7 @@ export function Certifications() {
   if (!items.length) return null
 
   return (
-    <SectionWrapper id="certifications" title="Certifications">
+    <SectionWrapper id="certifications" eyebrow="Certifications" title="Credentials">
       <div className="grid sm:grid-cols-2 gap-4">
         {items.map((cert) => (
           <Card key={cert.id}>

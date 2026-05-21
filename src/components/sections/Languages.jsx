@@ -15,7 +15,7 @@ export function Languages() {
   const { data: languages, loading } = useLanguages()
 
   if (loading) return (
-    <SectionWrapper id="languages" title="Languages">
+    <SectionWrapper id="languages" eyebrow="Languages" title="Languages I Speak" alt>
       <div className="flex gap-4">{[1,2,3].map(i => <Skeleton key={i} className="h-20 w-32" />)}</div>
     </SectionWrapper>
   )
@@ -24,7 +24,7 @@ export function Languages() {
   if (!items.length) return null
 
   return (
-    <SectionWrapper id="languages" title="Languages">
+    <SectionWrapper id="languages" eyebrow="Languages" title="Languages I Speak" alt>
       <div className="flex flex-wrap gap-4">
         {items.map((lang) => (
           <div key={lang.id} className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border bg-card min-w-[100px]">

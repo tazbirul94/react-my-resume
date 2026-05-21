@@ -6,7 +6,7 @@ import { useLocale } from '@/context/LocaleContext'
 import { useTheme } from '@/context/ThemeContext'
 import { LocaleSwitcher } from '@/components/ui/LocaleSwitcher'
 
-const SECTION_IDS = ['about', 'work', 'education', 'skills', 'portfolio', 'testimonials']
+const SECTION_IDS = ['about', 'skills', 'work', 'portfolio', 'education', 'certifications', 'testimonials']
 
 function useActiveSection() {
   const [active, setActive] = useState('')
@@ -39,12 +39,13 @@ export function Navbar({ name = 'Resume' }) {
   const { t } = useLocale()
   const { theme } = useTheme()
   const NAV_LINKS = [
-    { href: '#about',        label: t('navigation.about') },
-    { href: '#work',         label: t('navigation.work') },
-    { href: '#education',    label: t('navigation.education') },
-    { href: '#skills',       label: t('navigation.skills') },
-    { href: '#portfolio',    label: t('navigation.portfolio') },
-    { href: '#testimonials', label: t('navigation.references') },
+    { href: '#about',          label: t('navigation.about') },
+    { href: '#skills',         label: t('navigation.skills') },
+    { href: '#work',           label: t('navigation.work') },
+    { href: '#portfolio',      label: t('navigation.portfolio') },
+    { href: '#education',      label: t('navigation.education') },
+    { href: '#certifications', label: t('navigation.certifications') },
+    { href: '#testimonials',   label: t('navigation.references') },
   ]
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)

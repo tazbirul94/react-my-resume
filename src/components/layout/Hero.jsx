@@ -78,6 +78,19 @@ export function Hero({ basics, profiles = [] }) {
           </p>
         )}
 
+        {/* Tech stack */}
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          {['C#', '.NET Core', 'Docker', 'Kubernetes', 'Azure', 'MS SQL', 'RabbitMQ', 'React'].map(tech => (
+            <span
+              key={tech}
+              className="apple-chip font-mono-code"
+              style={{ fontSize: 12, background: 'rgb(var(--bg-secondary))' }}
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
         {/* CTAs */}
         <div className="hero-ctas flex flex-wrap justify-center gap-3 mb-10">
           <a

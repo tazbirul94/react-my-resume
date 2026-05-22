@@ -25,7 +25,8 @@ export default function App() {
     <ThemeProvider>
       <LocaleProvider>
         <AuthProvider>
-          <BrowserRouter basename="/react-my-resume">
+          <BrowserRouter basename="/">
+
             <Routes>
               <Route path="/" element={<Layout><Resume /></Layout>} />
               <Route path="/admin/login" element={<AdminLogin />} />

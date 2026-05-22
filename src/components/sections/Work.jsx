@@ -19,8 +19,21 @@ function duration(start, end) {
   return m ? `${y}y ${m}mo` : `${y}y`
 }
 
-function isCurrent(job) {
-  return !job.end_date
+function groupByCompany(jobs) {
+  const map = new Map()
+  jobs.forEach(job => {
+    if (!map.has(job.company)) {
+      map.set(job.company, {
+        company: job.company,
+        logo: job.logo,
+        website: job.website,
+        location: job.location,
+        roles: [],
+      })
+    }
+    map.get(job.company).roles.push(job)
+  })
+  return Array.from(map.values())
 }
 
 export function Work() {
@@ -37,171 +50,229 @@ export function Work() {
   )
 
   const items = work ?? []
-  const recentItems = items.slice(0, 4)
-  const olderItems = items.slice(4)
-  const visibleItems = showAll ? items : recentItems
-
-  /* career dateline: earliest year → present */
-  const years = items
-    .filter(j => j.start_date)
-    .map(j => new Date(j.start_date).getFullYear())
-  const startYear = years.length ? Math.min(...years) : null
-  const endYear = new Date().getFullYear()
+  const groups = groupByCompany(items)
+  const visibleGroups = showAll ? groups : groups.slice(0, 3)
+  const hiddenCount = Math.max(0, groups.length - 3)
 
   return (
     <SectionWrapper id="work" eyebrow={t('sections.work.eyebrow')} title={t('sections.work.title')} alt>
-      {/* Career dateline */}
-      {startYear && (
-        <div className="flex items-center gap-3 mb-10">
-          <span className="eyebrow whitespace-nowrap">{startYear}</span>
-          <div style={{ flex: 1, height: 1, background: 'rgb(var(--apple-border))' }} />
-          <span className="eyebrow whitespace-nowrap">{endYear}</span>
-        </div>
-      )}
+      <div>
+        <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', gap: 20 }}>
 
-      <div className="space-y-4">
-        {visibleItems.map((job) => (
-          <div key={job.id} className="apple-card stagger-item">
-            {/* Header row */}
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
-              <div className="flex items-start gap-3">
-                {/* Company logo or initial */}
+        {/* Vertical timeline line — scoped to cards only */}
+        <div style={{
+          position: 'absolute', left: 19, top: 20, bottom: 20,
+          width: 1, background: 'rgb(var(--apple-border))', zIndex: 0,
+        }} />
+          {visibleGroups.map((group, idx) => {
+            const allRoles = group.roles
+            const isCurrent = allRoles.some(r => !r.end_date)
+            const earliestStart = allRoles.map(r => r.start_date).filter(Boolean).sort()[0]
+            const latestEnd = isCurrent ? null : allRoles.map(r => r.end_date).filter(Boolean).sort().reverse()[0]
+            const joinYear = earliestStart ? new Date(earliestStart).getFullYear() : null
+            const totalDuration = earliestStart ? duration(earliestStart, latestEnd) : null
+            const allSkills = [...new Set(allRoles.flatMap(r => r.skills ?? []))]
+            const multiRole = allRoles.length > 1
+
+            return (
+              <div key={group.company} style={{ display: 'flex', gap: 16, position: 'relative' }}>
+
+                {/* Dot + year */}
                 <div style={{
-                  width: 44, height: 44, borderRadius: 10, flexShrink: 0,
-                  background: 'rgb(var(--bg-secondary))',
-                  border: '1px solid rgb(var(--apple-border))',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: 18, fontWeight: 700, color: 'rgb(var(--text-tertiary))',
-                  overflow: 'hidden',
+                  flexShrink: 0, width: 40, display: 'flex',
+                  flexDirection: 'column', alignItems: 'center',
+                  paddingTop: 20, gap: 5, zIndex: 1,
                 }}>
-                  {job.logo ? (
-                    <img src={job.logo} alt={job.company} style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                      onError={e => { e.target.style.display = 'none'; e.target.parentNode.textContent = job.company?.[0] || '?' }} />
-                  ) : (job.company?.[0] || '?')}
-                </div>
-
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-                    <h3 style={{ fontSize: 'var(--type-card-h)', fontWeight: 600, color: 'rgb(var(--text-primary))', margin: 0 }}>
-                      {job.position}
-                    </h3>
-                    {isCurrent(job) && (
-                      <span style={{
-                        display: 'inline-flex', alignItems: 'center', gap: 5,
-                        fontSize: 11, fontWeight: 600,
-                        color: '#22c55e',
-                        background: 'rgba(34,197,94,0.1)',
-                        padding: '2px 8px', borderRadius: 20,
-                      }}>
-                        <span
-                          className="current-dot"
-                          style={{ display: 'inline-block', width: 6, height: 6, borderRadius: '50%', background: '#22c55e' }}
-                        />
-                        {t('work.current')}
-                      </span>
-                    )}
-                  </div>
-                  {job.website ? (
-                    <a href={job.website} target="_blank" rel="noopener noreferrer"
-                      style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--accent))', textDecoration: 'none', fontWeight: 500 }}>
-                      {job.company}
-                    </a>
-                  ) : (
-                    <span style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--text-secondary))', fontWeight: 500 }}>
-                      {job.company}
+                  <div style={{
+                    width: 10, height: 10, borderRadius: '50%',
+                    background: isCurrent ? '#22c55e' : 'rgb(var(--bg-primary))',
+                    border: `2px solid ${isCurrent ? '#22c55e' : 'rgb(var(--apple-border))'}`,
+                    boxShadow: isCurrent ? '0 0 0 4px rgba(34,197,94,0.18)' : 'none',
+                  }} />
+                  {joinYear && (
+                    <span style={{
+                      fontSize: 10, fontWeight: 700,
+                      color: 'rgb(var(--text-tertiary))',
+                      letterSpacing: '0.04em',
+                    }}>
+                      {joinYear}
                     </span>
                   )}
                 </div>
+
+                {/* Company card */}
+                <div style={{ flex: 1, minWidth: 0 }} className="apple-card stagger-item">
+
+                  {/* Company header */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+                    <div style={{
+                      width: 42, height: 42, borderRadius: 10, flexShrink: 0,
+                      background: 'rgb(var(--bg-secondary))',
+                      border: '1px solid rgb(var(--apple-border))',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: 16, fontWeight: 700, color: 'rgb(var(--text-tertiary))',
+                      overflow: 'hidden',
+                    }}>
+                      {group.logo ? (
+                        <img src={group.logo} alt={group.company}
+                          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                          onError={e => { e.target.style.display = 'none'; e.target.parentNode.textContent = group.company?.[0] || '?' }} />
+                      ) : (group.company?.[0] || '?')}
+                    </div>
+
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      {group.website ? (
+                        <a href={group.website} target="_blank" rel="noopener noreferrer"
+                          style={{ fontSize: 'var(--type-card-h)', fontWeight: 700, color: 'rgb(var(--text-primary))', textDecoration: 'none' }}>
+                          {group.company}
+                        </a>
+                      ) : (
+                        <span style={{ fontSize: 'var(--type-card-h)', fontWeight: 700, color: 'rgb(var(--text-primary))' }}>
+                          {group.company}
+                        </span>
+                      )}
+                      <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 6, marginTop: 3 }}>
+                        {group.location && (
+                          <span style={{ fontSize: 'var(--type-micro)', color: 'rgb(var(--text-tertiary))' }}>
+                            {group.location}
+                          </span>
+                        )}
+                        {totalDuration && (
+                          <span style={{ fontSize: 'var(--type-micro)', color: 'rgb(var(--text-tertiary))' }}>
+                            · {totalDuration}
+                          </span>
+                        )}
+                        {isCurrent && (
+                          <span style={{
+                            display: 'inline-flex', alignItems: 'center', gap: 4,
+                            fontSize: 10, fontWeight: 600, color: '#22c55e',
+                            background: 'rgba(34,197,94,0.10)',
+                            padding: '2px 8px', borderRadius: 20,
+                          }}>
+                            <span
+                              className="current-dot"
+                              style={{ display: 'inline-block', width: 5, height: 5, borderRadius: '50%', background: '#22c55e' }}
+                            />
+                            {t('work.current')}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Roles */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+                    {allRoles.map((role, ri) => (
+                      <div key={role.id} style={{
+                        paddingTop: ri > 0 ? 14 : 0,
+                        marginTop: ri > 0 ? 14 : 0,
+                        borderTop: ri > 0 ? '1px solid rgb(var(--apple-border-subtle))' : 'none',
+                        paddingLeft: multiRole ? 14 : 0,
+                        borderLeft: multiRole ? '2px solid rgb(var(--apple-border-subtle))' : 'none',
+                        marginLeft: multiRole ? 6 : 0,
+                      }}>
+                        {/* Role title + dates */}
+                        <div style={{
+                          display: 'flex', flexWrap: 'wrap',
+                          alignItems: 'flex-start', justifyContent: 'space-between',
+                          gap: 8, marginBottom: 10,
+                        }}>
+                          <h3 style={{
+                            fontSize: 'var(--type-small)', fontWeight: 600,
+                            color: 'rgb(var(--text-primary))', margin: 0,
+                          }}>
+                            {role.position}
+                          </h3>
+                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 3, flexShrink: 0 }}>
+                            <span className="apple-chip" style={{ background: 'rgb(var(--bg-secondary))' }}>
+                              {formatDate(role.start_date, t('work.present'))} – {formatDate(role.end_date, t('work.present'))}
+                            </span>
+                            {role.start_date && (
+                              <span className="eyebrow" style={{ color: 'rgb(var(--text-tertiary))' }}>
+                                {duration(role.start_date, role.end_date)}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        {role.summary && (
+                          <p style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--text-secondary))', lineHeight: 1.65, marginBottom: 10 }}>
+                            {role.summary}
+                          </p>
+                        )}
+
+                        {role.highlights?.[0] && (
+                          <div style={{
+                            display: 'flex', alignItems: 'flex-start', gap: 10,
+                            padding: '10px 14px', borderRadius: 10,
+                            background: 'rgba(var(--accent)/0.06)',
+                            border: '1px solid rgba(var(--accent)/0.15)',
+                            marginBottom: 10,
+                          }}>
+                            <span style={{ fontSize: 13, flexShrink: 0, marginTop: 1 }}>⭐</span>
+                            <span style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--text-secondary))', lineHeight: 1.55 }}>
+                              {role.highlights[0]}
+                            </span>
+                          </div>
+                        )}
+
+                        {role.highlights?.slice(1).length > 0 && (
+                          <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 8px', display: 'flex', flexDirection: 'column', gap: 6 }}>
+                            {role.highlights.slice(1).map(h => (
+                              <li key={h} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                                <span style={{ color: 'rgb(var(--text-tertiary))', fontSize: 13, marginTop: 2, flexShrink: 0 }}>—</span>
+                                <span style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--text-secondary))', lineHeight: 1.55 }}>{h}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Merged skill chips across all roles */}
+                  {allSkills.length > 0 && (
+                    <div style={{
+                      display: 'flex', flexWrap: 'wrap', gap: 6,
+                      paddingTop: 14, marginTop: 12,
+                      borderTop: '1px solid rgb(var(--apple-border-subtle))',
+                    }}>
+                      {allSkills.map(s => (
+                        <span key={s} className="apple-chip font-mono-code"
+                          style={{ fontSize: 12, background: 'rgb(var(--bg-secondary))' }}>
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
+            )
+          })}
+        </div>
 
-              {/* Date chip */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4, flexShrink: 0 }}>
-                <span className="apple-chip" style={{ background: 'rgb(var(--bg-secondary))' }}>
-                  {formatDate(job.start_date, t('work.present'))} – {formatDate(job.end_date, t('work.present'))}
-                </span>
-                {job.start_date && (
-                  <span className="eyebrow" style={{ color: 'rgb(var(--text-tertiary))' }}>
-                    {duration(job.start_date, job.end_date)}
-                  </span>
-                )}
-              </div>
-            </div>
-
-            {/* Summary */}
-            {job.summary && (
-              <p style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--text-secondary))', lineHeight: 1.65, marginBottom: 12 }}>
-                {job.summary}
-              </p>
-            )}
-
-            {/* Key achievement callout */}
-            {job.highlights?.[0] && (
-              <div style={{
-                display: 'flex', alignItems: 'flex-start', gap: 10,
-                padding: '10px 14px',
-                borderRadius: 10,
-                background: 'rgba(var(--accent)/0.06)',
-                border: '1px solid rgba(var(--accent)/0.15)',
-                marginBottom: 10,
-              }}>
-                <span style={{ fontSize: 13, flexShrink: 0, marginTop: 1 }}>⭐</span>
-                <span style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--text-secondary))', lineHeight: 1.55 }}>
-                  {job.highlights[0]}
-                </span>
-              </div>
-            )}
-
-            {/* Highlights */}
-            {job.highlights?.length > 0 && (
-              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 12px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                {job.highlights.slice(1).map((h, i) => (
-                  <li key={h} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                    <span style={{ color: 'rgb(var(--text-tertiary))', fontSize: 13, marginTop: 2, flexShrink: 0 }}>—</span>
-                    <span style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--text-secondary))', lineHeight: 1.55 }}>{h}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-
-            {/* Skill chips */}
-            {job.skills?.length > 0 && (
-              <div style={{
-                display: 'flex', flexWrap: 'wrap', gap: 6,
-                paddingTop: 14, marginTop: 4,
-                borderTop: '1px solid rgb(var(--apple-border-subtle))',
-              }}>
-                {job.skills.map(s => (
-                  <span key={s} className="apple-chip font-mono-code"
-                    style={{ fontSize: 12, background: 'rgb(var(--bg-secondary))' }}>
-                    {s}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
+        {hiddenCount > 0 && (
+          <button
+            onClick={() => setShowAll(v => !v)}
+            style={{
+              display: 'block', width: '100%', marginTop: 16,
+              padding: '12px 0', borderRadius: 14,
+              border: '1px dashed rgb(var(--apple-border))',
+              background: 'transparent',
+              color: 'rgb(var(--text-tertiary))',
+              fontSize: 'var(--type-small)', fontWeight: 500,
+              cursor: 'pointer',
+              transition: 'border-color 150ms ease, color 150ms ease',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgb(var(--text-secondary))'; e.currentTarget.style.color = 'rgb(var(--text-secondary))' }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgb(var(--apple-border))'; e.currentTarget.style.color = 'rgb(var(--text-tertiary))' }}
+          >
+            {showAll
+              ? '↑ Show less'
+              : `↓ Show ${hiddenCount} earlier ${hiddenCount === 1 ? 'position' : 'positions'}`}
+          </button>
+        )}
       </div>
-
-      {olderItems.length > 0 && (
-        <button
-          onClick={() => setShowAll(v => !v)}
-          style={{
-            display: 'block', width: '100%', marginTop: 12,
-            padding: '12px 0',
-            borderRadius: 14,
-            border: '1px dashed rgb(var(--apple-border))',
-            background: 'transparent',
-            color: 'rgb(var(--text-tertiary))',
-            fontSize: 'var(--type-small)', fontWeight: 500,
-            cursor: 'pointer',
-            transition: 'border-color 150ms ease, color 150ms ease',
-          }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgb(var(--text-secondary))'; e.currentTarget.style.color = 'rgb(var(--text-secondary))' }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgb(var(--apple-border))'; e.currentTarget.style.color = 'rgb(var(--text-tertiary))' }}
-        >
-          {showAll ? '↑ Show less' : `↓ Show ${olderItems.length} earlier ${olderItems.length === 1 ? 'role' : 'roles'}`}
-        </button>
-      )}
     </SectionWrapper>
   )
 }

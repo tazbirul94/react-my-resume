@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { supabase } from '@/lib/supabase'
 import { fallbackData } from '@/lib/fallback'
 import { useAdminLocale } from '@/context/AdminLocaleContext'
+import { Upload, X } from 'lucide-react'
 
 export function BasicsAdmin() {
   const { adminLocale } = useAdminLocale()
@@ -13,6 +14,8 @@ export function BasicsAdmin() {
   const [id, setId] = useState(null)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const fileRef = useRef(null)
 
   useEffect(() => {
     const load = async () => {
@@ -22,6 +25,20 @@ export function BasicsAdmin() {
     }
     load()
   }, [adminLocale])
+
+  const handlePhotoUpload = async (e) => {
+    const file = e.target.files?.[0]
+    if (!file || !supabase) return
+    setUploading(true)
+    const ext = file.name.split('.').pop()
+    const path = `avatars/${adminLocale}-${Date.now()}.${ext}`
+    const { error } = await supabase.storage.from('avatars').upload(path, file, { upsert: true })
+    if (!error) {
+      const { data: urlData } = supabase.storage.from('avatars').getPublicUrl(path)
+      setForm(f => ({ ...f, picture: urlData.publicUrl }))
+    }
+    setUploading(false)
+  }
 
   const handleSave = async () => {
     if (!supabase) { alert('Supabase not configured'); return }
@@ -47,10 +64,53 @@ export function BasicsAdmin() {
             <Input label="Email" type="email" value={form.email || ''} onChange={e => setForm(f => ({...f, email: e.target.value}))} />
             <Input label="Phone" value={form.phone || ''} onChange={e => setForm(f => ({...f, phone: e.target.value}))} />
             <Input label="Website" value={form.website || ''} onChange={e => setForm(f => ({...f, website: e.target.value}))} />
-            <Input label="Profile Picture URL" value={form.picture || ''} onChange={e => setForm(f => ({...f, picture: e.target.value}))} />
             <Input label="City" value={form.city || ''} onChange={e => setForm(f => ({...f, city: e.target.value}))} />
             <Input label="Country Code" value={form.country_code || ''} onChange={e => setForm(f => ({...f, country_code: e.target.value}))} />
           </div>
+
+          {/* Photo upload */}
+          <div>
+            <p className="text-sm font-medium mb-2">Profile Photo</p>
+            <div className="flex items-start gap-4">
+              {form.picture ? (
+                <div className="relative shrink-0">
+                  <img
+                    src={form.picture}
+                    alt="Profile"
+                    className="w-24 h-24 rounded-xl object-cover border"
+                    onError={e => { e.target.style.display = 'none' }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setForm(f => ({ ...f, picture: '' }))}
+                    className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-red-500 text-white flex items-center justify-center"
+                  >
+                    <X size={11} />
+                  </button>
+                </div>
+              ) : (
+                <div
+                  className="w-24 h-24 rounded-xl border-2 border-dashed flex flex-col items-center justify-center gap-1 cursor-pointer hover:border-primary transition-colors shrink-0"
+                  onClick={() => fileRef.current?.click()}
+                >
+                  <Upload size={18} className="text-muted-foreground" />
+                  <span className="text-xs text-muted-foreground">Upload</span>
+                </div>
+              )}
+              <div className="flex-1 space-y-2">
+                <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
+                <Button type="button" variant="outline" size="sm" onClick={() => fileRef.current?.click()} disabled={uploading}>
+                  {uploading ? 'Uploading…' : 'Choose photo'}
+                </Button>
+                <Input
+                  label="Or paste image URL"
+                  value={form.picture || ''}
+                  onChange={e => setForm(f => ({...f, picture: e.target.value}))}
+                />
+              </div>
+            </div>
+          </div>
+
           <Textarea
             label="Summary (one paragraph per line)"
             rows={4}

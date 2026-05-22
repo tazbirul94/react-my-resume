@@ -65,11 +65,13 @@ export function Education() {
   const { data: education, loading } = useEducation()
   const { t, locale } = useLocale()
   const present = t('education.present')
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
+  )
   const [expanded, setExpanded] = useState({})
 
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 480px)')
+    const mq = window.matchMedia('(max-width: 768px)')
     setIsMobile(mq.matches)
     const handler = e => setIsMobile(e.matches)
     mq.addEventListener('change', handler)

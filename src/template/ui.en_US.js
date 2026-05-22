@@ -34,6 +34,7 @@ const ui = {
     portfolio:     { eyebrow: 'Portfolio',       title: "Things I've Shipped" },
     certifications:{ eyebrow: 'Certifications',  title: 'Credentials' },
     references:    { eyebrow: 'References',      title: 'What Others Say' },
+    softSkills:    { eyebrow: 'Interpersonal',   title: 'Soft Skills' },
   },
   work: {
     present: 'Present',

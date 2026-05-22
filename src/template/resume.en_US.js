@@ -5,7 +5,7 @@ const resume = {
         "picture": "images/myself2.jpg",
         "email": "tazbirul94@gmail.com",
         // "phone": "+49 17657742207",
-        "website": "<WEBSITE>",
+        "website": "",
         "summary": [
             "Passionate Software Development Expert with 7+ years of experience building scalable enterprise systems.",
             "Currently contributing at CTS Eventim, where I work on modernizing large-scale platforms with Docker, .NET, REST APIs, MS SQL, and CI/CD pipelines using YAML and ArgoCD. Previously worked at Swiss Re (Movingdots), developing data-driven telematics and insurance solutions with global impact, later acquired by Powerfleet.",

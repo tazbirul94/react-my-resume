@@ -38,7 +38,10 @@ export function Certifications() {
               }}>
                 <img src={cert.logo} alt={cert.issuer}
                   style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                  onError={e => { e.target.parentNode.style.display = 'none' }} />
+                  onError={e => {
+                    e.target.style.display = 'none'
+                    e.target.parentNode.innerHTML = `<span style="font-size:18px;font-weight:700;color:rgb(var(--text-tertiary))">${(cert.issuer?.[0] ?? '?').toUpperCase()}</span>`
+                  }} />
               </div>
             )}
             <div style={{ flex: 1, minWidth: 0 }}>
@@ -51,7 +54,10 @@ export function Certifications() {
                     style={{ color: 'rgb(var(--text-tertiary))', flexShrink: 0, transition: 'color 150ms ease' }}
                     onMouseEnter={e => e.currentTarget.style.color = 'rgb(var(--accent))'}
                     onMouseLeave={e => e.currentTarget.style.color = 'rgb(var(--text-tertiary))'}>
-                    <ExternalLink size={14} />
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 11, fontWeight: 600, color: 'inherit' }}>
+                      <ExternalLink size={12} />
+                      Verify
+                    </span>
                   </a>
                 )}
               </div>

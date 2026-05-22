@@ -1,4 +1,4 @@
-import { useBasics } from '@/hooks/useResume'
+import { useBasics, useWork } from '@/hooks/useResume'
 import { SectionWrapper } from '@/components/layout/SectionWrapper'
 import { useLocale } from '@/context/LocaleContext'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -14,6 +14,7 @@ const contactItems = (basics) => [
 export function About() {
   const { t } = useLocale()
   const { data: basics, loading } = useBasics()
+  const { data: work } = useWork()
 
   if (loading) return (
     <SectionWrapper id="about" eyebrow={t('sections.about.eyebrow')} title={t('sections.about.title')}>
@@ -31,6 +32,13 @@ export function About() {
   if (!basics) return null
 
   const contacts = contactItems(basics)
+
+  const yearsExp = (() => {
+    if (!work?.length) return null
+    const dates = work.map(j => new Date(j.start_date)).filter(d => !isNaN(d))
+    if (!dates.length) return null
+    return Math.floor((Date.now() - Math.min(...dates.map(d => d.getTime()))) / (1000 * 60 * 60 * 24 * 365.25))
+  })()
 
   return (
     <SectionWrapper id="about" eyebrow={t('sections.about.eyebrow')} title={t('sections.about.title')}>
@@ -68,9 +76,34 @@ export function About() {
           <h3 style={{ fontSize: 'var(--type-card-h)', fontWeight: 700, color: 'rgb(var(--text-primary))', marginBottom: 4 }}>
             {basics.name}
           </h3>
-          <p style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--accent))', fontWeight: 500, marginBottom: 20 }}>
+          <p style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--accent))', fontWeight: 500, marginBottom: 12 }}>
             {basics.label}
           </p>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 8, marginBottom: 20 }}>
+            <span style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6,
+              fontSize: 11, fontWeight: 600,
+              color: '#22c55e',
+              background: 'rgba(34,197,94,0.1)',
+              border: '1px solid rgba(34,197,94,0.25)',
+              padding: '4px 10px', borderRadius: 20,
+            }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#22c55e', display: 'inline-block' }} />
+              Open to opportunities
+            </span>
+            {yearsExp && (
+              <span style={{
+                fontSize: 11, fontWeight: 600,
+                color: 'rgb(var(--text-tertiary))',
+                background: 'rgb(var(--bg-secondary))',
+                border: '1px solid rgb(var(--apple-border))',
+                padding: '4px 10px', borderRadius: 20,
+              }}>
+                {yearsExp}+ years experience
+              </span>
+            )}
+          </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 28 }}>
             {(basics.summary || []).map((para, i) => (

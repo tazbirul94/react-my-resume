@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useWork } from '@/hooks/useResume'
 import { SectionWrapper } from '@/components/layout/SectionWrapper'
 import { useLocale } from '@/context/LocaleContext'
@@ -25,6 +26,7 @@ function isCurrent(job) {
 export function Work() {
   const { data: work, loading } = useWork()
   const { t } = useLocale()
+  const [showAll, setShowAll] = useState(false)
 
   if (loading) return (
     <SectionWrapper id="work" eyebrow={t('sections.work.eyebrow')} title={t('sections.work.title')} alt>
@@ -35,6 +37,9 @@ export function Work() {
   )
 
   const items = work ?? []
+  const recentItems = items.slice(0, 4)
+  const olderItems = items.slice(4)
+  const visibleItems = showAll ? items : recentItems
 
   /* career dateline: earliest year → present */
   const years = items
@@ -55,7 +60,7 @@ export function Work() {
       )}
 
       <div className="space-y-4">
-        {items.map((job) => (
+        {visibleItems.map((job) => (
           <div key={job.id} className="apple-card stagger-item">
             {/* Header row */}
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
@@ -129,11 +134,28 @@ export function Work() {
               </p>
             )}
 
+            {/* Key achievement callout */}
+            {job.highlights?.[0] && (
+              <div style={{
+                display: 'flex', alignItems: 'flex-start', gap: 10,
+                padding: '10px 14px',
+                borderRadius: 10,
+                background: 'rgba(var(--accent)/0.06)',
+                border: '1px solid rgba(var(--accent)/0.15)',
+                marginBottom: 10,
+              }}>
+                <span style={{ fontSize: 13, flexShrink: 0, marginTop: 1 }}>⭐</span>
+                <span style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--text-secondary))', lineHeight: 1.55 }}>
+                  {job.highlights[0]}
+                </span>
+              </div>
+            )}
+
             {/* Highlights */}
             {job.highlights?.length > 0 && (
               <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 12px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                {job.highlights.map((h, i) => (
-                  <li key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                {job.highlights.slice(1).map((h, i) => (
+                  <li key={h} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
                     <span style={{ color: 'rgb(var(--text-tertiary))', fontSize: 13, marginTop: 2, flexShrink: 0 }}>—</span>
                     <span style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--text-secondary))', lineHeight: 1.55 }}>{h}</span>
                   </li>
@@ -159,6 +181,27 @@ export function Work() {
           </div>
         ))}
       </div>
+
+      {olderItems.length > 0 && (
+        <button
+          onClick={() => setShowAll(v => !v)}
+          style={{
+            display: 'block', width: '100%', marginTop: 12,
+            padding: '12px 0',
+            borderRadius: 14,
+            border: '1px dashed rgb(var(--apple-border))',
+            background: 'transparent',
+            color: 'rgb(var(--text-tertiary))',
+            fontSize: 'var(--type-small)', fontWeight: 500,
+            cursor: 'pointer',
+            transition: 'border-color 150ms ease, color 150ms ease',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgb(var(--text-secondary))'; e.currentTarget.style.color = 'rgb(var(--text-secondary))' }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgb(var(--apple-border))'; e.currentTarget.style.color = 'rgb(var(--text-tertiary))' }}
+        >
+          {showAll ? '↑ Show less' : `↓ Show ${olderItems.length} earlier ${olderItems.length === 1 ? 'role' : 'roles'}`}
+        </button>
+      )}
     </SectionWrapper>
   )
 }

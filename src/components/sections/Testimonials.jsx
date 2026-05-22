@@ -44,6 +44,27 @@ export function Testimonials() {
           </div>
         ))}
       </div>
+      <div style={{ marginTop: 32, textAlign: 'center' }}>
+        <p style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--text-tertiary))', marginBottom: 12 }}>
+          Need more? Additional references available on request.
+        </p>
+        <a
+          href="mailto:tazbirul94@gmail.com?subject=Reference%20Request&body=Hi%20Tazbirul%2C%20I%20would%20like%20to%20request%20a%20reference%20letter."
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            height: 38, padding: '0 20px', borderRadius: 10,
+            border: '1px solid rgb(var(--apple-border))',
+            color: 'rgb(var(--text-secondary))',
+            fontSize: 'var(--type-small)', fontWeight: 500,
+            textDecoration: 'none',
+            transition: 'border-color 150ms ease, color 150ms ease',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgb(var(--text-secondary))'; e.currentTarget.style.color = 'rgb(var(--text-primary))' }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgb(var(--apple-border))'; e.currentTarget.style.color = 'rgb(var(--text-secondary))' }}
+        >
+          Request a reference letter
+        </a>
+      </div>
     </SectionWrapper>
   )
 }

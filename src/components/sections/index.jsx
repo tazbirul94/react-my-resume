@@ -1,5 +1,6 @@
 import { About } from './About'
 import { Skills } from './Skills'
+import { SoftSkills } from './SoftSkills'
 import { Work } from './Work'
 import { Portfolio } from './Portfolio'
 import { Education } from './Education'
@@ -13,6 +14,7 @@ export function Sections() {
     <>
       <About />
       <Skills />
+      <SoftSkills />
       <Work />
       <Portfolio />
       <Education />

@@ -5,6 +5,7 @@ import { Menu, X } from 'lucide-react'
 import { useLocale } from '@/context/LocaleContext'
 import { useTheme } from '@/context/ThemeContext'
 import { LocaleSwitcher } from '@/components/ui/LocaleSwitcher'
+import { useAuth } from '@/hooks/useAuth'
 
 const SECTION_IDS = ['about', 'skills', 'work', 'portfolio', 'education', 'certifications', 'testimonials']
 
@@ -38,6 +39,7 @@ function useActiveSection() {
 export function Navbar({ name = 'Resume' }) {
   const { t } = useLocale()
   const { theme } = useTheme()
+  const { user } = useAuth()
   const NAV_LINKS = [
     { href: '#about',          label: t('navigation.about') },
     { href: '#skills',         label: t('navigation.skills') },
@@ -95,6 +97,33 @@ export function Navbar({ name = 'Resume' }) {
         </div>
 
         <div className="flex items-center gap-2">
+          {user && <button
+            data-print="hidden"
+            onClick={() => window.print()}
+            title="Save as PDF — use 'Save as PDF' in the print dialog"
+            aria-label="Download CV as PDF"
+            style={{
+              alignItems: 'center',
+              gap: 6,
+              height: 32,
+              padding: '0 14px',
+              borderRadius: 16,
+              background: 'rgb(var(--text-primary))',
+              color: 'rgb(var(--bg-primary))',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: 12,
+              fontWeight: 600,
+              fontFamily: 'inherit',
+              letterSpacing: '-0.01em',
+              transition: 'opacity 150ms ease',
+            }}
+            className="hidden md:inline-flex"
+            onMouseEnter={e => e.currentTarget.style.opacity = '0.82'}
+            onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+          >
+            Download CV
+          </button>}
           <LocaleSwitcher />
           <ThemeToggle />
           <button

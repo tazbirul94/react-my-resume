@@ -20,7 +20,6 @@ export function Hero({ basics, profiles = [] }) {
     const startDates = work.map(j => new Date(j.start_date)).filter(d => !isNaN(d))
     const earliest = startDates.length ? Math.min(...startDates.map(d => d.getTime())) : null
     const years = earliest ? Math.floor((Date.now() - earliest) / (1000 * 60 * 60 * 24 * 365.25)) : null
-    const companies = new Set(work.map(j => j.company).filter(Boolean)).size
     const countries = new Set(
       work
         .map(j => j.location)
@@ -28,7 +27,18 @@ export function Hero({ basics, profiles = [] }) {
         .map(l => l.split(', ').pop())
         .filter(Boolean)
     ).size
-    return { years, companies, countries }
+    const techCount = new Set(work.flatMap(j => j.skills ?? [])).size
+    return { years, techCount, countries }
+  }, [work])
+
+  const topTechChips = useMemo(() => {
+    if (!work?.length) return ['C#', '.NET Core', 'Docker', 'Kubernetes', 'Azure', 'MS SQL', 'RabbitMQ', 'React']
+    const freq = {}
+    work.forEach(j => (j.skills ?? []).forEach(s => { freq[s] = (freq[s] ?? 0) + 1 }))
+    return Object.entries(freq)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 8)
+      .map(([name]) => name)
   }, [work])
 
   if (!basics) return null
@@ -80,7 +90,7 @@ export function Hero({ basics, profiles = [] }) {
 
         {/* Tech stack chips — staggered entrance */}
         <div className="hero-tech-chips flex flex-wrap justify-center gap-2 mb-10">
-          {['C#', '.NET Core', 'Docker', 'Kubernetes', 'Azure', 'MS SQL', 'RabbitMQ', 'React'].map(tech => (
+          {topTechChips.map(tech => (
             <span
               key={tech}
               className="hero-tech-chip apple-chip font-mono-code"
@@ -96,8 +106,8 @@ export function Hero({ basics, profiles = [] }) {
           <div className="hero-stats-row">
             {[
               { value: `${stats.years}+`, label: 'Years Experience' },
-              { value: stats.companies,   label: 'Companies' },
-              { value: stats.countries,   label: 'Countries' },
+              { value: `${stats.techCount}+`, label: 'Technologies' },
+              { value: stats.countries,        label: 'Countries' },
             ].map(({ value, label }) => (
               <div key={label} className="text-center">
                 <div className="hero-stat-value">{value}</div>
@@ -200,6 +210,7 @@ export function Hero({ basics, profiles = [] }) {
       {/* Scroll cue */}
       <a
         href="#about"
+        aria-label="Scroll down to About section"
         className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 transition-colors"
         style={{ color: 'rgb(var(--text-tertiary))', textDecoration: 'none' }}
       >

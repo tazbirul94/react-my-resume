@@ -3,7 +3,6 @@ import { Hero } from '@/components/layout/Hero'
 import { Sections } from '@/components/sections'
 import { Footer } from '@/components/layout/Footer'
 import { PrintHeader } from '@/components/PrintHeader'
-import { PrintButton } from '@/components/ui/PrintButton'
 
 export function Resume() {
   const { data: basics, profiles } = useBasics()
@@ -13,7 +12,6 @@ export function Resume() {
       <Hero basics={basics} profiles={profiles ?? []} />
       <Sections />
       <Footer basics={basics} />
-      <PrintButton />
     </>
   )
 }

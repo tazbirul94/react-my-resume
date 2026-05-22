@@ -12,18 +12,6 @@ const GROUP_COLORS = {
 
 const DEFAULT_COLOR = '0 113 227'
 
-function tierLabel(level) {
-  if (!level) return null
-  if (level >= 88) return 'Expert'
-  if (level >= 72) return 'Proficient'
-  return 'Familiar'
-}
-
-function tierColor(level, groupColor) {
-  if (!level) return groupColor
-  return groupColor
-}
-
 export function Skills() {
   const { t } = useLocale()
   const { data: groups, loading } = useSkills()
@@ -59,56 +47,17 @@ export function Skills() {
                 <p className="eyebrow" style={{ color: `rgb(${color})`, margin: 0 }}>{group.title}</p>
               </div>
 
-              {/* Skills list with bar */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {group.skillDetails?.map((skill) => {
-                  const pct = skill.level ? `${skill.level}%` : '60%'
-                  const tier = tierLabel(skill.level)
-                  return (
-                    <div key={skill.id}>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
-                        <span
-                          style={{
-                            fontSize: 13,
-                            fontWeight: skill.level >= 88 ? 600 : 500,
-                            color: 'rgb(var(--text-primary))',
-                            fontFamily: "'JetBrains Mono', monospace",
-                          }}
-                        >
-                          {skill.name}
-                        </span>
-                        {tier && (
-                          <span style={{
-                            fontSize: 10,
-                            fontWeight: 600,
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.07em',
-                            color: `rgb(${color})`,
-                            background: `rgba(${color}/0.1)`,
-                            padding: '2px 7px',
-                            borderRadius: 20,
-                          }}>
-                            {tier}
-                          </span>
-                        )}
-                      </div>
-                      <div className="skill-bar">
-                        <div
-                          className="skill-bar-fill"
-                          style={{ '--skill-pct': pct }}
-                        />
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-
-              {/* Print-only fallback */}
-              <ul className="skills-print-list" style={{ display: 'none' }} aria-hidden="true">
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 12 }}>
                 {group.skillDetails?.map((skill) => (
-                  <li key={skill.id}>{skill.name}</li>
+                  <span
+                    key={skill.id}
+                    className="apple-chip font-mono-code"
+                    style={{ fontSize: 12, background: 'rgb(var(--bg-secondary))', border: `1px solid rgba(${color}/0.25)` }}
+                  >
+                    {skill.name}
+                  </span>
                 ))}
-              </ul>
+              </div>
             </div>
           )
         })}

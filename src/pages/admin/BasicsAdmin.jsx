@@ -15,6 +15,7 @@ export function BasicsAdmin() {
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
   const [uploading, setUploading] = useState(false)
+  const [blobPreview, setBlobPreview] = useState('')
   const fileRef = useRef(null)
 
   useEffect(() => {
@@ -28,7 +29,10 @@ export function BasicsAdmin() {
 
   const handlePhotoUpload = async (e) => {
     const file = e.target.files?.[0]
-    if (!file || !supabase) return
+    if (!file) return
+    const localUrl = URL.createObjectURL(file)
+    setBlobPreview(localUrl)
+    if (!supabase) return
     setUploading(true)
     const ext = file.name.split('.').pop()
     const path = `avatars/${adminLocale}-${Date.now()}.${ext}`
@@ -37,6 +41,7 @@ export function BasicsAdmin() {
       const { data: urlData } = supabase.storage.from('avatars').getPublicUrl(path)
       setForm(f => ({ ...f, picture: urlData.publicUrl }))
     }
+    setBlobPreview('')
     setUploading(false)
   }
 
@@ -72,17 +77,16 @@ export function BasicsAdmin() {
           <div>
             <p className="text-sm font-medium mb-2">Profile Photo</p>
             <div className="flex items-start gap-4">
-              {form.picture ? (
+              {(blobPreview || form.picture) ? (
                 <div className="relative shrink-0">
                   <img
-                    src={form.picture}
+                    src={blobPreview || form.picture}
                     alt="Profile"
                     className="w-24 h-24 rounded-xl object-cover border"
-                    onError={e => { e.target.style.display = 'none' }}
                   />
                   <button
                     type="button"
-                    onClick={() => setForm(f => ({ ...f, picture: '' }))}
+                    onClick={() => { setBlobPreview(''); setForm(f => ({ ...f, picture: '' })) }}
                     className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-red-500 text-white flex items-center justify-center"
                   >
                     <X size={11} />
@@ -97,16 +101,11 @@ export function BasicsAdmin() {
                   <span className="text-xs text-muted-foreground">Upload</span>
                 </div>
               )}
-              <div className="flex-1 space-y-2">
+              <div className="flex items-end">
                 <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
                 <Button type="button" variant="outline" size="sm" onClick={() => fileRef.current?.click()} disabled={uploading}>
                   {uploading ? 'Uploading…' : 'Choose photo'}
                 </Button>
-                <Input
-                  label="Or paste image URL"
-                  value={form.picture || ''}
-                  onChange={e => setForm(f => ({...f, picture: e.target.value}))}
-                />
               </div>
             </div>
           </div>

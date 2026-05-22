@@ -1,8 +1,9 @@
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import { useAdminLocale } from '@/context/AdminLocaleContext'
+import { useTheme } from '@/context/ThemeContext'
 import { Button } from '@/components/ui/button'
-import { LogOut, Home } from 'lucide-react'
+import { LogOut, Home, Sun, Moon } from 'lucide-react'
 
 const SECTIONS = [
   { path: 'locales', label: 'Locales' },
@@ -20,6 +21,7 @@ const SECTIONS = [
 export function AdminLayout() {
   const { signOut } = useAuth()
   const { adminLocale, setAdminLocale, supportedLocales } = useAdminLocale()
+  const { theme, toggleTheme } = useTheme()
   const location = useLocation()
 
   return (
@@ -52,7 +54,11 @@ export function AdminLayout() {
             </Link>
           ))}
         </nav>
-        <div className="p-4 border-t border-border">
+        <div className="p-4 border-t border-border space-y-1">
+          <Button variant="ghost" size="sm" className="w-full justify-start gap-2" onClick={toggleTheme}>
+            {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+          </Button>
           <Button variant="ghost" size="sm" className="w-full justify-start gap-2" onClick={signOut}>
             <LogOut className="h-4 w-4" /> Sign Out
           </Button>

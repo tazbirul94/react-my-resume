@@ -10,7 +10,7 @@ function formatDate(dateStr, presentLabel) {
 
 export function Education() {
   const { data: education, loading } = useEducation()
-  const { t } = useLocale()
+  const { t, locale } = useLocale()
   const present = t('education.present')
 
   if (loading) return (
@@ -71,9 +71,50 @@ export function Education() {
                     <span className="apple-chip">
                       {formatDate(edu.start_date, present)} – {formatDate(edu.end_date, present)}
                     </span>
-                    {edu.gpa && (
-                      <span className="apple-chip" style={{ background: 'rgba(var(--accent)/0.08)', color: 'rgb(var(--accent))' }}>
-                        GPA {edu.gpa}{edu.gpa_german ? ` / ${edu.gpa_german}` : ''}
+                    {edu.gpa_german && (
+                      <span
+                        className="apple-chip"
+                        style={{ background: 'rgba(var(--accent)/0.08)', color: 'rgb(var(--accent))', position: 'relative', cursor: 'default' }}
+                        onMouseEnter={e => { const t = e.currentTarget.querySelector('.grade-tooltip'); if (t) t.style.opacity = '1'; if (t) t.style.pointerEvents = 'auto' }}
+                        onMouseLeave={e => { const t = e.currentTarget.querySelector('.grade-tooltip'); if (t) t.style.opacity = '0'; if (t) t.style.pointerEvents = 'none' }}
+                      >
+                        {locale === 'de-DE' ? 'Note' : 'Grade'} {edu.gpa_german}
+                        <span className="grade-tooltip" style={{
+                          opacity: 0, pointerEvents: 'none',
+                          position: 'absolute', bottom: 'calc(100% + 8px)', right: 0,
+                          background: 'rgb(var(--bg-primary))',
+                          border: '1px solid rgb(var(--apple-border))',
+                          borderRadius: 10, padding: '10px 14px',
+                          width: 220, zIndex: 50,
+                          boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                          transition: 'opacity 150ms ease',
+                          textAlign: 'left',
+                        }}>
+                          <p style={{ fontSize: 11, fontWeight: 700, color: 'rgb(var(--text-primary))', marginBottom: 8, whiteSpace: 'nowrap' }}>
+                            {locale === 'de-DE' ? 'Deutsche Notenskala' : 'German Grading Scale'}
+                          </p>
+                          {[
+                            ['1.0 – 1.5', 'Sehr gut', 'Excellent'],
+                            ['1.6 – 2.5', 'Gut', 'Good'],
+                            ['2.6 – 3.5', 'Befriedigend', 'Satisfactory'],
+                            ['3.6 – 4.0', 'Ausreichend', 'Sufficient'],
+                            ['4.1 – 5.0', 'Nicht bestanden', 'Fail'],
+                          ].map(([range, de, en]) => {
+                            const val = parseFloat(edu.gpa_german)
+                            const [lo, hi] = range.split(' – ').map(parseFloat)
+                            const active = val >= lo && val <= hi
+                            return (
+                              <div key={range} style={{
+                                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                                padding: '3px 6px', borderRadius: 6, marginBottom: 2,
+                                background: active ? 'rgba(var(--accent)/0.12)' : 'transparent',
+                              }}>
+                                <span style={{ fontSize: 10, fontWeight: active ? 700 : 400, color: active ? 'rgb(var(--accent))' : 'rgb(var(--text-tertiary))', whiteSpace: 'nowrap' }}>{range}</span>
+                                <span style={{ fontSize: 10, color: active ? 'rgb(var(--accent))' : 'rgb(var(--text-secondary))', marginLeft: 8, whiteSpace: 'nowrap' }}>{locale === 'de-DE' ? de : en}</span>
+                              </div>
+                            )
+                          })}
+                        </span>
                       </span>
                     )}
                   </div>

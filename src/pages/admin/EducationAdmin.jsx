@@ -46,8 +46,7 @@ export function EducationAdmin() {
             <Input label="Institution" value={form.institution || ''} onChange={e => setForm(f => ({...f, institution: e.target.value}))} />
             <Input label="Degree" value={form.degree || ''} onChange={e => setForm(f => ({...f, degree: e.target.value}))} />
             <Input label="Area / Field of Study" value={form.area || ''} onChange={e => setForm(f => ({...f, area: e.target.value}))} />
-            <Input label="GPA" value={form.gpa || ''} onChange={e => setForm(f => ({...f, gpa: e.target.value}))} />
-            <Input label="GPA (German scale)" value={form.gpa_german || ''} onChange={e => setForm(f => ({...f, gpa_german: e.target.value}))} />
+            <Input label="Grade (German scale, e.g. 1.3)" value={form.gpa_german || ''} onChange={e => setForm(f => ({...f, gpa_german: e.target.value}))} />
             <Input label="Website" value={form.website || ''} onChange={e => setForm(f => ({...f, website: e.target.value}))} />
             <DatePicker label="Start Date" value={form.start_date || ''} onChange={v => setForm(f => ({...f, start_date: v}))} clearable={false} />
             <DatePicker label="End Date (blank = Present)" value={form.end_date || ''} onChange={v => setForm(f => ({...f, end_date: v || null}))} placeholder="Present" />

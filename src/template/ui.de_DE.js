@@ -40,6 +40,13 @@ const ui = {
     present: 'Heute',
     current: 'Aktuell',
     title: 'Berufserfahrung',
+    employmentTypes: [
+      { value: 'Vollzeit',    label: 'Vollzeit' },
+      { value: 'Teilzeit',    label: 'Teilzeit' },
+      { value: 'Werkstudent', label: 'Werkstudent' },
+      { value: 'Minijob',     label: 'Minijob' },
+      { value: 'Sonstiges',   label: 'Sonstiges' },
+    ],
   },
   about: {
     title: 'Über mich',

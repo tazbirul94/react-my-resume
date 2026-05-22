@@ -75,7 +75,7 @@ VALUES
 ),
 (
   'Swiss Re (Movingdots GmbH)', 'images/swiss-re-logo.png', 'https://www.movingdots.com/',
-  'Full Stack Developer (Working Student)', 'Working Student', 'Kleve, Germany',
+  'Full Stack Developer', 'Working Student', 'Kleve, Germany',
   '2021-08-01', '2022-03-31', NULL,
   ARRAY[
     'Contributed to full-stack projects with C#, ASP.NET Core, ReactJS, React Native, and MS SQL.',
@@ -86,7 +86,7 @@ VALUES
 ),
 (
   'Netzlab GmbH', 'images/netzlab_gmbh_logo.jpg', 'https://netzlab.de/',
-  'Software Engineer (Working Student)', 'Working Student', 'Düsseldorf, Germany',
+  'Software Engineer', 'Working Student', 'Düsseldorf, Germany',
   '2020-10-01', '2021-07-31', NULL,
   ARRAY[
     'Developed and maintained mobile and web applications using React Native, C#, ASP.NET Core, and MS SQL.',

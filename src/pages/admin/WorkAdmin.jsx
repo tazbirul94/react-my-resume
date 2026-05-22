@@ -7,11 +7,14 @@ import { DatePicker } from '@/components/ui/DatePicker'
 import { supabase } from '@/lib/supabase'
 import { fallbackData } from '@/lib/fallback'
 import { useAdminLocale } from '@/context/AdminLocaleContext'
+import { useLocale } from '@/context/LocaleContext'
 
 const EMPTY = { company: '', position: '', website: '', start_date: '', end_date: '', summary: '', highlights: [], skills: [], employment_type: '', location: '' }
 
 export function WorkAdmin() {
   const { adminLocale } = useAdminLocale()
+  const { t } = useLocale()
+  const empTypes = t('work.employmentTypes') ?? []
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -33,10 +36,13 @@ export function WorkAdmin() {
       onRefresh={load}
       emptyForm={{...EMPTY, locale: adminLocale}}
       renderRow={(item) => (
-        <div>
+        <div className="flex flex-wrap items-center gap-2">
           <span className="font-medium">{item.position}</span>
-          <span className="text-muted-foreground"> @ {item.company}</span>
-          <Badge variant="secondary" className="ml-2 text-xs">{item.start_date?.slice(0,7)} — {item.end_date?.slice(0,7) || 'Present'}</Badge>
+          <span className="text-muted-foreground">@ {item.company}</span>
+          {item.employment_type && (
+            <Badge variant="outline" className="text-xs">{item.employment_type}</Badge>
+          )}
+          <Badge variant="secondary" className="text-xs">{item.start_date?.slice(0,7)} — {item.end_date?.slice(0,7) || 'Present'}</Badge>
         </div>
       )}
       renderForm={(form, setForm) => (
@@ -48,6 +54,21 @@ export function WorkAdmin() {
             <DatePicker label="End Date (blank = Present)" value={form.end_date || ''} onChange={v => setForm(f => ({...f, end_date: v || null}))} placeholder="Present" />
             <Input label="Website" value={form.website || ''} onChange={e => setForm(f => ({...f, website: e.target.value}))} />
             <Input label="Location" value={form.location || ''} onChange={e => setForm(f => ({...f, location: e.target.value}))} />
+            <div className="flex flex-col gap-1">
+              <label className="text-xs font-medium text-muted-foreground">
+                {adminLocale === 'de-DE' ? 'Beschäftigungsart' : 'Employment Type'}
+              </label>
+              <select
+                value={form.employment_type || ''}
+                onChange={e => setForm(f => ({...f, employment_type: e.target.value}))}
+                className="h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
+              >
+                <option value="">{adminLocale === 'de-DE' ? '— Auswählen —' : '— Select —'}</option>
+                {Array.isArray(empTypes) && empTypes.map(opt => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                ))}
+              </select>
+            </div>
           </div>
           <Textarea label="Summary" value={form.summary || ''} onChange={e => setForm(f => ({...f, summary: e.target.value}))} />
           <Textarea label="Highlights (one per line)" value={(form.highlights || []).join('\n')} onChange={e => setForm(f => ({...f, highlights: e.target.value.split('\n').filter(Boolean)}))} />

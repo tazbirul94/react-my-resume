@@ -89,8 +89,58 @@
 .wk-roles { margin-top: 10px; }
 .wk-role-row { padding: 10px 0; }
 .wk-role-row + .wk-role-row { border-top: 1px dashed rgb(var(--apple-border-subtle)); }
-.wk-role-row-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; }
+.wk-role-row-head { display: flex; flex-direction: column; gap: 4px; }
+.wk-role-title-line { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .wk-role { margin: 0; font-size: 1rem; line-height: 1.35rem; color: rgb(var(--text-primary)); }
+
+/* Employment type badge */
+.wk-emp-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid;
+  flex-shrink: 0;
+}
+.wk-emp-full-time {
+  color: rgb(var(--accent));
+  background: rgba(var(--accent) / 0.1);
+  border-color: rgba(var(--accent) / 0.25);
+}
+.wk-emp-working-student {
+  color: rgb(161 98 7);
+  background: rgba(245 158 11 / 0.1);
+  border-color: rgba(245 158 11 / 0.35);
+}
+.dark .wk-emp-working-student {
+  color: rgb(251 191 36);
+  background: rgba(245 158 11 / 0.13);
+  border-color: rgba(245 158 11 / 0.32);
+}
+.wk-emp-part-time {
+  color: rgb(109 40 217);
+  background: rgba(168 85 247 / 0.1);
+  border-color: rgba(168 85 247 / 0.28);
+}
+.dark .wk-emp-part-time {
+  color: rgb(196 155 255);
+  background: rgba(168 85 247 / 0.13);
+  border-color: rgba(168 85 247 / 0.3);
+}
+.wk-emp-mini-job {
+  color: rgb(15 118 110);
+  background: rgba(20 184 166 / 0.1);
+  border-color: rgba(20 184 166 / 0.28);
+}
+.dark .wk-emp-mini-job {
+  color: rgb(94 234 212);
+  background: rgba(20 184 166 / 0.13);
+  border-color: rgba(20 184 166 / 0.3);
+}
 .wk-summary { margin: 8px 0 4px; color: rgb(var(--text-secondary)); }
 
 /* Bullets & skills */

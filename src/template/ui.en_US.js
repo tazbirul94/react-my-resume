@@ -40,6 +40,13 @@ const ui = {
     present: 'Present',
     current: 'Current',
     title: 'Work',
+    employmentTypes: [
+      { value: 'Full-Time',       label: 'Full-Time' },
+      { value: 'Part-Time',       label: 'Part-Time' },
+      { value: 'Working Student', label: 'Working Student' },
+      { value: 'Mini Job',        label: 'Mini Job' },
+      { value: 'Other',           label: 'Other' },
+    ],
   },
   about: {
     title: 'About Me',

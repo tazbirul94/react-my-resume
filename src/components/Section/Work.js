@@ -29,31 +29,38 @@ const CompanyAvatar = ({ name, logo }) => {
 
 /* One role row inside a company card */
 const RoleRow = ({ entry }) => {
-  const startDate = Datetime.getDisplayFromDate(entry.startDate);
-  const rawEnd = entry.endDate;
+  const startDate = Datetime.getDisplayFromDate(entry.startDate || entry.start_date);
+  const rawEnd = entry.endDate || entry.end_date;
   const endDate = rawEnd === "Present" ? "Present" : Datetime.getDisplayFromDate(rawEnd);
 
   const hasHighlights =
     entry.highlights && Array.isArray(entry.highlights) && entry.highlights.length > 0;
   const skills = Array.isArray(entry.skills) ? entry.skills : [];
   const hasSkills = skills.length > 0;
+  const empType = entry.employmentType || entry.employment_type || null;
 
   return (
     <div className="wk-role-row">
       <div className="wk-role-row-head">
-        <h4 className="wk-role">{entry.position}</h4>
+        <div className="wk-role-title-line">
+          <h4 className="wk-role">{entry.position}</h4>
+          {empType && (
+            <span className={`wk-emp-badge wk-emp-${empType.toLowerCase().replace(/[\s/]+/g, '-')}`}>
+              {empType}
+            </span>
+          )}
+        </div>
         <div className="wk-meta">
           <span className="wk-date">
             <FormattedDate value={startDate} year="numeric" month="short" />
             {" – "}
-            {entry.endDate === "Present" ? (
+            {rawEnd === "Present" || !rawEnd ? (
               "Present"
             ) : (
               <FormattedDate value={endDate} year="numeric" month="short" />
             )}
           </span>
           {entry.mode && <span className="wk-chip">{entry.mode}</span>}
-          {entry.employmentType && <span className="wk-chip">{entry.employmentType}</span>}
           {entry.location && <span className="wk-sep">·</span>}
           {entry.location && <span>{entry.location}</span>}
         </div>

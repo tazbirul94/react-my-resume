@@ -38,7 +38,8 @@ const resume = {
         {
             "company": "CTS EVENTIM AG & Co. KGaA",
             "logo": "images/eventim-logo.png", 
-            "position": "Software Development Expert (Full-Time)",
+            "position": "Software Development Expert",
+            "employment_type": "Full-Time",
             "website": "https://karriere.eventim.de/en/",
             "startDate": "2023/07/01",
             "endDate": "Present",
@@ -58,7 +59,8 @@ const resume = {
         {
             "company": "Swiss Re (Movingdots GmbH)",
             "logo": "images/swiss-re-logo.png", 
-            "position": "Senior Full Stack Developer (Full-Time)",
+            "position": "Senior Full Stack Developer",
+            "employment_type": "Full-Time",
             "website": "https://www.movingdots.com/",
             "startDate": "2023/04/01",
             "endDate": "2023/06/30",
@@ -72,7 +74,8 @@ const resume = {
         {
             "company": "Swiss Re (Movingdots GmbH)",
             "logo": "images/swiss-re-logo.png", 
-            "position": "Full Stack Developer (Full-Time)",
+            "position": "Full Stack Developer",
+            "employment_type": "Full-Time",
             "website": "https://www.movingdots.com/",
             "startDate": "2022/04/01",
             "endDate": "2023/03/31",
@@ -88,7 +91,8 @@ const resume = {
                 {
             "company": "Swiss Re (Movingdots GmbH)",
             "logo": "images/swiss-re-logo.png", 
-            "position": "Full Stack Developer (Working Student)",
+            "position": "Full Stack Developer",
+            "employment_type": "Working Student",
             "website": "https://www.movingdots.com/",
             "startDate": "2021/08/01",
             "endDate": "2022/03/31",
@@ -101,7 +105,8 @@ const resume = {
         {
             "company": "Netzlab GmbH",
             "logo": "images/netzlab_gmbh_logo.jpg", 
-            "position": "Software Engineer (Working Student)",
+            "position": "Software Engineer",
+            "employment_type": "Working Student",
             "website": "https://netzlab.de/",
             "startDate": "2020/10/01",
             "endDate": "2021/07/31",
@@ -114,7 +119,8 @@ const resume = {
         {
             "company": "Convince Computer Limited",
             "logo": "images/CCL-logo.jpg", 
-            "position": "Programmer (Full-Time)",
+            "position": "Programmer",
+            "employment_type": "Full-Time",
             "website": "https://www.convincebd.com/",
             "startDate": "2017/09/15",
             "endDate": "2019/09/15",
@@ -127,7 +133,8 @@ const resume = {
         {
             "company": "China Railway Major Bridge Engineering Co., Ltd.",
             "logo": "images/mbec.jpg", 
-            "position": "IT Engineer (Full-Time)",
+            "position": "IT Engineer",
+            "employment_type": "Full-Time",
             "website": "http://www.crecg.com/english/2687/3808/3938/index.html",
             "startDate": "2017/05/15",
             "endDate": "2017/08/15",
@@ -268,7 +275,7 @@ const resume = {
         }
     ],
     "interests": [
-    { "name": "Photgraphy", "keywords": ["Landscapes", "Nature", "Street"] },
+    { "name": "Photography", "keywords": ["Landscapes", "Nature", "Street"] },
     { "name": "Travel", "keywords": ["City breaks", "Hiking"] },
     { "name": "Cooking", "keywords": ["Bangladeshi", "BBQ", "Experimenting"] },
     { "name": "DIY Projects", "keywords": ["Quilling", "Origami", "Puzzles"] },

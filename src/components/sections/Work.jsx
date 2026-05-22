@@ -4,6 +4,24 @@ import { SectionWrapper } from '@/components/layout/SectionWrapper'
 import { useLocale } from '@/context/LocaleContext'
 import { Skeleton } from '@/components/ui/skeleton'
 
+const EMP_TYPE_STYLES = {
+  // English
+  'full-time':       { color: '#0071e3', background: 'rgba(0,113,227,0.10)',  border: '1px solid rgba(0,113,227,0.28)'  },
+  'part-time':       { color: '#6d28d9', background: 'rgba(168,85,247,0.10)', border: '1px solid rgba(168,85,247,0.30)' },
+  'working-student': { color: '#b45309', background: 'rgba(245,158,11,0.10)', border: '1px solid rgba(245,158,11,0.35)' },
+  'mini-job':        { color: '#0f766e', background: 'rgba(20,184,166,0.10)', border: '1px solid rgba(20,184,166,0.30)' },
+  // German
+  'vollzeit':        { color: '#0071e3', background: 'rgba(0,113,227,0.10)',  border: '1px solid rgba(0,113,227,0.28)'  },
+  'teilzeit':        { color: '#6d28d9', background: 'rgba(168,85,247,0.10)', border: '1px solid rgba(168,85,247,0.30)' },
+  'werkstudent':     { color: '#b45309', background: 'rgba(245,158,11,0.10)', border: '1px solid rgba(245,158,11,0.35)' },
+  'minijob':         { color: '#0f766e', background: 'rgba(20,184,166,0.10)', border: '1px solid rgba(20,184,166,0.30)' },
+}
+
+function getEmpBadgeStyle(type = '') {
+  const key = type.toLowerCase().replace(/[\s/]+/g, '-')
+  return EMP_TYPE_STYLES[key] ?? { color: '#555', background: 'rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.15)' }
+}
+
 function formatDate(dateStr, presentLabel = 'Present') {
   if (!dateStr) return presentLabel
   return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
@@ -177,12 +195,31 @@ export function Work() {
                           alignItems: 'flex-start', justifyContent: 'space-between',
                           gap: 8, marginBottom: 10,
                         }}>
-                          <h3 style={{
-                            fontSize: 'var(--type-small)', fontWeight: 600,
-                            color: 'rgb(var(--text-primary))', margin: 0,
-                          }}>
-                            {role.position}
-                          </h3>
+                          <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+                            <h3 style={{
+                              fontSize: 'var(--type-small)', fontWeight: 600,
+                              color: 'rgb(var(--text-primary))', margin: 0,
+                            }}>
+                              {role.position}
+                            </h3>
+                            {role.employment_type && (
+                              <span style={{
+                                ...getEmpBadgeStyle(role.employment_type),
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                padding: '2px 10px',
+                                borderRadius: 999,
+                                fontSize: 10,
+                                fontWeight: 700,
+                                letterSpacing: '0.05em',
+                                textTransform: 'uppercase',
+                                flexShrink: 0,
+                                lineHeight: 1.6,
+                              }}>
+                                {role.employment_type}
+                              </span>
+                            )}
+                          </div>
                           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 3, flexShrink: 0 }}>
                             <span className="apple-chip" style={{ background: 'rgb(var(--bg-secondary))' }}>
                               {formatDate(role.start_date, t('work.present'))} – {formatDate(role.end_date, t('work.present'))}

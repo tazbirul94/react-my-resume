@@ -1,17 +1,82 @@
+import { useState, useEffect } from 'react'
 import { useEducation } from '@/hooks/useResume'
 import { useLocale } from '@/context/LocaleContext'
 import { SectionWrapper } from '@/components/layout/SectionWrapper'
 import { Skeleton } from '@/components/ui/skeleton'
+import { ChevronDown } from 'lucide-react'
 
 function formatDate(dateStr, presentLabel) {
   if (!dateStr) return presentLabel
   return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
 }
 
+const GRADE_SCALE = [
+  ['1.0 – 1.5', 'Sehr gut',       'Excellent'],
+  ['1.6 – 2.5', 'Gut',            'Good'],
+  ['2.6 – 3.5', 'Befriedigend',   'Satisfactory'],
+  ['3.6 – 4.0', 'Ausreichend',    'Sufficient'],
+  ['4.1 – 5.0', 'Nicht bestanden','Fail'],
+]
+
+function GradeChip({ gpa_german, locale }) {
+  return (
+    <span
+      className="apple-chip"
+      style={{ background: 'rgba(var(--accent)/0.08)', color: 'rgb(var(--accent))', position: 'relative', cursor: 'default' }}
+      onMouseEnter={e => { const t = e.currentTarget.querySelector('.grade-tooltip'); if (t) { t.style.opacity = '1'; t.style.pointerEvents = 'auto' } }}
+      onMouseLeave={e => { const t = e.currentTarget.querySelector('.grade-tooltip'); if (t) { t.style.opacity = '0'; t.style.pointerEvents = 'none' } }}
+    >
+      {locale === 'de-DE' ? 'Note' : 'Grade'} {gpa_german}
+      <span className="grade-tooltip" style={{
+        opacity: 0, pointerEvents: 'none',
+        position: 'absolute', bottom: 'calc(100% + 8px)', right: 0,
+        background: 'rgb(var(--bg-primary))',
+        border: '1px solid rgb(var(--apple-border))',
+        borderRadius: 10, padding: '10px 14px',
+        width: 220, zIndex: 50,
+        boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+        transition: 'opacity 150ms ease',
+        textAlign: 'left',
+      }}>
+        <p style={{ fontSize: 11, fontWeight: 700, color: 'rgb(var(--text-primary))', marginBottom: 8, whiteSpace: 'nowrap' }}>
+          {locale === 'de-DE' ? 'Deutsche Notenskala' : 'German Grading Scale'}
+        </p>
+        {GRADE_SCALE.map(([range, de, en]) => {
+          const val = parseFloat(gpa_german)
+          const [lo, hi] = range.split(' – ').map(parseFloat)
+          const active = val >= lo && val <= hi
+          return (
+            <div key={range} style={{
+              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+              padding: '3px 6px', borderRadius: 6, marginBottom: 2,
+              background: active ? 'rgba(var(--accent)/0.12)' : 'transparent',
+            }}>
+              <span style={{ fontSize: 10, fontWeight: active ? 700 : 400, color: active ? 'rgb(var(--accent))' : 'rgb(var(--text-tertiary))', whiteSpace: 'nowrap' }}>{range}</span>
+              <span style={{ fontSize: 10, color: active ? 'rgb(var(--accent))' : 'rgb(var(--text-secondary))', marginLeft: 8, whiteSpace: 'nowrap' }}>{locale === 'de-DE' ? de : en}</span>
+            </div>
+          )
+        })}
+      </span>
+    </span>
+  )
+}
+
 export function Education() {
   const { data: education, loading } = useEducation()
   const { t, locale } = useLocale()
   const present = t('education.present')
+  const [isMobile, setIsMobile] = useState(false)
+  const [expanded, setExpanded] = useState({})
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 480px)')
+    setIsMobile(mq.matches)
+    const handler = e => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
+  const toggle = key => setExpanded(prev => ({ ...prev, [key]: !prev[key] }))
 
   if (loading) return (
     <SectionWrapper id="education" eyebrow={t('sections.education.eyebrow')} title={t('sections.education.title')}>
@@ -24,28 +89,43 @@ export function Education() {
   return (
     <SectionWrapper id="education" eyebrow={t('sections.education.eyebrow')} title={t('sections.education.title')}>
       <div className="space-y-4">
-        {items.map((edu, idx) => (
-          <div key={edu.id ?? idx} className="apple-card">
-            <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
-              {/* Institution logo or initial */}
-              <div style={{
-                width: 44, height: 44, borderRadius: 10, flexShrink: 0,
-                background: 'rgb(var(--bg-secondary))',
-                border: '1px solid rgb(var(--apple-border))',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 18, fontWeight: 700, color: 'rgb(var(--text-tertiary))',
-                overflow: 'hidden',
-              }}>
-                {edu.logo ? (
-                  <img src={edu.logo} alt={edu.institution}
-                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                    onError={e => { e.target.style.display = 'none'; e.target.parentNode.textContent = edu.institution?.[0] || '?' }} />
-                ) : (edu.institution?.[0] || '?')}
-              </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <h3 style={{ fontSize: 'var(--type-card-h)', fontWeight: 600, color: 'rgb(var(--text-primary))', marginBottom: 3 }}>
+        {items.map((edu, idx) => {
+          const key = edu.id ?? idx
+          const isOpen = !isMobile || expanded[key]
+          const summaryArr = Array.isArray(edu.summary) ? edu.summary : [edu.summary].filter(Boolean)
+          const bodyLines = summaryArr.filter(s => s && !s.toLowerCase().includes('thesis'))
+          const thesisLine = summaryArr.find(s => s && s.toLowerCase().includes('thesis'))
+          const hasBody = bodyLines.length > 0 || !!thesisLine || !!edu.gpa_german
+
+          return (
+            <div key={key} className="apple-card">
+
+              {/* ── Header row — always visible ── */}
+              <div
+                style={{ display: 'flex', gap: 12, alignItems: 'flex-start', cursor: isMobile && hasBody ? 'pointer' : 'default' }}
+                onClick={() => isMobile && hasBody && toggle(key)}
+              >
+                {/* Logo */}
+                <div style={{
+                  width: 40, height: 40, borderRadius: 10, flexShrink: 0,
+                  background: 'rgb(var(--bg-secondary))',
+                  border: '1px solid rgb(var(--apple-border))',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: 16, fontWeight: 700, color: 'rgb(var(--text-tertiary))',
+                  overflow: 'hidden',
+                }}>
+                  {edu.logo ? (
+                    <img src={edu.logo} alt={edu.institution}
+                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                      onError={e => { e.target.style.display = 'none'; e.target.parentNode.textContent = edu.institution?.[0] || '?' }} />
+                  ) : (edu.institution?.[0] || '?')}
+                </div>
+
+                {/* Title + meta */}
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  {/* Degree + chevron */}
+                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
+                    <h3 style={{ fontSize: 'var(--type-card-h)', fontWeight: 600, color: 'rgb(var(--text-primary))', margin: 0, lineHeight: 1.3 }}>
                       {edu.degree || edu.area}
                       {edu.degree && edu.area && (
                         <span style={{ fontWeight: 400, color: 'rgb(var(--text-secondary))', marginLeft: 6 }}>
@@ -53,9 +133,21 @@ export function Education() {
                         </span>
                       )}
                     </h3>
+                    {isMobile && hasBody && (
+                      <ChevronDown size={16} style={{
+                        flexShrink: 0, marginTop: 3, color: 'rgb(var(--text-tertiary))',
+                        transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                        transition: 'transform 200ms ease',
+                      }} />
+                    )}
+                  </div>
+
+                  {/* Institution */}
+                  <div style={{ marginTop: 3 }}>
                     {edu.website ? (
                       <a href={edu.website} target="_blank" rel="noopener noreferrer"
-                        style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--accent))', fontWeight: 500, textDecoration: 'none' }}>
+                        style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--accent))', fontWeight: 500, textDecoration: 'none' }}
+                        onClick={e => isMobile && e.stopPropagation()}>
                         {edu.institution}
                       </a>
                     ) : (
@@ -63,81 +155,51 @@ export function Education() {
                         {edu.institution}
                       </span>
                     )}
-                    {edu.location && (
-                      <p style={{ fontSize: 'var(--type-micro)', color: 'rgb(var(--text-tertiary))', marginTop: 2 }}>{edu.location}</p>
-                    )}
                   </div>
+
+                  {/* Location + date on same line */}
+                  <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 6, marginTop: 5 }}>
+                    {edu.location && (
+                      <span style={{ fontSize: 'var(--type-micro)', color: 'rgb(var(--text-tertiary))' }}>
+                        {edu.location}
+                      </span>
+                    )}
+                    <span className="apple-chip" style={{ fontSize: 11 }}>
+                      {formatDate(edu.start_date, present)} – {formatDate(edu.end_date, present)}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Date + grade chips — desktop only, right-aligned */}
+                {!isMobile && (
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6, flexShrink: 0 }}>
                     <span className="apple-chip">
                       {formatDate(edu.start_date, present)} – {formatDate(edu.end_date, present)}
                     </span>
-                    {edu.gpa_german && (
-                      <span
-                        className="apple-chip"
-                        style={{ background: 'rgba(var(--accent)/0.08)', color: 'rgb(var(--accent))', position: 'relative', cursor: 'default' }}
-                        onMouseEnter={e => { const t = e.currentTarget.querySelector('.grade-tooltip'); if (t) t.style.opacity = '1'; if (t) t.style.pointerEvents = 'auto' }}
-                        onMouseLeave={e => { const t = e.currentTarget.querySelector('.grade-tooltip'); if (t) t.style.opacity = '0'; if (t) t.style.pointerEvents = 'none' }}
-                      >
-                        {locale === 'de-DE' ? 'Note' : 'Grade'} {edu.gpa_german}
-                        <span className="grade-tooltip" style={{
-                          opacity: 0, pointerEvents: 'none',
-                          position: 'absolute', bottom: 'calc(100% + 8px)', right: 0,
-                          background: 'rgb(var(--bg-primary))',
-                          border: '1px solid rgb(var(--apple-border))',
-                          borderRadius: 10, padding: '10px 14px',
-                          width: 220, zIndex: 50,
-                          boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
-                          transition: 'opacity 150ms ease',
-                          textAlign: 'left',
-                        }}>
-                          <p style={{ fontSize: 11, fontWeight: 700, color: 'rgb(var(--text-primary))', marginBottom: 8, whiteSpace: 'nowrap' }}>
-                            {locale === 'de-DE' ? 'Deutsche Notenskala' : 'German Grading Scale'}
-                          </p>
-                          {[
-                            ['1.0 – 1.5', 'Sehr gut', 'Excellent'],
-                            ['1.6 – 2.5', 'Gut', 'Good'],
-                            ['2.6 – 3.5', 'Befriedigend', 'Satisfactory'],
-                            ['3.6 – 4.0', 'Ausreichend', 'Sufficient'],
-                            ['4.1 – 5.0', 'Nicht bestanden', 'Fail'],
-                          ].map(([range, de, en]) => {
-                            const val = parseFloat(edu.gpa_german)
-                            const [lo, hi] = range.split(' – ').map(parseFloat)
-                            const active = val >= lo && val <= hi
-                            return (
-                              <div key={range} style={{
-                                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                                padding: '3px 6px', borderRadius: 6, marginBottom: 2,
-                                background: active ? 'rgba(var(--accent)/0.12)' : 'transparent',
-                              }}>
-                                <span style={{ fontSize: 10, fontWeight: active ? 700 : 400, color: active ? 'rgb(var(--accent))' : 'rgb(var(--text-tertiary))', whiteSpace: 'nowrap' }}>{range}</span>
-                                <span style={{ fontSize: 10, color: active ? 'rgb(var(--accent))' : 'rgb(var(--text-secondary))', marginLeft: 8, whiteSpace: 'nowrap' }}>{locale === 'de-DE' ? de : en}</span>
-                              </div>
-                            )
-                          })}
-                        </span>
-                      </span>
-                    )}
+                    {edu.gpa_german && <GradeChip gpa_german={edu.gpa_german} locale={locale} />}
                   </div>
-                </div>
-                {edu.summary && edu.summary !== '<SUMMARY>' && (
-                  (Array.isArray(edu.summary) ? edu.summary : [edu.summary])
-                    .filter(s => s && !s.toLowerCase().includes('thesis'))
-                    .map((s, si) => (
-                      <p key={si} style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--text-secondary))', marginTop: 10, lineHeight: 1.6 }}>
-                        {s}
-                      </p>
-                    ))
                 )}
-                {/* Thesis highlight — show if any summary line mentions thesis */}
-                {(() => {
-                  const summaryArr = Array.isArray(edu.summary) ? edu.summary : [edu.summary].filter(Boolean)
-                  const thesisLine = summaryArr.find(s => s && s.toLowerCase().includes('thesis'))
-                  if (!thesisLine) return null
-                  return (
+              </div>
+
+              {/* ── Expandable body ── */}
+              {isOpen && (
+                <div style={{ marginTop: 12 }}>
+                  {/* Grade chip on mobile */}
+                  {isMobile && edu.gpa_german && (
+                    <div style={{ marginBottom: 10 }}>
+                      <GradeChip gpa_german={edu.gpa_german} locale={locale} />
+                    </div>
+                  )}
+
+                  {bodyLines.map((s, si) => (
+                    <p key={si} style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--text-secondary))', marginBottom: 6, lineHeight: 1.6 }}>
+                      {s}
+                    </p>
+                  ))}
+
+                  {thesisLine && (
                     <div style={{
-                      marginTop: 12,
-                      padding: '12px 16px',
-                      borderRadius: 10,
+                      marginTop: 8, padding: '12px 16px', borderRadius: 10,
                       background: 'rgba(var(--accent)/0.06)',
                       border: '1px solid rgba(var(--accent)/0.15)',
                       display: 'flex', gap: 10, alignItems: 'flex-start',
@@ -150,12 +212,13 @@ export function Education() {
                         </p>
                       </div>
                     </div>
-                  )
-                })()}
-              </div>
+                  )}
+                </div>
+              )}
+
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
     </SectionWrapper>
   )

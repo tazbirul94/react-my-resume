@@ -8,11 +8,10 @@ export function Footer({ basics }) {
   return (
     <footer
       data-print="hidden"
+      className="px-5 sm:px-6 py-6 sm:py-8 text-center"
       style={{
         borderTop: '1px solid rgb(var(--apple-border))',
         background: 'rgb(var(--bg-secondary))',
-        padding: '32px 24px',
-        textAlign: 'center',
       }}
     >
       <div className="max-w-content mx-auto">

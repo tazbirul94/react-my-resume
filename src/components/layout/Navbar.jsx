@@ -65,7 +65,7 @@ export function Navbar({ name = 'Resume' }) {
 
   return (
     <header className={cn('fixed top-0 left-0 right-0 z-40 transition-all duration-300', navBg)}>
-      <nav className="max-w-content mx-auto px-6 h-[52px] flex items-center justify-between">
+      <nav className="max-w-content mx-auto px-4 sm:px-6 h-[52px] flex items-center justify-between">
         <a
           href="#"
           className="font-display font-semibold text-base tracking-tight shrink-0"
@@ -140,7 +140,7 @@ export function Navbar({ name = 'Resume' }) {
       {/* Mobile menu */}
       {mobileOpen && (
         <div
-          className="md:hidden border-b px-6 py-2 backdrop-blur-[20px]"
+          className="md:hidden border-b px-4 sm:px-6 py-2 backdrop-blur-[20px]"
           style={{
             background: theme === 'dark' ? 'rgba(0,0,0,0.92)' : 'rgba(255,255,255,0.92)',
             borderColor: 'rgb(var(--apple-border))',

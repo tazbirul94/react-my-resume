@@ -19,7 +19,7 @@ export function Testimonials() {
 
   return (
     <SectionWrapper id="testimonials" eyebrow={t('sections.references.eyebrow')} title={t('sections.references.title')} alt>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))', gap: 16 }}>
         {items.map((ref, idx) => (
           <div key={ref.id ?? idx} className="apple-card" style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             {ref.reference && ref.reference !== '<SUMMARY>' && (

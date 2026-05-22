@@ -25,7 +25,7 @@ export function Certifications() {
 
   return (
     <SectionWrapper id="certifications" eyebrow={t('sections.certifications.eyebrow')} title={t('sections.certifications.title')}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))', gap: 16 }}>
         {items.map((cert, idx) => (
           <div key={cert.id ?? idx} className="apple-card" style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
             {/* Logo */}

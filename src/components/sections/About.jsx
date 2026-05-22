@@ -50,17 +50,10 @@ export function About() {
               src={basics.picture}
               alt={basics.name}
               onError={(e) => { e.target.style.display = 'none' }}
-              style={{
-                width: 200, height: 200,
-                borderRadius: 24,
-                objectFit: 'cover',
-                border: '1px solid rgb(var(--apple-border))',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.07)',
-              }}
+              className="about-photo"
             />
           ) : (
-            <div style={{
-              width: 200, height: 200, borderRadius: 24,
+            <div className="about-photo-fallback" style={{
               background: 'rgb(var(--bg-secondary))',
               border: '1px solid rgb(var(--apple-border))',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -115,7 +108,7 @@ export function About() {
 
           {/* Contact items with micro-interaction arrow */}
           {contacts.length > 0 && (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 10 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(220px, 100%), 1fr))', gap: 10 }}>
               {contacts.map(({ icon: Icon, href, label, external }) => {
                 const content = (
                   <span style={{ display: 'flex', alignItems: 'center', gap: 10, width: '100%' }}>

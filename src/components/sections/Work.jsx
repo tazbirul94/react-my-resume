@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useWork } from '@/hooks/useResume'
 import { SectionWrapper } from '@/components/layout/SectionWrapper'
 import { useLocale } from '@/context/LocaleContext'
 import { Skeleton } from '@/components/ui/skeleton'
+import { ChevronDown } from 'lucide-react'
 
 const EMP_TYPE_STYLES = {
   // English
@@ -58,6 +59,18 @@ export function Work() {
   const { data: work, loading } = useWork()
   const { t } = useLocale()
   const [showAll, setShowAll] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const [expanded, setExpanded] = useState({})
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 480px)')
+    setIsMobile(mq.matches)
+    const handler = e => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
+  const toggle = key => setExpanded(prev => ({ ...prev, [key]: !prev[key] }))
 
   if (loading) return (
     <SectionWrapper id="work" eyebrow={t('sections.work.eyebrow')} title={t('sections.work.title')} alt>
@@ -122,7 +135,10 @@ export function Work() {
                 <div style={{ flex: 1, minWidth: 0 }} className="apple-card stagger-item">
 
                   {/* Company header */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+                  <div
+                    style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: isMobile && !expanded[group.company] ? 0 : 16, cursor: isMobile ? 'pointer' : 'default' }}
+                    onClick={() => isMobile && toggle(group.company)}
+                  >
                     <div style={{
                       width: 42, height: 42, borderRadius: 10, flexShrink: 0,
                       background: 'rgb(var(--bg-secondary))',
@@ -141,7 +157,8 @@ export function Work() {
                     <div style={{ flex: 1, minWidth: 0 }}>
                       {group.website ? (
                         <a href={group.website} target="_blank" rel="noopener noreferrer"
-                          style={{ fontSize: 'var(--type-card-h)', fontWeight: 700, color: 'rgb(var(--text-primary))', textDecoration: 'none' }}>
+                          style={{ fontSize: 'var(--type-card-h)', fontWeight: 700, color: 'rgb(var(--text-primary))', textDecoration: 'none' }}
+                          onClick={e => isMobile && e.stopPropagation()}>
                           {group.company}
                         </a>
                       ) : (
@@ -176,9 +193,17 @@ export function Work() {
                         )}
                       </div>
                     </div>
+                    {isMobile && (
+                      <ChevronDown size={16} style={{
+                        flexShrink: 0, color: 'rgb(var(--text-tertiary))',
+                        transform: expanded[group.company] ? 'rotate(180deg)' : 'rotate(0deg)',
+                        transition: 'transform 200ms ease',
+                      }} />
+                    )}
                   </div>
 
-                  {/* Roles */}
+                  {/* Roles + skills — collapsed on mobile until tapped */}
+                  {(!isMobile || expanded[group.company]) && <div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
                     {allRoles.map((role, ri) => (
                       <div key={role.id} style={{
@@ -190,11 +215,7 @@ export function Work() {
                         marginLeft: multiRole ? 6 : 0,
                       }}>
                         {/* Role title + dates */}
-                        <div style={{
-                          display: 'flex', flexWrap: 'wrap',
-                          alignItems: 'flex-start', justifyContent: 'space-between',
-                          gap: 8, marginBottom: 10,
-                        }}>
+                        <div className="role-header-row">
                           <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
                             <h3 style={{
                               fontSize: 'var(--type-small)', fontWeight: 600,
@@ -220,7 +241,7 @@ export function Work() {
                               </span>
                             )}
                           </div>
-                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 3, flexShrink: 0 }}>
+                          <div className="role-date-block" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 3, flexShrink: 0 }}>
                             <span className="apple-chip" style={{ background: 'rgb(var(--bg-secondary))' }}>
                               {formatDate(role.start_date, t('work.present'))} – {formatDate(role.end_date, t('work.present'))}
                             </span>
@@ -282,6 +303,8 @@ export function Work() {
                       ))}
                     </div>
                   )}
+                  </div>
+                  }
                 </div>
               </div>
             )

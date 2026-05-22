@@ -450,3 +450,106 @@
 .dark .hero-stat-value {
   color: rgb(var(--accent));
 }
+
+/* ══════════════════════════════════════════════════
+   MOBILE RESPONSIVE — max-width: 480px
+   ══════════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+  /* Hero type scale */
+  :root {
+    --type-hero: clamp(1.75rem, 8vw, 2.5rem);
+  }
+
+  /* Hero stats row — stack vertically */
+  .hero-stats-row {
+    flex-direction: column;
+    gap: 0;
+    padding: 16px 0;
+    border-radius: 14px;
+  }
+  .hero-stats-row > div {
+    padding: 14px 24px;
+    border-right: none;
+    border-bottom: 1px solid rgba(var(--apple-border) / 0.4);
+    flex: none;
+    min-width: unset;
+    width: 100%;
+    text-align: center;
+  }
+  .hero-stats-row > div:last-child {
+    border-bottom: none;
+  }
+
+  /* Hero orbs — scale down */
+  .hero-orb-1 { width: 300px; height: 300px; top: -80px; left: -80px; }
+  .hero-orb-2 { width: 250px; height: 250px; top: 40px; right: -80px; }
+  .hero-orb-3 { width: 220px; height: 220px; bottom: -60px; }
+
+  /* Apple card — tighter padding */
+  .apple-card {
+    padding: 18px 16px;
+    border-radius: 14px;
+  }
+
+  /* Grade tooltip — center above chip */
+  .grade-tooltip {
+    width: 200px !important;
+    right: auto !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+
+  /* Work role date block — left-align on mobile */
+  .role-date-block {
+    align-items: flex-start !important;
+  }
+}
+
+/* ── Hero CTA button ─────────────────────────────── */
+.hero-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 28px;
+  border-radius: 12px;
+}
+@media (max-width: 480px) {
+  .hero-cta-btn {
+    height: 40px;
+    padding: 0 18px;
+    font-size: 0.8125rem;
+  }
+}
+
+/* ── Work role header row ────────────────────────── */
+.role-header-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+@media (max-width: 480px) {
+  .role-header-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+/* ── About photo ─────────────────────────────────── */
+.about-photo {
+  width: 200px; height: 200px;
+  border-radius: 24px; object-fit: cover;
+  border: 1px solid rgb(var(--apple-border));
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+}
+.about-photo-fallback {
+  width: 200px; height: 200px; border-radius: 24px;
+}
+@media (max-width: 480px) {
+  .about-photo { width: 140px; height: 140px; border-radius: 18px; }
+  .about-photo-fallback { width: 140px; height: 140px; border-radius: 18px; }
+}

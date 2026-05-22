@@ -36,7 +36,8 @@ export function Languages() {
               borderRadius: 14,
               background: 'rgb(var(--bg-tertiary))',
               border: '1px solid rgb(var(--apple-border))',
-              minWidth: 150,
+              minWidth: 130,
+              flex: '1 1 130px',
             }}>
               <p style={{ fontSize: 'var(--type-card-h)', fontWeight: 600, color: 'rgb(var(--text-primary))', marginBottom: 6 }}>
                 {lang.name}

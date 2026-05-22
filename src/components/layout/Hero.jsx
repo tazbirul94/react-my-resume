@@ -64,7 +64,7 @@ export function Hero({ basics, profiles = [] }) {
         }}
       />
 
-      <div className="relative z-10 text-center px-5 w-full max-w-3xl mx-auto pt-28 pb-36">
+      <div className="relative z-10 text-center px-5 w-full max-w-3xl mx-auto pt-20 pb-28 sm:pt-28 sm:pb-36">
 
 
         {/* Role eyebrow */}
@@ -121,9 +121,8 @@ export function Hero({ basics, profiles = [] }) {
         <div className="hero-ctas flex flex-wrap justify-center gap-3 mb-10">
           <a
             href="#about"
+            className="hero-cta-btn"
             style={{
-              display: 'inline-flex', alignItems: 'center', gap: 8,
-              height: 44, padding: '0 28px', borderRadius: 12,
               background: 'rgb(var(--text-primary))',
               color: 'rgb(var(--bg-primary))',
               fontSize: 'var(--type-small)', fontWeight: 600,
@@ -140,9 +139,8 @@ export function Hero({ basics, profiles = [] }) {
           </a>
           <a
             href={`mailto:${basics.email}`}
+            className="hero-cta-btn"
             style={{
-              display: 'inline-flex', alignItems: 'center', gap: 8,
-              height: 44, padding: '0 28px', borderRadius: 12,
               background: 'transparent',
               border: '1px solid rgb(var(--apple-border))',
               color: 'rgb(var(--text-primary))',

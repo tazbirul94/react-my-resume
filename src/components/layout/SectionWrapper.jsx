@@ -20,9 +20,9 @@ export function SectionWrapper({ id, eyebrow, title, subtitle, className, childr
     <>
       {/* Wave divider before alt sections */}
       {alt && (
-        <div className="wave-divider" aria-hidden="true" style={{ marginBottom: -1 }}>
+        <div className="wave-divider" aria-hidden="true" style={{ marginBottom: -2, lineHeight: 0, background: 'rgb(var(--bg-secondary))' }}>
           <svg viewBox="0 0 1440 28" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
-            style={{ fill: 'rgb(var(--bg-secondary))' }}>
+            style={{ fill: 'rgb(var(--bg-primary))', display: 'block', width: '100%', height: 28 }}>
             <path d="M0,14 C360,28 1080,0 1440,14 L1440,0 L0,0 Z" />
           </svg>
         </div>
@@ -59,9 +59,9 @@ export function SectionWrapper({ id, eyebrow, title, subtitle, className, childr
 
       {/* Wave divider after alt sections */}
       {alt && (
-        <div className="wave-divider" aria-hidden="true" style={{ marginTop: -1 }}>
+        <div className="wave-divider" aria-hidden="true" style={{ marginTop: -2, lineHeight: 0, background: 'rgb(var(--bg-secondary))' }}>
           <svg viewBox="0 0 1440 28" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
-            style={{ fill: 'rgb(var(--bg-primary))' }}>
+            style={{ fill: 'rgb(var(--bg-primary))', display: 'block', width: '100%', height: 28 }}>
             <path d="M0,14 C360,0 1080,28 1440,14 L1440,28 L0,28 Z" />
           </svg>
         </div>

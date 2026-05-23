@@ -6,6 +6,8 @@ import deResume from '@/template/resume.de_DE'
 
 const basics = {
   name: 'MD TAZBIRUL HAQUE',
+  first_name: 'Tazbirul',
+  last_name: 'Haque',
   label: 'SOFTWARE ENGINEER',
   tagline: '8+ years building enterprise .NET systems across Germany — microservices, cloud, and fintech.',
   hero_chips: ['C#', '.NET Core', 'Docker', 'Kubernetes', 'Azure', 'MS SQL', 'RabbitMQ', 'React'],

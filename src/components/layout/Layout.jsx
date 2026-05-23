@@ -3,7 +3,7 @@ import { Navbar } from './Navbar'
 export function Layout({ children, basics }) {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Navbar name={basics?.name?.split(' ')[0] || 'Resume'} />
+      <Navbar name={basics?.first_name || basics?.name?.split(' ')[0] || ''} />
       <main>{children}</main>
     </div>
   )

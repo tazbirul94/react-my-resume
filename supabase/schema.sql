@@ -17,6 +17,8 @@ create table if not exists basics (
   id           uuid primary key default gen_random_uuid(),
   locale       text not null default 'en-US' references locales(code),
   name         text not null,
+  first_name   text,
+  last_name    text,
   label        text,
   tagline      text,
   hero_chips   text[],

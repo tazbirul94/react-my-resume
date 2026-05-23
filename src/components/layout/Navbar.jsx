@@ -36,7 +36,7 @@ function useActiveSection() {
   return active
 }
 
-export function Navbar({ name = 'Resume' }) {
+export function Navbar({ name = '' }) {
   const { t } = useLocale()
   const { theme } = useTheme()
   const { user } = useAuth()
@@ -71,18 +71,20 @@ export function Navbar({ name = 'Resume' }) {
           className="font-display font-semibold text-base tracking-tight shrink-0"
           style={{ color: 'rgb(var(--text-primary))', textDecoration: 'none', fontSize: 'var(--type-small)' }}
         >
-          {name}
+          {t('navbar.brand')}{name ? ` · ${name}` : ''}
         </a>
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden lg:flex items-center gap-0.5">
           {NAV_LINKS.map(link => {
             const isActive = active === link.href.slice(1)
+            const id = link.href.slice(1)
             return (
               <a
                 key={link.href}
                 href={link.href}
-                className="nav-link relative px-3 py-1.5 rounded-md transition-colors duration-150"
+                onClick={e => { e.preventDefault(); document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }}
+                className="nav-link relative px-2 py-1.5 rounded-md transition-colors duration-150"
                 style={{
                   fontSize: 'var(--type-small)',
                   fontWeight: isActive ? 600 : 500,
@@ -118,7 +120,7 @@ export function Navbar({ name = 'Resume' }) {
               letterSpacing: '-0.01em',
               transition: 'opacity 150ms ease',
             }}
-            className="hidden md:inline-flex"
+            className="hidden lg:inline-flex"
             onMouseEnter={e => e.currentTarget.style.opacity = '0.82'}
             onMouseLeave={e => e.currentTarget.style.opacity = '1'}
           >
@@ -127,7 +129,7 @@ export function Navbar({ name = 'Resume' }) {
           <LocaleSwitcher />
           <ThemeToggle />
           <button
-            className="mobile-menu-btn md:hidden p-2 rounded-md transition-colors"
+            className="mobile-menu-btn lg:hidden p-2 rounded-md transition-colors"
             style={{ color: 'rgb(var(--text-secondary))' }}
             onClick={() => setMobileOpen(v => !v)}
             aria-label="Toggle menu"
@@ -140,7 +142,7 @@ export function Navbar({ name = 'Resume' }) {
       {/* Mobile menu */}
       {mobileOpen && (
         <div
-          className="md:hidden border-b px-4 sm:px-6 py-2 backdrop-blur-[20px]"
+          className="lg:hidden border-b px-4 sm:px-6 py-2 backdrop-blur-[20px]"
           style={{
             background: theme === 'dark' ? 'rgba(0,0,0,0.92)' : 'rgba(255,255,255,0.92)',
             borderColor: 'rgb(var(--apple-border))',
@@ -148,11 +150,12 @@ export function Navbar({ name = 'Resume' }) {
         >
           {NAV_LINKS.map(link => {
             const isActive = active === link.href.slice(1)
+            const id = link.href.slice(1)
             return (
               <a
                 key={link.href}
                 href={link.href}
-                onClick={() => setMobileOpen(false)}
+                onClick={e => { e.preventDefault(); setMobileOpen(false); document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }}
                 className="nav-link flex items-center py-3 border-b last:border-0 transition-colors"
                 style={{
                   fontSize: 'var(--type-small)',

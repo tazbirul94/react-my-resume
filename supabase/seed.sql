@@ -2,9 +2,11 @@
 -- Run in order: basics → profiles → work → education → skill_groups → skills → languages → interests → projects → certifications → testimonials
 
 -- basics
-INSERT INTO basics (name, label, tagline, hero_chips, picture, email, phone, website, summary, city, country_code, postal_code)
+INSERT INTO basics (name, first_name, last_name, label, tagline, hero_chips, picture, email, phone, website, summary, city, country_code, postal_code)
 VALUES (
   'MD TAZBIRUL HAQUE',
+  'Tazbirul',
+  'Haque',
   'SOFTWARE ENGINEER',
   '8+ years building enterprise .NET systems across Germany — microservices, cloud, and fintech.',
   ARRAY['C#', '.NET Core', 'Docker', 'Kubernetes', 'Azure', 'MS SQL', 'RabbitMQ', 'React'],

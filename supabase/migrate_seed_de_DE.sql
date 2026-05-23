@@ -16,10 +16,12 @@ DELETE FROM profiles       WHERE locale = 'de-DE';
 DELETE FROM basics         WHERE locale = 'de-DE';
 
 -- ─── basics ──────────────────────────────────────────────────────────────────
-INSERT INTO basics (locale, name, label, picture, email, phone, website, summary, city, country_code, postal_code)
+INSERT INTO basics (locale, name, first_name, last_name, label, picture, email, phone, website, summary, city, country_code, postal_code)
 VALUES (
   'de-DE',
   'MD TAZBIRUL HAQUE',
+  'Tazbirul',
+  'Haque',
   'SOFTWAREENTWICKLER',
   'images/myself2.jpg',
   'tazbirul94@gmail.com',

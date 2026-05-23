@@ -9,7 +9,7 @@ export function Portfolio() {
   const { t } = useLocale()
 
   if (loading) return (
-    <SectionWrapper id="portfolio" eyebrow={t('sections.portfolio.eyebrow')} title={t('sections.portfolio.title')} alt>
+    <SectionWrapper id="portfolio" eyebrow={t('sections.portfolio.eyebrow')} title={t('sections.portfolio.title')}>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {[1,2,3].map(i => <Skeleton key={i} className="h-52 w-full rounded-2xl" />)}
       </div>
@@ -19,7 +19,7 @@ export function Portfolio() {
   const items = (projects ?? []).filter(p => p.name && !p.name.startsWith('<'))
 
   return (
-    <SectionWrapper id="portfolio" eyebrow={t('sections.portfolio.eyebrow')} title={t('sections.portfolio.title')} alt>
+    <SectionWrapper id="portfolio" eyebrow={t('sections.portfolio.eyebrow')} title={t('sections.portfolio.title')}>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))', gap: 16 }}>
         {items.map((project, idx) => (
           <div key={project.id ?? idx} className="apple-card stagger-item" style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: 0, overflow: 'hidden' }}>

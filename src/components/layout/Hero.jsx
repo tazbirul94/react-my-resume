@@ -116,15 +116,18 @@ export function Hero({ basics, profiles = [] }) {
 
         {/* CTAs */}
         <div className="hero-ctas flex flex-wrap justify-center gap-3 mb-10">
-          <a
-            href="#about"
+          <button
+            type="button"
+            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
             className="hero-cta-btn"
             style={{
               background: 'rgb(var(--text-primary))',
               color: 'rgb(var(--bg-primary))',
               fontSize: 'var(--type-small)', fontWeight: 600,
               letterSpacing: '-0.01em',
-              textDecoration: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              fontFamily: 'inherit',
               boxShadow: '0 2px 8px rgba(0,0,0,0.14)',
               transition: 'opacity 150ms ease, transform 200ms ease',
             }}
@@ -133,7 +136,7 @@ export function Hero({ basics, profiles = [] }) {
           >
             <FileText size={16} />
             {t('hero.viewResume')}
-          </a>
+          </button>
           <a
             href={`mailto:${basics.email}`}
             className="hero-cta-btn"
@@ -203,15 +206,16 @@ export function Hero({ basics, profiles = [] }) {
       </div>
 
       {/* Scroll cue */}
-      <a
-        href="#about"
+      <button
+        type="button"
+        onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
         aria-label={t('hero.scroll')}
-        className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 transition-colors"
-        style={{ color: 'rgb(var(--text-tertiary))', textDecoration: 'none' }}
+        className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 transition-colors z-10"
+        style={{ color: 'rgb(var(--text-tertiary))', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', padding: 0 }}
       >
         <span className="eyebrow" style={{ letterSpacing: '0.2em' }}>{t('hero.scroll')}</span>
         <ArrowDown size={13} />
-      </a>
+      </button>
     </section>
   )
 }

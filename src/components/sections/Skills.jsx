@@ -90,7 +90,7 @@ export function Skills() {
   const { data: groups, loading } = useSkills()
 
   if (loading) return (
-    <SectionWrapper id="skills" eyebrow={t('sections.skills.eyebrow')} title={t('sections.skills.title')}>
+    <SectionWrapper id="skills" eyebrow={t('sections.skills.eyebrow')} title={t('sections.skills.title')} alt>
       <div className="grid md:grid-cols-2 gap-5">
         {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-52 w-full rounded-2xl" />)}
       </div>
@@ -100,7 +100,7 @@ export function Skills() {
   const items = groups ?? []
 
   return (
-    <SectionWrapper id="skills" eyebrow={t('sections.skills.eyebrow')} title={t('sections.skills.title')}>
+    <SectionWrapper id="skills" eyebrow={t('sections.skills.eyebrow')} title={t('sections.skills.title')} alt>
       <div className="grid md:grid-cols-2 gap-5">
         {items.map((group) => {
           if (group.type === 'soft') return <SoftGroupCard key={group.id} group={group} />

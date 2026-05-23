@@ -15,6 +15,9 @@ const ui = {
     references: 'Referenzen',
     photo: 'Foto',
   },
+  navbar: {
+    brand: 'Lebenslauf',
+  },
   navMenu: {
     showNav: 'Navigation anzeigen',
     hideNav: 'Navigation ausblenden',

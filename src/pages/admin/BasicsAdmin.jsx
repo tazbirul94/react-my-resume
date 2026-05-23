@@ -11,7 +11,7 @@ import { Upload, X } from 'lucide-react'
 
 export function BasicsAdmin() {
   const { adminLocale } = useAdminLocale()
-  const [form, setForm] = useState({ name: '', label: '', tagline: '', hero_chips: [], email: '', phone: '', website: '', picture: '', city: '', country_code: '', summary: [] })
+  const [form, setForm] = useState({ name: '', first_name: '', last_name: '', label: '', tagline: '', hero_chips: [], email: '', phone: '', website: '', picture: '', city: '', country_code: '', summary: [] })
   const [id, setId] = useState(null)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -58,6 +58,7 @@ export function BasicsAdmin() {
     const payload = { ...form }
     delete payload.id
     payload.locale = adminLocale
+    payload.name = [form.first_name, form.last_name].filter(Boolean).join(' ') || form.name
     const { data, error: upsertErr } = await supabase.from('basics').upsert({ ...payload, locale: adminLocale }, { onConflict: 'locale' }).select()
     if (data?.[0]) setId(data[0].id)
     setSaving(false)
@@ -74,7 +75,10 @@ export function BasicsAdmin() {
       <Card>
         <CardContent className="pt-6 space-y-4">
           <div className="grid grid-cols-2 gap-4">
-            <Input label="Full Name" value={form.name || ''} onChange={e => setForm(f => ({...f, name: e.target.value}))} />
+            <Input label="First Name" value={form.first_name || ''} onChange={e => setForm(f => ({...f, first_name: e.target.value}))} />
+            <Input label="Last Name" value={form.last_name || ''} onChange={e => setForm(f => ({...f, last_name: e.target.value}))} />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
             <Input label="Job Title / Label" value={form.label || ''} onChange={e => setForm(f => ({...f, label: e.target.value}))} />
           </div>
           <Input label="Tagline (one-liner shown in hero)" value={form.tagline || ''} onChange={e => setForm(f => ({...f, tagline: e.target.value}))} />

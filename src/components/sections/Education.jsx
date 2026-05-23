@@ -82,7 +82,7 @@ export function Education() {
   const toggle = key => setExpanded(prev => ({ ...prev, [key]: !prev[key] }))
 
   if (loading) return (
-    <SectionWrapper id="education" eyebrow={t('sections.education.eyebrow')} title={t('sections.education.title')}>
+    <SectionWrapper id="education" eyebrow={t('sections.education.eyebrow')} title={t('sections.education.title')} alt>
       <div className="space-y-4">{[1,2].map(i => <Skeleton key={i} className="h-28 w-full rounded-2xl" />)}</div>
     </SectionWrapper>
   )
@@ -90,7 +90,7 @@ export function Education() {
   const items = education ?? []
 
   return (
-    <SectionWrapper id="education" eyebrow={t('sections.education.eyebrow')} title={t('sections.education.title')}>
+    <SectionWrapper id="education" eyebrow={t('sections.education.eyebrow')} title={t('sections.education.title')} alt>
       <div className="space-y-4">
         {items.map((edu, idx) => {
           const key = edu.id ?? idx

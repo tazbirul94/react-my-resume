@@ -11,6 +11,7 @@ const SECTIONS = [
   { path: 'work', label: 'Work' },
   { path: 'education', label: 'Education' },
   { path: 'skills', label: 'Skills' },
+  { path: 'soft-skills', label: 'Soft Skills' },
   { path: 'languages', label: 'Languages' },
   { path: 'interests', label: 'Interests' },
   { path: 'projects', label: 'Projects' },
@@ -49,7 +50,7 @@ export function AdminLayout() {
           </Link>
           {SECTIONS.map(s => (
             <Link key={s.path} to={`/admin/${s.path}`}
-              className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors ${location.pathname.includes(s.path) ? 'bg-apple-text text-apple-bg' : 'text-apple-text-2 hover:bg-apple-bg-2 hover:text-apple-text'}`}>
+              className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors ${location.pathname.endsWith(`/${s.path}`) ? 'bg-apple-text text-apple-bg' : 'text-apple-text-2 hover:bg-apple-bg-2 hover:text-apple-text'}`}>
               {s.label}
             </Link>
           ))}

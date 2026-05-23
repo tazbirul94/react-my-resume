@@ -91,7 +91,17 @@ create table if not exists skills (
   locale     text not null default 'en-US' references locales(code),
   group_id   uuid references skill_groups(id) on delete cascade,
   name       text not null,
+  icon       text,
   level      int check (level between 0 and 100),
+  sort_order int default 0
+);
+
+create table if not exists soft_skill_categories (
+  id         uuid primary key default gen_random_uuid(),
+  locale     text not null default 'en-US' references locales(code),
+  title      text not null,
+  icon       text,
+  tags       text[] default '{}',
   sort_order int default 0
 );
 
@@ -160,6 +170,7 @@ alter table interests enable row level security;
 alter table projects enable row level security;
 alter table certifications enable row level security;
 alter table testimonials enable row level security;
+alter table soft_skill_categories enable row level security;
 
 create policy "Public read locales" on locales for select using (true);
 create policy "Public read basics" on basics for select using (true);
@@ -173,6 +184,7 @@ create policy "Public read interests" on interests for select using (true);
 create policy "Public read projects" on projects for select using (true);
 create policy "Public read certifications" on certifications for select using (true);
 create policy "Public read testimonials" on testimonials for select using (true);
+create policy "Public read soft_skill_categories" on soft_skill_categories for select using (true);
 
 create policy "Auth write locales" on locales for all using (auth.role() = 'authenticated');
 create policy "Auth write basics" on basics for all using (auth.role() = 'authenticated');
@@ -186,3 +198,4 @@ create policy "Auth write interests" on interests for all using (auth.role() = '
 create policy "Auth write projects" on projects for all using (auth.role() = 'authenticated');
 create policy "Auth write certifications" on certifications for all using (auth.role() = 'authenticated');
 create policy "Auth write testimonials" on testimonials for all using (auth.role() = 'authenticated');
+create policy "Auth write soft_skill_categories" on soft_skill_categories for all using (auth.role() = 'authenticated');

@@ -196,9 +196,10 @@ INSERT INTO skill_groups (title, description, type, sort_order) VALUES
   ('Backend',           ARRAY[]::text[], 'hard', 0),
   ('Cloud & DevOps',    ARRAY[]::text[], 'hard', 1),
   ('Frontend & Mobile', ARRAY[]::text[], 'hard', 2),
-  ('Data & ML',         ARRAY[]::text[], 'hard', 3);
+  ('Data & ML',         ARRAY[]::text[], 'hard', 3),
+  ('Soft Skills',       ARRAY[]::text[], 'soft', 4);
 
--- skills (CTE joins on group title)
+-- hard skills (no icon)
 WITH sg AS (
   SELECT id, title FROM skill_groups
 )
@@ -232,6 +233,35 @@ FROM (VALUES
   ('Data & ML',         'Machine Learning',   70, 3)
 ) AS s(group_title, name, level, sort_order)
 JOIN sg ON sg.title = s.group_title;
+
+-- soft skills (with icon)
+WITH sg AS (
+  SELECT id, title FROM skill_groups
+)
+INSERT INTO skills (group_id, name, icon, level, sort_order)
+SELECT sg.id, s.name, s.icon, s.level, s.sort_order
+FROM (VALUES
+  ('Soft Skills', 'Problem Solving',    '🧩', 90, 0),
+  ('Soft Skills', 'Team Collaboration', '🤝', 90, 1),
+  ('Soft Skills', 'Communication',      '💬', 85, 2),
+  ('Soft Skills', 'Adaptability',       '🔄', 88, 3),
+  ('Soft Skills', 'Critical Thinking',  '🎯', 85, 4),
+  ('Soft Skills', 'Time Management',    '⏱',  82, 5),
+  ('Soft Skills', 'Mentoring',          '🌱', 78, 6),
+  ('Soft Skills', 'Agile / Scrum',      '⚡', 88, 7)
+) AS s(group_title, name, icon, level, sort_order)
+JOIN sg ON sg.title = s.group_title;
+
+-- soft_skill_categories
+INSERT INTO soft_skill_categories (locale, title, icon, tags, sort_order) VALUES
+  ('en-US', 'Communication',  '💬', ARRAY['Technical Writing', 'Stakeholder Presentation', 'Cross-cultural Collaboration'], 0),
+  ('en-US', 'Leadership',     '🌱', ARRAY['Team Mentoring', 'Code Review Culture', 'Initiative Taking'],                    1),
+  ('en-US', 'Delivery',       '⚡', ARRAY['Agile / Scrum', 'Deadline-driven', 'Iterative Improvement'],                    2),
+  ('en-US', 'Collaboration',  '🤝', ARRAY['Remote-first', 'Pair Programming', 'Knowledge Sharing'],                        3),
+  ('de-DE', 'Kommunikation',  '💬', ARRAY['Technisches Schreiben', 'Stakeholder-Präsentation', 'Interkulturelle Zusammenarbeit'], 0),
+  ('de-DE', 'Führung',        '🌱', ARRAY['Team-Mentoring', 'Code-Review-Kultur', 'Eigeninitiative'],                           1),
+  ('de-DE', 'Lieferung',      '⚡', ARRAY['Agile / Scrum', 'Termintreue', 'Iterative Verbesserung'],                           2),
+  ('de-DE', 'Zusammenarbeit', '🤝', ARRAY['Remote-first', 'Pair Programming', 'Wissensteilung'],                               3);
 
 -- languages
 INSERT INTO languages (name, level, sort_order) VALUES

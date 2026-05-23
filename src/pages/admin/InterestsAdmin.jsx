@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { CrudPage } from '@/components/admin/CrudPage'
 import { Input } from '@/components/ui/input'
+import { TagInput } from '@/components/ui/TagInput'
 import { supabase } from '@/lib/supabase'
 import { fallbackData } from '@/lib/fallback'
 import { useAdminLocale } from '@/context/AdminLocaleContext'
@@ -40,7 +41,7 @@ export function InterestsAdmin() {
       renderForm={(form, setForm) => (
         <>
           <Input label="Interest Name" value={form.name || ''} onChange={e => setForm(f => ({...f, name: e.target.value}))} />
-          <Input label="Keywords (comma separated)" value={(form.keywords || []).join(', ')} onChange={e => setForm(f => ({...f, keywords: e.target.value.split(',').map(s => s.trim()).filter(Boolean)}))} />
+          <TagInput label="Keywords" value={form.keywords || []} onChange={chips => setForm(f => ({ ...f, keywords: chips }))} />
         </>
       )}
     />

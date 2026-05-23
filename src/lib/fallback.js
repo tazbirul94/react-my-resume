@@ -213,6 +213,7 @@ const skillGroups = [
   { id: 'sg-cloud',   title: 'Cloud & DevOps',     description: [], type: 'hard', sort_order: 1 },
   { id: 'sg-frontend', title: 'Frontend & Mobile', description: [], type: 'hard', sort_order: 2 },
   { id: 'sg-data',    title: 'Data & ML',          description: [], type: 'hard', sort_order: 3 },
+  { id: 'sg-soft',    title: 'Soft Skills',        description: [], type: 'soft', sort_order: 4 },
 ]
 
 const skills = [
@@ -241,6 +242,21 @@ const skills = [
   { id: 'sk-23', group_id: 'sg-data',     name: 'Azure Data Factory', level: 75, sort_order: 1 },
   { id: 'sk-24', group_id: 'sg-data',     name: 'Python',           level: 65, sort_order: 2 },
   { id: 'sk-25', group_id: 'sg-data',     name: 'Machine Learning', level: 70, sort_order: 3 },
+  { id: 'sk-26', group_id: 'sg-soft',     name: 'Problem Solving',    icon: '🧩', level: 90, sort_order: 0 },
+  { id: 'sk-27', group_id: 'sg-soft',     name: 'Team Collaboration', icon: '🤝', level: 90, sort_order: 1 },
+  { id: 'sk-28', group_id: 'sg-soft',     name: 'Communication',      icon: '💬', level: 85, sort_order: 2 },
+  { id: 'sk-29', group_id: 'sg-soft',     name: 'Adaptability',       icon: '🔄', level: 88, sort_order: 3 },
+  { id: 'sk-30', group_id: 'sg-soft',     name: 'Critical Thinking',  icon: '🎯', level: 85, sort_order: 4 },
+  { id: 'sk-31', group_id: 'sg-soft',     name: 'Time Management',    icon: '⏱',  level: 82, sort_order: 5 },
+  { id: 'sk-32', group_id: 'sg-soft',     name: 'Mentoring',          icon: '🌱', level: 78, sort_order: 6 },
+  { id: 'sk-33', group_id: 'sg-soft',     name: 'Agile / Scrum',      icon: '⚡', level: 88, sort_order: 7 },
+]
+
+const softSkillCategories = [
+  { id: 'ssc-1', title: 'Communication',  icon: '💬', tags: ['Technical Writing', 'Stakeholder Presentation', 'Cross-cultural Collaboration'], sort_order: 0 },
+  { id: 'ssc-2', title: 'Leadership',     icon: '🌱', tags: ['Team Mentoring', 'Code Review Culture', 'Initiative Taking'],                    sort_order: 1 },
+  { id: 'ssc-3', title: 'Delivery',       icon: '⚡', tags: ['Agile / Scrum', 'Deadline-driven', 'Iterative Improvement'],                    sort_order: 2 },
+  { id: 'ssc-4', title: 'Collaboration',  icon: '🤝', tags: ['Remote-first', 'Pair Programming', 'Knowledge Sharing'],                        sort_order: 3 },
 ]
 
 const languages = [
@@ -338,6 +354,7 @@ export const fallbackData = {
   education,
   skillGroups,
   skills,
+  softSkillCategories,
   languages,
   interests,
   projects,

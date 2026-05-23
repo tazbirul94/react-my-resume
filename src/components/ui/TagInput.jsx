@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 export function TagInput({ value = [], onChange, label, placeholder = 'Type and press Enter or ,', className }) {
   const [input, setInput] = useState('')
+  const inputRef = useRef(null)
 
   const add = (raw) => {
     const chip = raw.trim()
@@ -21,7 +22,10 @@ export function TagInput({ value = [], onChange, label, placeholder = 'Type and 
   return (
     <div className={cn('space-y-1', className)}>
       {label && <label className="text-sm font-medium text-foreground">{label}</label>}
-      <div className="flex flex-wrap items-center gap-1.5 min-h-10 w-full rounded-md border border-border bg-background px-3 py-2 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand focus-within:ring-offset-2">
+      <div
+        className="flex flex-wrap items-center gap-1.5 min-h-10 w-full rounded-md border border-border bg-background px-3 py-2 cursor-text focus-within:outline-none focus-within:ring-2 focus-within:ring-brand focus-within:ring-offset-2"
+        onClick={() => inputRef.current?.focus()}
+      >
         {value.map(chip => (
           <span
             key={chip}
@@ -30,7 +34,7 @@ export function TagInput({ value = [], onChange, label, placeholder = 'Type and 
             {chip}
             <button
               type="button"
-              onClick={() => remove(chip)}
+              onClick={e => { e.stopPropagation(); remove(chip) }}
               className="rounded-full opacity-60 hover:opacity-100 transition-opacity"
               aria-label={`Remove ${chip}`}
             >
@@ -39,6 +43,7 @@ export function TagInput({ value = [], onChange, label, placeholder = 'Type and 
           </span>
         ))}
         <input
+          ref={inputRef}
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={handleKeyDown}

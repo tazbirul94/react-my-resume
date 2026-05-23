@@ -17,6 +17,7 @@ import { InterestsAdmin } from '@/pages/admin/InterestsAdmin'
 import { ProjectsAdmin } from '@/pages/admin/ProjectsAdmin'
 import { CertificationsAdmin } from '@/pages/admin/CertificationsAdmin'
 import { TestimonialsAdmin } from '@/pages/admin/TestimonialsAdmin'
+import { SoftSkillsAdmin } from '@/pages/admin/SoftSkillsAdmin'
 import { AdminLocaleProvider } from '@/context/AdminLocaleContext'
 import { LocalesAdmin } from '@/pages/admin/LocalesAdmin'
 
@@ -51,6 +52,7 @@ export default function App() {
                 <Route path="projects" element={<ProjectsAdmin />} />
                 <Route path="certifications" element={<CertificationsAdmin />} />
                 <Route path="testimonials" element={<TestimonialsAdmin />} />
+                <Route path="soft-skills" element={<SoftSkillsAdmin />} />
               </Route>
             </Routes>
           </BrowserRouter>

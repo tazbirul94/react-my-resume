@@ -7,6 +7,7 @@ const SECTIONS = [
   { path: 'work', label: 'Work Experience', description: 'Jobs and highlights' },
   { path: 'education', label: 'Education', description: 'Degrees and courses' },
   { path: 'skills', label: 'Skills', description: 'Skill groups and levels' },
+  { path: 'soft-skills', label: 'Soft Skills', description: 'Interpersonal categories and tags' },
   { path: 'languages', label: 'Languages', description: 'Language proficiency' },
   { path: 'interests', label: 'Interests', description: 'Hobbies and keywords' },
   { path: 'projects', label: 'Projects', description: 'Portfolio entries' },

@@ -58,6 +58,10 @@ export function useSkills() {
   return { data, loading: groups.loading || skills.loading, error: groups.error || skills.error }
 }
 
+export function useSoftSkills() {
+  return useQuery('soft_skill_categories', 'softSkillCategories', { order: 'sort_order', ascending: true })
+}
+
 export function useLanguages() {
   return useQuery('languages', 'languages', { order: 'sort_order', ascending: true })
 }

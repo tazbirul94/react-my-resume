@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { CrudPage } from '@/components/admin/CrudPage'
 import { Input } from '@/components/ui/input'
+import { TagInput } from '@/components/ui/TagInput'
 import { Badge } from '@/components/ui/badge'
 import { DatePicker } from '@/components/ui/DatePicker'
 import { supabase } from '@/lib/supabase'
@@ -49,8 +50,8 @@ export function ProjectsAdmin() {
             <Input label="Thumbnail Image URL" value={form.image_thumb || ''} onChange={e => setForm(f => ({...f, image_thumb: e.target.value}))} />
             <Input label="Modal Image URL" value={form.image_modal || ''} onChange={e => setForm(f => ({...f, image_modal: e.target.value}))} />
             <DatePicker label="Release Date" value={form.release_date || ''} onChange={v => setForm(f => ({...f, release_date: v}))} />
-            <Input label="Keywords (comma separated)" value={(form.keywords || []).join(', ')} onChange={e => setForm(f => ({...f, keywords: e.target.value.split(',').map(s => s.trim()).filter(Boolean)}))} />
           </div>
+          <TagInput label="Keywords" value={form.keywords || []} onChange={chips => setForm(f => ({ ...f, keywords: chips }))} />
         </>
       )}
     />

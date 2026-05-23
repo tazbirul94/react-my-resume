@@ -5,28 +5,29 @@ import { SectionWrapper } from '@/components/layout/SectionWrapper'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ChevronDown } from 'lucide-react'
 
-function formatDate(dateStr, presentLabel) {
-  if (!dateStr) return presentLabel
-  return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
-}
-
-const GRADE_SCALE = [
-  ['1.0 – 1.5', 'Sehr gut',       'Excellent'],
-  ['1.6 – 2.5', 'Gut',            'Good'],
-  ['2.6 – 3.5', 'Befriedigend',   'Satisfactory'],
-  ['3.6 – 4.0', 'Ausreichend',    'Sufficient'],
-  ['4.1 – 5.0', 'Nicht bestanden','Fail'],
+const GRADE_SCALE_KEYS = [
+  ['1.0 – 1.5', 'gradeScale.veryGood'],
+  ['1.6 – 2.5', 'gradeScale.good'],
+  ['2.6 – 3.5', 'gradeScale.satisfactory'],
+  ['3.6 – 4.0', 'gradeScale.sufficient'],
+  ['4.1 – 5.0', 'gradeScale.fail'],
 ]
 
-function GradeChip({ gpa_german, locale }) {
+function formatDate(dateStr, presentLabel, locale = 'en-US') {
+  if (!dateStr) return presentLabel
+  return new Date(dateStr).toLocaleDateString(locale, { month: 'short', year: 'numeric' })
+}
+
+function GradeChip({ gpa_german }) {
+  const { t } = useLocale()
   return (
     <span
       className="apple-chip"
       style={{ background: 'rgba(var(--accent)/0.08)', color: 'rgb(var(--accent))', position: 'relative', cursor: 'default' }}
-      onMouseEnter={e => { const t = e.currentTarget.querySelector('.grade-tooltip'); if (t) { t.style.opacity = '1'; t.style.pointerEvents = 'auto' } }}
-      onMouseLeave={e => { const t = e.currentTarget.querySelector('.grade-tooltip'); if (t) { t.style.opacity = '0'; t.style.pointerEvents = 'none' } }}
+      onMouseEnter={e => { const tip = e.currentTarget.querySelector('.grade-tooltip'); if (tip) { tip.style.opacity = '1'; tip.style.pointerEvents = 'auto' } }}
+      onMouseLeave={e => { const tip = e.currentTarget.querySelector('.grade-tooltip'); if (tip) { tip.style.opacity = '0'; tip.style.pointerEvents = 'none' } }}
     >
-      {locale === 'de-DE' ? 'Note' : 'Grade'} {gpa_german}
+      {t('education.gradeLabel')} {gpa_german}
       <span className="grade-tooltip" style={{
         opacity: 0, pointerEvents: 'none',
         position: 'absolute', bottom: 'calc(100% + 8px)', right: 0,
@@ -39,9 +40,9 @@ function GradeChip({ gpa_german, locale }) {
         textAlign: 'left',
       }}>
         <p style={{ fontSize: 11, fontWeight: 700, color: 'rgb(var(--text-primary))', marginBottom: 8, whiteSpace: 'nowrap' }}>
-          {locale === 'de-DE' ? 'Deutsche Notenskala' : 'German Grading Scale'}
+          {t('education.gradeScaleTitle')}
         </p>
-        {GRADE_SCALE.map(([range, de, en]) => {
+        {GRADE_SCALE_KEYS.map(([range, key]) => {
           const val = parseFloat(gpa_german)
           const [lo, hi] = range.split(' – ').map(parseFloat)
           const active = val >= lo && val <= hi
@@ -52,7 +53,7 @@ function GradeChip({ gpa_german, locale }) {
               background: active ? 'rgba(var(--accent)/0.12)' : 'transparent',
             }}>
               <span style={{ fontSize: 10, fontWeight: active ? 700 : 400, color: active ? 'rgb(var(--accent))' : 'rgb(var(--text-tertiary))', whiteSpace: 'nowrap' }}>{range}</span>
-              <span style={{ fontSize: 10, color: active ? 'rgb(var(--accent))' : 'rgb(var(--text-secondary))', marginLeft: 8, whiteSpace: 'nowrap' }}>{locale === 'de-DE' ? de : en}</span>
+              <span style={{ fontSize: 10, color: active ? 'rgb(var(--accent))' : 'rgb(var(--text-secondary))', marginLeft: 8, whiteSpace: 'nowrap' }}>{t(key)}</span>
             </div>
           )
         })}
@@ -167,7 +168,7 @@ export function Education() {
                       </span>
                     )}
                     <span className="apple-chip" style={{ fontSize: 11 }}>
-                      {formatDate(edu.start_date, present)} – {formatDate(edu.end_date, present)}
+                      {formatDate(edu.start_date, present, locale)} – {formatDate(edu.end_date, present, locale)}
                     </span>
                   </div>
                 </div>
@@ -176,9 +177,9 @@ export function Education() {
                 {!isMobile && (
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6, flexShrink: 0 }}>
                     <span className="apple-chip">
-                      {formatDate(edu.start_date, present)} – {formatDate(edu.end_date, present)}
+                      {formatDate(edu.start_date, present, locale)} – {formatDate(edu.end_date, present, locale)}
                     </span>
-                    {edu.gpa_german && <GradeChip gpa_german={edu.gpa_german} locale={locale} />}
+                    {edu.gpa_german && <GradeChip gpa_german={edu.gpa_german} />}
                   </div>
                 )}
               </div>
@@ -189,7 +190,7 @@ export function Education() {
                   {/* Grade chip on mobile */}
                   {isMobile && edu.gpa_german && (
                     <div style={{ marginBottom: 10 }}>
-                      <GradeChip gpa_german={edu.gpa_german} locale={locale} />
+                      <GradeChip gpa_german={edu.gpa_german} />
                     </div>
                   )}
 
@@ -208,7 +209,7 @@ export function Education() {
                     }}>
                       <span style={{ fontSize: 16, flexShrink: 0 }}>📄</span>
                       <div>
-                        <p className="eyebrow" style={{ color: 'rgb(var(--accent))', marginBottom: 3 }}>Master's Thesis</p>
+                        <p className="eyebrow" style={{ color: 'rgb(var(--accent))', marginBottom: 3 }}>{t('education.thesisLabel')}</p>
                         <p style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--text-secondary))', lineHeight: 1.55, margin: 0 }}>
                           {thesisLine}
                         </p>

@@ -23,6 +23,9 @@ const ui = {
     viewResume: 'View Resume',
     contactMe: 'Contact Me',
     scroll: 'Scroll',
+    statsYears: 'Years Experience',
+    statsTech: 'Technologies',
+    statsCountries: 'Countries',
   },
   sections: {
     about:         { eyebrow: 'About',          title: 'About Me' },
@@ -40,6 +43,10 @@ const ui = {
     present: 'Present',
     current: 'Current',
     title: 'Work',
+    showMore: '↓ Show {count} earlier {label}',
+    showMoreSingle: '↓ Show {count} earlier position',
+    showMorePlural: '↓ Show {count} earlier positions',
+    showLess: '↑ Show less',
     employmentTypes: [
       { value: 'Full-Time',       label: 'Full-Time' },
       { value: 'Part-Time',       label: 'Part-Time' },
@@ -51,6 +58,8 @@ const ui = {
   about: {
     title: 'About Me',
     subtitle: 'Contact Details',
+    openBadge: 'Open to opportunities',
+    yearsExp: '{years}+ years experience',
   },
   skills: {
     title: 'Skills',
@@ -61,16 +70,31 @@ const ui = {
   },
   certification: {
     title: 'Certifications',
+    verify: 'Verify',
   },
   education: {
     title: 'Education',
     present: 'Present',
+    gradeLabel: 'Grade',
+    gradeScaleTitle: 'German Grading Scale',
+    thesisLabel: "Master's Thesis",
   },
   hobbys: {
     title: 'Interests',
   },
   references: {
     title: 'References',
+    moreNote: 'Need more? Additional references available on request.',
+    requestBtn: 'Request a reference letter',
+    requestSubject: 'Reference%20Request',
+    requestBody: 'Hi%2C%20I%20would%20like%20to%20request%20a%20reference%20letter.',
+  },
+  gradeScale: {
+    veryGood: 'Excellent',
+    good: 'Good',
+    satisfactory: 'Satisfactory',
+    sufficient: 'Sufficient',
+    fail: 'Fail',
   },
   print: {
     saveButton: 'Save PDF',

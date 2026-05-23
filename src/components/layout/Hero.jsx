@@ -102,9 +102,9 @@ export function Hero({ basics, profiles = [] }) {
         {stats && (
           <div className="hero-stats-row">
             {[
-              { value: `${stats.years}+`, label: 'Years Experience' },
-              { value: `${stats.techCount}+`, label: 'Technologies' },
-              { value: stats.countries,        label: 'Countries' },
+              { value: `${stats.years}+`, label: t('hero.statsYears') },
+              { value: `${stats.techCount}+`, label: t('hero.statsTech') },
+              { value: stats.countries,        label: t('hero.statsCountries') },
             ].map(({ value, label }) => (
               <div key={label} className="text-center">
                 <div className="hero-stat-value">{value}</div>
@@ -205,7 +205,7 @@ export function Hero({ basics, profiles = [] }) {
       {/* Scroll cue */}
       <a
         href="#about"
-        aria-label="Scroll down to About section"
+        aria-label={t('hero.scroll')}
         className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 transition-colors"
         style={{ color: 'rgb(var(--text-tertiary))', textDecoration: 'none' }}
       >

@@ -23,6 +23,9 @@ const ui = {
     viewResume: 'Lebenslauf ansehen',
     contactMe: 'Kontakt aufnehmen',
     scroll: 'Scrollen',
+    statsYears: 'Jahre Erfahrung',
+    statsTech: 'Technologien',
+    statsCountries: 'Länder',
   },
   sections: {
     about:         { eyebrow: 'Über mich',        title: 'Wer ich bin' },
@@ -40,6 +43,9 @@ const ui = {
     present: 'Heute',
     current: 'Aktuell',
     title: 'Berufserfahrung',
+    showMoreSingle: '↓ {count} frühere Stelle anzeigen',
+    showMorePlural: '↓ {count} frühere Stellen anzeigen',
+    showLess: '↑ Weniger anzeigen',
     employmentTypes: [
       { value: 'Vollzeit',    label: 'Vollzeit' },
       { value: 'Teilzeit',    label: 'Teilzeit' },
@@ -51,6 +57,8 @@ const ui = {
   about: {
     title: 'Über mich',
     subtitle: 'Kontaktdaten',
+    openBadge: 'Offen für Angebote',
+    yearsExp: '{years}+ Jahre Erfahrung',
   },
   skills: {
     title: 'Fähigkeiten',
@@ -64,16 +72,31 @@ const ui = {
   },
   certification: {
     title: 'Zertifizierung',
+    verify: 'Verifizieren',
   },
   education: {
     title: 'Ausbildung',
     present: 'Heute',
+    gradeLabel: 'Note',
+    gradeScaleTitle: 'Deutsche Notenskala',
+    thesisLabel: 'Masterarbeit',
   },
   hobbys: {
     title: 'Interessen',
   },
   references: {
     title: 'Referenzen',
+    moreNote: 'Weitere Referenzen auf Anfrage erhältlich.',
+    requestBtn: 'Referenzschreiben anfordern',
+    requestSubject: 'Referenzanfrage',
+    requestBody: 'Hallo%2C%20ich%20m%C3%B6chte%20ein%20Referenzschreiben%20anfordern.',
+  },
+  gradeScale: {
+    veryGood: 'Sehr gut',
+    good: 'Gut',
+    satisfactory: 'Befriedigend',
+    sufficient: 'Ausreichend',
+    fail: 'Nicht bestanden',
   },
   print: {
     saveButton: 'PDF speichern',

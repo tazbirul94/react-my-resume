@@ -23,9 +23,9 @@ function getEmpBadgeStyle(type = '') {
   return EMP_TYPE_STYLES[key] ?? { color: '#555', background: 'rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.15)' }
 }
 
-function formatDate(dateStr, presentLabel = 'Present') {
+function formatDate(dateStr, presentLabel = 'Present', locale = 'en-US') {
   if (!dateStr) return presentLabel
-  return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+  return new Date(dateStr).toLocaleDateString(locale, { month: 'short', year: 'numeric' })
 }
 
 function duration(start, end) {
@@ -57,7 +57,7 @@ function groupByCompany(jobs) {
 
 export function Work() {
   const { data: work, loading } = useWork()
-  const { t } = useLocale()
+  const { t, locale } = useLocale()
   const [showAll, setShowAll] = useState(false)
   const [isMobile, setIsMobile] = useState(() =>
     typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
@@ -245,7 +245,7 @@ export function Work() {
                           </div>
                           <div className="role-date-block" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 3, flexShrink: 0 }}>
                             <span className="apple-chip" style={{ background: 'rgb(var(--bg-secondary))' }}>
-                              {formatDate(role.start_date, t('work.present'))} – {formatDate(role.end_date, t('work.present'))}
+                              {formatDate(role.start_date, t('work.present'), locale)} – {formatDate(role.end_date, t('work.present'), locale)}
                             </span>
                             {role.start_date && (
                               <span className="eyebrow" style={{ color: 'rgb(var(--text-tertiary))' }}>
@@ -330,8 +330,10 @@ export function Work() {
             onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgb(var(--apple-border))'; e.currentTarget.style.color = 'rgb(var(--text-tertiary))' }}
           >
             {showAll
-              ? '↑ Show less'
-              : `↓ Show ${hiddenCount} earlier ${hiddenCount === 1 ? 'position' : 'positions'}`}
+              ? t('work.showLess')
+              : hiddenCount === 1
+                ? t('work.showMoreSingle').replace('{count}', hiddenCount)
+                : t('work.showMorePlural').replace('{count}', hiddenCount)}
           </button>
         )}
       </div>

@@ -47,10 +47,10 @@ export function Testimonials() {
       </div>
       <div style={{ marginTop: 32, textAlign: 'center' }}>
         <p style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--text-tertiary))', marginBottom: 12 }}>
-          Need more? Additional references available on request.
+          {t('references.moreNote')}
         </p>
         <a
-          href={`mailto:${basics?.email ?? ''}?subject=Reference%20Request&body=Hi%2C%20I%20would%20like%20to%20request%20a%20reference%20letter.`}
+          href={`mailto:${basics?.email ?? ''}?subject=${t('references.requestSubject')}&body=${t('references.requestBody')}`}
           style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
             height: 38, padding: '0 20px', borderRadius: 10,
@@ -63,7 +63,7 @@ export function Testimonials() {
           onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgb(var(--text-secondary))'; e.currentTarget.style.color = 'rgb(var(--text-primary))' }}
           onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgb(var(--apple-border))'; e.currentTarget.style.color = 'rgb(var(--text-secondary))' }}
         >
-          Request a reference letter
+          {t('references.requestBtn')}
         </a>
       </div>
     </SectionWrapper>

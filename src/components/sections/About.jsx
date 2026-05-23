@@ -83,7 +83,7 @@ export function About() {
               padding: '4px 10px', borderRadius: 20,
             }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#22c55e', display: 'inline-block' }} />
-              Open to opportunities
+              {t('about.openBadge')}
             </span>
             {yearsExp && (
               <span style={{
@@ -93,7 +93,7 @@ export function About() {
                 border: '1px solid rgb(var(--apple-border))',
                 padding: '4px 10px', borderRadius: 20,
               }}>
-                {yearsExp}+ years experience
+                {t('about.yearsExp').replace('{years}', yearsExp)}
               </span>
             )}
           </div>

@@ -5,14 +5,14 @@ import { SectionWrapper } from '@/components/layout/SectionWrapper'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ExternalLink } from 'lucide-react'
 
-function formatDate(dateStr) {
+function formatDate(dateStr, locale = 'en-US') {
   if (!dateStr) return ''
-  return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+  return new Date(dateStr).toLocaleDateString(locale, { month: 'short', year: 'numeric' })
 }
 
 export function Certifications() {
   const { data: certifications, loading } = useCertifications()
-  const { t } = useLocale()
+  const { t, locale } = useLocale()
   const [logoErrors, setLogoErrors] = useState({})
 
   if (loading) return (
@@ -61,7 +61,7 @@ export function Certifications() {
                     onMouseLeave={e => e.currentTarget.style.color = 'rgb(var(--text-tertiary))'}>
                     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 11, fontWeight: 600, color: 'inherit' }}>
                       <ExternalLink size={12} />
-                      Verify
+                      {t('certification.verify')}
                     </span>
                   </a>
                 )}
@@ -71,7 +71,7 @@ export function Certifications() {
               </p>
               {cert.issue_date && (
                 <p className="eyebrow" style={{ color: 'rgb(var(--text-tertiary))', marginTop: 4 }}>
-                  {formatDate(cert.issue_date)}
+                  {formatDate(cert.issue_date, locale)}
                 </p>
               )}
             </div>

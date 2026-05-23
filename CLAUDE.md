@@ -72,7 +72,7 @@ Never let schema.sql, seed.sql, fallback.js, and migration scripts diverge from 
 - `resume.*.js` — resume content
 - `ui.*.js` — UI string translations (section titles, nav labels, modal text)
 
-**i18n**: `react-intl` wraps the tree. UI strings use `<FormattedMessage id="section.key">` where IDs map to the nested keys in `ui.*.js` (flattened by `src/utils/flattenMessages.js`). Resume content strings are passed as props directly — not through intl. Supported locales: `en-US`, `de-DE`.
+**i18n**: `react-intl` wraps the tree. UI strings use `<FormattedMessage id="section.key">` where IDs map to the nested keys in `ui.*.js` (flattened by `src/utils/flattenMessages.js`). Resume content strings are passed as props directly — not through intl. Supported locales: `en-US`, `de-DE`. **Default locale: `de-DE`.**
 
 **Section components** (`src/components/sections/`) are purely presentational — each fetches its own data via a `useResume` hook. To add a new section: add table + column to schema, add hook to `useResume.js`, add component, wire it in `sections/index.jsx`.
 

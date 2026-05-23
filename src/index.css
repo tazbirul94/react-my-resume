@@ -15,7 +15,7 @@
     --accent:        0 113 227;
     --accent-hover:  0 119 237;
     --apple-border:  210 210 215;
-    --apple-border-subtle: 240 240 243;
+    --apple-border-subtle: 220 220 225;
 
     /* keep Tailwind semantic tokens wired */
     --background: 0 0% 100%;
@@ -31,26 +31,26 @@
   }
 
   .dark {
-    --bg-primary:    8 8 14;
-    --bg-secondary:  14 14 22;
-    --bg-tertiary:   20 20 30;
-    --text-primary:  240 240 248;
-    --text-secondary:148 148 162;
-    --text-tertiary: 90 90 108;
+    --bg-primary:    9 10 18;
+    --bg-secondary:  22 24 40;
+    --bg-tertiary:   32 36 60;
+    --text-primary:  238 240 250;
+    --text-secondary:175 180 215;
+    --text-tertiary: 108 114 148;
     --accent:        99 179 255;
     --accent-hover:  122 192 255;
-    --apple-border:  48 48 68;
-    --apple-border-subtle: 30 30 46;
+    --apple-border:        52 58 95;
+    --apple-border-subtle: 28 31 55;
 
-    --background: 240 11% 4%;
-    --foreground: 240 8% 95%;
-    --card: 240 10% 10%;
-    --card-foreground: 240 8% 95%;
-    --primary: 214 100% 70%;
+    --background:         233 33% 5%;
+    --foreground:         230 55% 96%;
+    --card:               231 31% 13%;
+    --card-foreground:    230 55% 96%;
+    --primary:            214 100% 70%;
     --primary-foreground: 0 0% 0%;
-    --muted: 240 6% 13%;
-    --muted-foreground: 240 5% 54%;
-    --border: 240 6% 22%;
+    --muted:              231 33% 9%;
+    --muted-foreground:   232 29% 76%;
+    --border:             232 29% 29%;
   }
 }
 
@@ -166,17 +166,17 @@
 .dark .apple-card {
   background: rgb(var(--bg-tertiary));
   box-shadow:
-    0 0 0 1px rgba(var(--apple-border) / 0.8),
-    0 4px 20px rgba(0,0,0,0.4),
-    inset 0 1px 0 rgba(255,255,255,0.04);
+    0 0 0 1px rgba(var(--apple-border) / 0.85),
+    0 4px 24px rgba(0,0,0,0.50),
+    inset 0 1px 0 rgba(255,255,255,0.06);
 }
 .dark .apple-card:hover {
   transform: translateY(-3px);
   box-shadow:
-    0 0 0 1px rgba(var(--accent) / 0.35),
-    0 8px 32px rgba(0,0,0,0.5),
-    0 0 28px rgba(var(--accent) / 0.12),
-    inset 0 1px 0 rgba(255,255,255,0.06);
+    0 0 0 1px rgba(var(--accent) / 0.45),
+    0 8px 36px rgba(0,0,0,0.60),
+    0 0 32px rgba(var(--accent) / 0.16),
+    inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
 .apple-chip {
@@ -263,13 +263,13 @@
 
 /* Dark mode orbs — stronger, more colorful */
 .dark .hero-orb-1 {
-  background: radial-gradient(circle at center, rgba(99,179,255,0.20) 0%, transparent 65%);
+  background: radial-gradient(circle at center, rgba(99,179,255,0.30) 0%, transparent 65%);
 }
 .dark .hero-orb-2 {
-  background: radial-gradient(circle at center, rgba(167,139,250,0.18) 0%, transparent 65%);
+  background: radial-gradient(circle at center, rgba(167,139,250,0.26) 0%, transparent 65%);
 }
 .dark .hero-orb-3 {
-  background: radial-gradient(circle at center, rgba(52,211,153,0.12) 0%, transparent 65%);
+  background: radial-gradient(circle at center, rgba(52,211,153,0.18) 0%, transparent 65%);
 }
 
 /* ── Hero stats row ──────────────────────────────── */
@@ -311,8 +311,8 @@
   border-right: none;
 }
 .dark .hero-stats-row {
-  background: rgba(var(--bg-secondary) / 0.8);
-  border-color: rgba(var(--apple-border) / 0.7);
+  background: rgba(var(--bg-secondary) / 0.9);
+  border-color: rgba(var(--apple-border) / 0.8);
 }
 @media (prefers-reduced-motion: no-preference) {
   .hero-stats-row { animation: hero-fade-up 0.9s cubic-bezier(0.25,0.46,0.45,0.94) 0.66s both; }
@@ -358,7 +358,7 @@
   margin-top: 6px;
 }
 .dark .skill-bar {
-  background: rgba(var(--apple-border) / 0.5);
+  background: rgba(var(--apple-border) / 0.55);
 }
 .skill-bar-fill {
   height: 100%;

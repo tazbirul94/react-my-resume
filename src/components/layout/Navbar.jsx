@@ -144,7 +144,7 @@ export function Navbar({ name = '' }) {
         <div
           className="lg:hidden border-b px-4 sm:px-6 py-2 backdrop-blur-[20px]"
           style={{
-            background: theme === 'dark' ? 'rgba(0,0,0,0.92)' : 'rgba(255,255,255,0.92)',
+            background: theme === 'dark' ? 'rgba(9,10,18,0.95)' : 'rgba(255,255,255,0.92)',
             borderColor: 'rgb(var(--apple-border))',
           }}
         >

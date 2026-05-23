@@ -15,14 +15,18 @@ export function BasicsAdmin() {
   const [id, setId] = useState(null)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [saveError, setSaveError] = useState('')
   const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState('')
+  const [loadError, setLoadError] = useState('')
   const [blobPreview, setBlobPreview] = useState('')
   const fileRef = useRef(null)
 
   useEffect(() => {
     const load = async () => {
       if (!supabase) { const d = fallbackData.basics; if (d) setForm(d); return }
-      const { data } = await supabase.from('basics').select('*').eq('locale', adminLocale).limit(1)
+      const { data, error: qErr } = await supabase.from('basics').select('*').eq('locale', adminLocale).limit(1)
+      if (qErr) { setLoadError(qErr.message); return }
       if (data?.[0]) { setForm(data[0]); setId(data[0].id) }
     }
     load()
@@ -41,6 +45,8 @@ export function BasicsAdmin() {
     if (!error) {
       const { data: urlData } = supabase.storage.from('avatars').getPublicUrl(path)
       setForm(f => ({ ...f, picture: urlData.publicUrl }))
+    } else {
+      setUploadError(error.message)
     }
     setBlobPreview('')
     setUploading(false)
@@ -52,9 +58,11 @@ export function BasicsAdmin() {
     const payload = { ...form }
     delete payload.id
     payload.locale = adminLocale
-    const { data } = await supabase.from('basics').upsert({ ...payload, locale: adminLocale }, { onConflict: 'locale' }).select()
+    const { data, error: upsertErr } = await supabase.from('basics').upsert({ ...payload, locale: adminLocale }, { onConflict: 'locale' }).select()
     if (data?.[0]) setId(data[0].id)
     setSaving(false)
+    if (upsertErr) { setSaveError(upsertErr.message); return }
+    setSaveError('')
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
   }
@@ -62,6 +70,7 @@ export function BasicsAdmin() {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6">Basics</h1>
+      {loadError && <p className="text-red-500 text-sm mb-4">{loadError}</p>}
       <Card>
         <CardContent className="pt-6 space-y-4">
           <div className="grid grid-cols-2 gap-4">
@@ -117,6 +126,7 @@ export function BasicsAdmin() {
                 </Button>
               </div>
             </div>
+            {uploadError && <p className="text-red-500 text-sm mt-2">{uploadError}</p>}
           </div>
 
           <Textarea
@@ -125,6 +135,7 @@ export function BasicsAdmin() {
             value={(form.summary || []).join('\n')}
             onChange={e => setForm(f => ({...f, summary: e.target.value.split('\n').filter(Boolean)}))}
           />
+          {saveError && <p className="text-red-500 text-sm">{saveError}</p>}
           <div className="flex justify-end gap-2">
             <Button onClick={handleSave} disabled={saving}>
               {saving ? 'Saving…' : saved ? 'Saved!' : 'Save Changes'}

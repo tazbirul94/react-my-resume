@@ -94,6 +94,8 @@ export function SkillsAdmin() {
   const [groupForm, setGroupForm] = useState({ title: '', type: 'hard' })
   const [skillForm, setSkillForm] = useState({ name: '', icon: '', level: 80, group_id: '' })
   const [activeGroupId, setActiveGroupId] = useState(null)
+  const [groupError, setGroupError] = useState('')
+  const [skillError, setSkillError] = useState('')
 
   const load = async () => {
     if (!supabase) {
@@ -115,8 +117,11 @@ export function SkillsAdmin() {
 
   const saveGroup = async () => {
     if (!supabase) return
-    if (editingGroup) await supabase.from('skill_groups').update(groupForm).eq('id', editingGroup.id)
-    else await supabase.from('skill_groups').insert({ ...groupForm, locale: adminLocale })
+    let err
+    if (editingGroup) { const r = await supabase.from('skill_groups').update(groupForm).eq('id', editingGroup.id); err = r.error }
+    else { const r = await supabase.from('skill_groups').insert({ ...groupForm, locale: adminLocale }); err = r.error }
+    if (err) { setGroupError(err.message); return }
+    setGroupError('')
     setGroupDialog(false)
     load()
   }
@@ -125,8 +130,11 @@ export function SkillsAdmin() {
     if (!supabase) return
     const payload = { ...skillForm }
     if (!payload.icon) delete payload.icon
-    if (editingSkill) await supabase.from('skills').update(payload).eq('id', editingSkill.id)
-    else await supabase.from('skills').insert({ ...payload, locale: adminLocale })
+    let err
+    if (editingSkill) { const r = await supabase.from('skills').update(payload).eq('id', editingSkill.id); err = r.error }
+    else { const r = await supabase.from('skills').insert({ ...payload, locale: adminLocale }); err = r.error }
+    if (err) { setSkillError(err.message); return }
+    setSkillError('')
     setSkillDialog(null)
     load()
   }
@@ -218,6 +226,7 @@ export function SkillsAdmin() {
               <option value="soft">Soft Skills</option>
             </select>
           </div>
+          {groupError && <p className="text-red-500 text-sm">{groupError}</p>}
           <div className="flex justify-end gap-2 pt-2">
             <Button variant="outline" onClick={() => setGroupDialog(false)}>Cancel</Button>
             <Button onClick={saveGroup}>Save</Button>
@@ -239,6 +248,7 @@ export function SkillsAdmin() {
             <label className="text-sm font-medium">Level ({skillForm.level}%)</label>
             <input type="range" min="0" max="100" value={skillForm.level} onChange={e => setSkillForm(f => ({...f, level: Number(e.target.value)}))} className="w-full accent-brand" />
           </div>
+          {skillError && <p className="text-red-500 text-sm">{skillError}</p>}
           <div className="flex justify-end gap-2 pt-2">
             <Button variant="outline" onClick={() => setSkillDialog(null)}>Cancel</Button>
             <Button onClick={saveSkill}>Save</Button>

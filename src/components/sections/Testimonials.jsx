@@ -1,10 +1,11 @@
-import { useTestimonials } from '@/hooks/useResume'
+import { useTestimonials, useBasics } from '@/hooks/useResume'
 import { useLocale } from '@/context/LocaleContext'
 import { SectionWrapper } from '@/components/layout/SectionWrapper'
 import { Skeleton } from '@/components/ui/skeleton'
 
 export function Testimonials() {
   const { data: testimonials, loading } = useTestimonials()
+  const { data: basics } = useBasics()
   const { t } = useLocale()
 
   if (loading) return (
@@ -49,7 +50,7 @@ export function Testimonials() {
           Need more? Additional references available on request.
         </p>
         <a
-          href="mailto:tazbirul94@gmail.com?subject=Reference%20Request&body=Hi%20Tazbirul%2C%20I%20would%20like%20to%20request%20a%20reference%20letter."
+          href={`mailto:${basics?.email ?? ''}?subject=Reference%20Request&body=Hi%2C%20I%20would%20like%20to%20request%20a%20reference%20letter.`}
           style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
             height: 38, padding: '0 20px', borderRadius: 10,

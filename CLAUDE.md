@@ -44,6 +44,26 @@ Admin panel: `http://localhost:5173/admin/login`
 
 Never let schema.sql, seed.sql, fallback.js, and migration scripts diverge from each other.
 
+## No hardcoding rules — ALWAYS follow
+
+**Never hardcode user-facing strings, personal data, or locale-specific content in components.**
+
+1. **No hardcoded personal data** — emails, names, phone numbers, URLs, addresses must come from Supabase (`useBasics()` or relevant hook), never as string literals in components. Example violation: `href="mailto:someone@gmail.com"` — must be `href={\`mailto:${basics?.email}\`}`.
+
+2. **No hardcoded UI strings** — every user-visible label, title, badge text, button text, eyebrow, tooltip, or placeholder must go through i18n:
+   - Use `<FormattedMessage id="section.key" />` for JSX text nodes
+   - Use `t('section.key')` (from `useLocale()`) for attribute strings (alt, aria-label, placeholder, title)
+   - Never: `<h2>Testimonials</h2>` — always: `<h2><FormattedMessage id="sections.testimonials.title" /></h2>`
+
+3. **Any new UI string must be added to ALL locale files** — when adding a new `FormattedMessage` key:
+   - Add to `src/template/ui.en_US.js` with English value
+   - Add to `src/template/ui.de_DE.js` with German value (translate or use English as placeholder prefixed `[DE]`)
+   - Keys must be nested to match the existing structure: `sections.sectionName.title`, `sections.sectionName.eyebrow`, `admin.fieldName.label`, etc.
+
+4. **No hardcoded lists or options** — dropdowns, badge labels, level names (e.g. employment types, language levels) must either come from Supabase data or be defined in a shared constant file under `src/lib/` and referenced via i18n keys when displayed.
+
+5. **No locale-specific logic in components** — never branch on `locale === 'de-DE'` to render different content. Data differences per locale are handled by Supabase rows (each locale has its own row). UI string differences are handled by `ui.*.js` files.
+
 ## Architecture
 
 **Data flow**: Supabase → `useResume` hooks → components. `useBasics`, `useWork`, etc. each query one table and fall back to `src/lib/fallback.js` when Supabase is not configured.

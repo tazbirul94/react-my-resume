@@ -2,7 +2,7 @@ import { useLanguages } from '@/hooks/useResume'
 import { useLocale } from '@/context/LocaleContext'
 import { SectionWrapper } from '@/components/layout/SectionWrapper'
 import { Skeleton } from '@/components/ui/skeleton'
-import { LANGUAGE_LEVELS } from '@/pages/admin/LanguagesAdmin'
+import { LANGUAGE_LEVELS } from '@/lib/languageLevels'
 
 function sortOrder(lang) {
   const match = LANGUAGE_LEVELS.find(l => l.label === lang.level || l.cefr === lang.level)

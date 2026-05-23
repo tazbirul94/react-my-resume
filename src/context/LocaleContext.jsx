@@ -13,7 +13,7 @@ const LocaleContext = createContext(null)
 
 export function LocaleProvider({ children }) {
   const [locale, setLocale] = useState(() =>
-    localStorage.getItem('resume-locale') || 'de-DE'
+    localStorage.getItem('resume-locale') || 'en-US'
   )
 
   useEffect(() => { localStorage.setItem('resume-locale', locale) }, [locale])

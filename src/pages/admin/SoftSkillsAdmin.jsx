@@ -71,6 +71,7 @@ export function SoftSkillsAdmin() {
   const [dialog, setDialog] = useState(false)
   const [editing, setEditing] = useState(null)
   const [form, setForm] = useState({ title: '', icon: '', tags: [] })
+  const [saveError, setSaveError] = useState('')
 
   const load = async () => {
     if (!supabase) {
@@ -104,8 +105,11 @@ export function SoftSkillsAdmin() {
   const save = async () => {
     if (!supabase) return
     const payload = { title: form.title, icon: form.icon || null, tags: form.tags }
-    if (editing) await supabase.from('soft_skill_categories').update(payload).eq('id', editing.id)
-    else await supabase.from('soft_skill_categories').insert({ ...payload, locale: adminLocale })
+    let err
+    if (editing) { const r = await supabase.from('soft_skill_categories').update(payload).eq('id', editing.id); err = r.error }
+    else { const r = await supabase.from('soft_skill_categories').insert({ ...payload, locale: adminLocale }); err = r.error }
+    if (err) { setSaveError(err.message); return }
+    setSaveError('')
     setDialog(false)
     load()
   }
@@ -171,6 +175,7 @@ export function SoftSkillsAdmin() {
           {(form.title || form.tags.length > 0) && (
             <PreviewCard item={form} />
           )}
+          {saveError && <p className="text-red-500 text-sm">{saveError}</p>}
           <div className="flex justify-end gap-2 pt-2">
             <Button variant="outline" onClick={() => setDialog(false)}>Cancel</Button>
             <Button onClick={save}>Save</Button>

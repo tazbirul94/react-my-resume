@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from '@/context/ThemeContext'
 import { LocaleProvider } from '@/context/LocaleContext'
 import { AuthProvider } from '@/hooks/useAuth'
-import { Layout } from '@/components/layout/Layout'
 import { Resume } from '@/pages/Resume'
 import { AdminLogin } from '@/pages/admin/Login'
 import { AdminLayout } from '@/components/admin/AdminLayout'
@@ -29,7 +28,7 @@ export default function App() {
           <BrowserRouter basename="/" future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
 
             <Routes>
-              <Route path="/" element={<Layout><Resume /></Layout>} />
+              <Route path="/" element={<Resume />} />
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route
                 path="/admin"

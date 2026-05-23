@@ -48,6 +48,11 @@ export function Portfolio() {
               {project.category && (
                 <span className="eyebrow" style={{ color: 'rgb(var(--accent))' }}>{project.category}</span>
               )}
+              {project.description && (
+                <p style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--text-secondary))', lineHeight: 1.6, margin: 0 }}>
+                  {project.description}
+                </p>
+              )}
               {(project.keywords || []).filter(k => !k.startsWith('<')).length > 0 && (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 4 }}>
                   {project.keywords.filter(k => !k.startsWith('<')).map((kw, i) => (

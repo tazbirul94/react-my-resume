@@ -8,7 +8,7 @@ import { supabase } from '@/lib/supabase'
 import { fallbackData } from '@/lib/fallback'
 import { useAdminLocale } from '@/context/AdminLocaleContext'
 
-const EMPTY = { institution: '', degree: '', area: '', start_date: '', end_date: '', gpa: '', gpa_german: '', website: '', location: '', summary: '' }
+const EMPTY = { institution: '', degree: '', area: '', start_date: '', end_date: '', gpa: '', gpa_german: '', website: '', location: '', summary: [] }
 
 export function EducationAdmin() {
   const { adminLocale } = useAdminLocale()
@@ -18,7 +18,7 @@ export function EducationAdmin() {
   const load = async () => {
     if (!supabase) { setItems(fallbackData.education || []); setLoading(false); return }
     const { data } = await supabase.from('education').select('*').eq('locale', adminLocale).order('start_date', { ascending: false })
-    setItems(data || [])
+    setItems((data || []).map(d => ({ ...d, summary: Array.isArray(d.summary) ? d.summary : (d.summary ? [d.summary] : []) })))
     setLoading(false)
   }
 
@@ -46,13 +46,14 @@ export function EducationAdmin() {
             <Input label="Institution" value={form.institution || ''} onChange={e => setForm(f => ({...f, institution: e.target.value}))} />
             <Input label="Degree" value={form.degree || ''} onChange={e => setForm(f => ({...f, degree: e.target.value}))} />
             <Input label="Area / Field of Study" value={form.area || ''} onChange={e => setForm(f => ({...f, area: e.target.value}))} />
+            <Input label="GPA" value={form.gpa || ''} onChange={e => setForm(f => ({...f, gpa: e.target.value}))} />
             <Input label="Grade (German scale, e.g. 1.3)" value={form.gpa_german || ''} onChange={e => setForm(f => ({...f, gpa_german: e.target.value}))} />
             <Input label="Website" value={form.website || ''} onChange={e => setForm(f => ({...f, website: e.target.value}))} />
             <DatePicker label="Start Date" value={form.start_date || ''} onChange={v => setForm(f => ({...f, start_date: v}))} clearable={false} />
             <DatePicker label="End Date (blank = Present)" value={form.end_date || ''} onChange={v => setForm(f => ({...f, end_date: v || null}))} placeholder="Present" />
             <Input label="Location" value={form.location || ''} onChange={e => setForm(f => ({...f, location: e.target.value}))} className="col-span-2" />
           </div>
-          <Textarea label="Summary" value={form.summary || ''} onChange={e => setForm(f => ({...f, summary: e.target.value}))} />
+          <Textarea label="Summary" value={(Array.isArray(form.summary) ? form.summary : []).join('\n')} onChange={e => setForm(f => ({...f, summary: e.target.value.split('\n')}))} />
         </>
       )}
     />

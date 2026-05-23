@@ -13,6 +13,8 @@ export function LocalesAdmin() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [form, setForm] = useState({ code: '', label: '' })
   const [saving, setSaving] = useState(false)
+  const [formError, setFormError] = useState('')
+  const [mutateError, setMutateError] = useState('')
 
   const load = async () => {
     if (!supabase) { setLoading(false); return }
@@ -24,15 +26,18 @@ export function LocalesAdmin() {
   useEffect(() => { load() }, [])
 
   const handleAdd = async () => {
-    if (!supabase || !form.code || !form.label) return
+    if (!form.code || !form.label) { setFormError('Code and label are required.'); return }
+    if (!supabase) return
+    setFormError('')
     setSaving(true)
-    await supabase.from('locales').insert({
+    const { error } = await supabase.from('locales').insert({
       code: form.code,
       label: form.label,
       is_active: true,
       sort_order: locales.length,
     })
     setSaving(false)
+    if (error) { setFormError(error.message); return }
     setDialogOpen(false)
     setForm({ code: '', label: '' })
     load()
@@ -40,13 +45,17 @@ export function LocalesAdmin() {
 
   const toggleActive = async (locale) => {
     if (!supabase || locale.code === 'en-US') return
-    await supabase.from('locales').update({ is_active: !locale.is_active }).eq('code', locale.code)
+    const { error } = await supabase.from('locales').update({ is_active: !locale.is_active }).eq('code', locale.code)
+    if (error) { setMutateError(error.message); return }
+    setMutateError('')
     load()
   }
 
   const handleDelete = async (code) => {
     if (!supabase || code === 'en-US') return
-    await supabase.from('locales').delete().eq('code', code)
+    const { error } = await supabase.from('locales').delete().eq('code', code)
+    if (error) { setMutateError(error.message); return }
+    setMutateError('')
     load()
   }
 
@@ -58,6 +67,7 @@ export function LocalesAdmin() {
           <Plus className="h-4 w-4" /> Add Locale
         </Button>
       </div>
+      {mutateError && <p className="text-red-500 text-sm mb-3">{mutateError}</p>}
       {loading ? (
         <p className="text-muted-foreground">Loading…</p>
       ) : (
@@ -93,6 +103,7 @@ export function LocalesAdmin() {
         <div className="space-y-4">
           <Input label="Code (e.g. fr-FR)" value={form.code} onChange={e => setForm(f => ({ ...f, code: e.target.value }))} />
           <Input label="Label (e.g. FR)" value={form.label} onChange={e => setForm(f => ({ ...f, label: e.target.value }))} />
+          {formError && <p className="text-red-500 text-sm">{formError}</p>}
           <div className="flex justify-end gap-2 pt-2">
             <Button variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button>
             <Button onClick={handleAdd} disabled={saving}>{saving ? 'Saving…' : 'Add'}</Button>

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useCertifications } from '@/hooks/useResume'
 import { useLocale } from '@/context/LocaleContext'
 import { SectionWrapper } from '@/components/layout/SectionWrapper'
@@ -12,6 +13,7 @@ function formatDate(dateStr) {
 export function Certifications() {
   const { data: certifications, loading } = useCertifications()
   const { t } = useLocale()
+  const [logoErrors, setLogoErrors] = useState({})
 
   if (loading) return (
     <SectionWrapper id="certifications" eyebrow={t('sections.certifications.eyebrow')} title={t('sections.certifications.title')}>
@@ -36,12 +38,15 @@ export function Certifications() {
                 border: '1px solid rgb(var(--apple-border))',
                 overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
-                <img src={cert.logo} alt={cert.issuer}
-                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                  onError={e => {
-                    e.target.style.display = 'none'
-                    e.target.parentNode.innerHTML = `<span style="font-size:18px;font-weight:700;color:rgb(var(--text-tertiary))">${(cert.issuer?.[0] ?? '?').toUpperCase()}</span>`
-                  }} />
+                {logoErrors[idx] ? (
+                  <span style={{ fontSize: 18, fontWeight: 700, color: 'rgb(var(--text-tertiary))' }}>
+                    {(cert.issuer?.[0] ?? '?').toUpperCase()}
+                  </span>
+                ) : (
+                  <img src={cert.logo} alt={cert.issuer}
+                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                    onError={() => setLogoErrors(prev => ({ ...prev, [idx]: true }))} />
+                )}
               </div>
             )}
             <div style={{ flex: 1, minWidth: 0 }}>

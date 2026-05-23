@@ -10,6 +10,7 @@ export function CrudPage({ title, table, items = [], loading, renderRow, renderF
   const [editing, setEditing] = useState(null)
   const [form, setForm] = useState(emptyForm)
   const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState('')
   const [deleteConfirm, setDeleteConfirm] = useState(null)
 
   const openAdd = () => { setEditing(null); setForm(emptyForm); setDialogOpen(true) }
@@ -22,11 +23,16 @@ export function CrudPage({ title, table, items = [], loading, renderRow, renderF
       Object.entries(form).map(([k, v]) => [k, v === '' ? null : v])
     )
     try {
+      let err
       if (editing) {
-        await supabase.from(table).update(payload).eq('id', editing.id)
+        const { error } = await supabase.from(table).update(payload).eq('id', editing.id)
+        err = error
       } else {
-        await supabase.from(table).insert(payload)
+        const { error } = await supabase.from(table).insert(payload)
+        err = error
       }
+      if (err) { setSaveError(err.message); return }
+      setSaveError('')
       setDialogOpen(false)
       onRefresh?.()
     } finally {
@@ -71,6 +77,7 @@ export function CrudPage({ title, table, items = [], loading, renderRow, renderF
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} title={editing ? `Edit ${title}` : `Add ${title}`}>
         <div className="space-y-4">
           {renderForm(form, setForm)}
+          {saveError && <p className="text-red-500 text-sm">{saveError}</p>}
           <div className="flex justify-end gap-2 pt-2">
             <Button variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button>
             <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving…' : 'Save'}</Button>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { CrudPage } from '@/components/admin/CrudPage'
 import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { TagInput } from '@/components/ui/TagInput'
 import { Badge } from '@/components/ui/badge'
 import { DatePicker } from '@/components/ui/DatePicker'
@@ -8,7 +9,7 @@ import { supabase } from '@/lib/supabase'
 import { fallbackData } from '@/lib/fallback'
 import { useAdminLocale } from '@/context/AdminLocaleContext'
 
-const EMPTY = { name: '', category: '', publisher: '', website: '', image_thumb: '', image_modal: '', release_date: '', keywords: [] }
+const EMPTY = { name: '', category: '', publisher: '', website: '', description: '', image_thumb: '', image_modal: '', release_date: '', keywords: [] }
 
 export function ProjectsAdmin() {
   const [items, setItems] = useState([])
@@ -51,6 +52,7 @@ export function ProjectsAdmin() {
             <Input label="Modal Image URL" value={form.image_modal || ''} onChange={e => setForm(f => ({...f, image_modal: e.target.value}))} />
             <DatePicker label="Release Date" value={form.release_date || ''} onChange={v => setForm(f => ({...f, release_date: v}))} />
           </div>
+          <Textarea label="Description" value={form.description || ''} onChange={e => setForm(f => ({...f, description: e.target.value}))} />
           <TagInput label="Keywords" value={form.keywords || []} onChange={chips => setForm(f => ({ ...f, keywords: chips }))} />
         </>
       )}

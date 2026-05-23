@@ -32,14 +32,12 @@ export function Hero({ basics, profiles = [] }) {
   }, [work])
 
   const topTechChips = useMemo(() => {
-    if (!work?.length) return ['C#', '.NET Core', 'Docker', 'Kubernetes', 'Azure', 'MS SQL', 'RabbitMQ', 'React']
+    if (basics?.hero_chips?.length) return basics.hero_chips
+    if (!work?.length) return []
     const freq = {}
     work.forEach(j => (j.skills ?? []).forEach(s => { freq[s] = (freq[s] ?? 0) + 1 }))
-    return Object.entries(freq)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 8)
-      .map(([name]) => name)
-  }, [work])
+    return Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([name]) => name)
+  }, [basics?.hero_chips, work])
 
   if (!basics) return null
 
@@ -78,13 +76,12 @@ export function Hero({ basics, profiles = [] }) {
           {basics.name}
         </h1>
 
-        {/* Summary first line as subtitle */}
-        {basics.summary?.[0] && (
+        {basics.tagline && (
           <p
             className="hero-socials mb-6 mx-auto max-w-xl leading-relaxed"
             style={{ fontSize: 'var(--type-small)', color: 'rgb(var(--text-secondary))' }}
           >
-            {basics.summary[0]}
+            {basics.tagline}
           </p>
         )}
 

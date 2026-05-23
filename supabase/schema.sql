@@ -18,6 +18,8 @@ create table if not exists basics (
   locale       text not null default 'en-US' references locales(code),
   name         text not null,
   label        text,
+  tagline      text,
+  hero_chips   text[],
   picture      text,
   email        text,
   phone        text,

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Input } from '@/components/ui/input'
+import { TagInput } from '@/components/ui/TagInput'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -10,7 +11,7 @@ import { Upload, X } from 'lucide-react'
 
 export function BasicsAdmin() {
   const { adminLocale } = useAdminLocale()
-  const [form, setForm] = useState({ name: '', label: '', email: '', phone: '', website: '', picture: '', city: '', country_code: '', summary: [] })
+  const [form, setForm] = useState({ name: '', label: '', tagline: '', hero_chips: [], email: '', phone: '', website: '', picture: '', city: '', country_code: '', summary: [] })
   const [id, setId] = useState(null)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -66,6 +67,14 @@ export function BasicsAdmin() {
           <div className="grid grid-cols-2 gap-4">
             <Input label="Full Name" value={form.name || ''} onChange={e => setForm(f => ({...f, name: e.target.value}))} />
             <Input label="Job Title / Label" value={form.label || ''} onChange={e => setForm(f => ({...f, label: e.target.value}))} />
+          </div>
+          <Input label="Tagline (one-liner shown in hero)" value={form.tagline || ''} onChange={e => setForm(f => ({...f, tagline: e.target.value}))} />
+          <TagInput
+            label="Hero Tech Chips (shown under tagline in hero)"
+            value={form.hero_chips || []}
+            onChange={chips => setForm(f => ({ ...f, hero_chips: chips }))}
+          />
+          <div className="grid grid-cols-2 gap-4">
             <Input label="Email" type="email" value={form.email || ''} onChange={e => setForm(f => ({...f, email: e.target.value}))} />
             <Input label="Phone" value={form.phone || ''} onChange={e => setForm(f => ({...f, phone: e.target.value}))} />
             <Input label="Website" value={form.website || ''} onChange={e => setForm(f => ({...f, website: e.target.value}))} />

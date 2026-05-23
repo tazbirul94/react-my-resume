@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { CrudPage } from '@/components/admin/CrudPage'
 import { Input } from '@/components/ui/input'
+import { TagInput } from '@/components/ui/TagInput'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import { DatePicker } from '@/components/ui/DatePicker'
@@ -72,7 +73,7 @@ export function WorkAdmin() {
           </div>
           <Textarea label="Summary" value={form.summary || ''} onChange={e => setForm(f => ({...f, summary: e.target.value}))} />
           <Textarea label="Highlights (one per line)" value={(form.highlights || []).join('\n')} onChange={e => setForm(f => ({...f, highlights: e.target.value.split('\n').filter(Boolean)}))} />
-          <Input label="Skills (comma separated)" value={(form.skills || []).join(', ')} onChange={e => setForm(f => ({...f, skills: e.target.value.split(',').map(s => s.trim()).filter(Boolean)}))} />
+          <TagInput label="Skills" value={form.skills || []} onChange={chips => setForm(f => ({ ...f, skills: chips }))} />
         </>
       )}
     />

@@ -4,6 +4,8 @@ import { LocaleProvider } from '@/context/LocaleContext'
 import { AuthProvider } from '@/hooks/useAuth'
 import { Resume } from '@/pages/Resume'
 import { AdminLogin } from '@/pages/admin/Login'
+import { ForgotPassword } from '@/pages/admin/ForgotPassword'
+import { ResetPassword } from '@/pages/admin/ResetPassword'
 import { AdminLayout } from '@/components/admin/AdminLayout'
 import { ProtectedRoute } from '@/components/admin/ProtectedRoute'
 import { AdminDashboard } from '@/pages/admin/Dashboard'
@@ -30,6 +32,8 @@ export default function App() {
             <Routes>
               <Route path="/" element={<Resume />} />
               <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin/forgot-password" element={<ForgotPassword />} />
+              <Route path="/admin/reset-password" element={<ResetPassword />} />
               <Route
                 path="/admin"
                 element={

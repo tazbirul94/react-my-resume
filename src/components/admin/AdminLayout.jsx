@@ -17,6 +17,7 @@ const SECTIONS = [
   { path: 'projects', label: 'Projects' },
   { path: 'certifications', label: 'Certifications' },
   { path: 'testimonials', label: 'Testimonials' },
+  { path: 'export', label: 'Export / Backup' },
 ]
 
 export function AdminLayout() {

@@ -13,6 +13,7 @@ const SECTIONS = [
   { path: 'projects', label: 'Projects', description: 'Portfolio entries' },
   { path: 'certifications', label: 'Certifications', description: 'Issued certificates' },
   { path: 'testimonials', label: 'Testimonials', description: 'References and quotes' },
+  { path: 'export', label: 'Export / Backup', description: 'Download all data as JSON or Excel' },
 ]
 
 export function AdminDashboard() {
